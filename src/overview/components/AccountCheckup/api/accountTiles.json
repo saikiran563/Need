@@ -1,0 +1,27 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+    "accountTiles": [
+      {
+        "id": "1",
+        "headline": "Download \n the My Verizon \n App.",
+        "ctaBtnText": "Go to App Store",
+        "completed": false
+      },
+      {
+        "id": "2",
+        "headline": "Heads up, your \n card's about to \n expire.",
+        "ctaBtnText": "Update card",
+        "completed": false
+      },
+      {
+        "id": "3",
+        "headline": "Say goodbye \n to missed \n payments.",
+        "subheader": "You'll save $5 every month.",
+        "ctaBtnText": "Set up Auto Pay",
+        "completed": false
+      }
+    ]
+  }
+}

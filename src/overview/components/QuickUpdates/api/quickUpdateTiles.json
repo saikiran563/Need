@@ -1,0 +1,34 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+    "quickUpdateTiles": [
+      {
+        "overline": "Bill",
+        "headline": "Your bill is due. \n $194.96",
+        "subheader": "",
+        "ctaBtnText": "Pay bill",
+        "alertMode": true,
+        "content":
+          "Why was I charged an upgrade fee?  You're charged an upgrade fee when you purchase a new device at retail price or through the device payment program."
+      },
+      {
+        "overline": "Data",
+        "headline": "90% data remaining.",
+        "subheader": "",
+        "ctaBtnText": "",
+        "alertMode": false,
+        "content": "Verizon Cloud 500GB Usage estimated at 3:30pm"
+      },
+      {
+        "overline": "FAQ",
+        "headline": "Verizon Up gives you rewards.",
+        "subheader": "",
+        "ctaBtnText": "",
+        "alertMode": false,
+        "content":
+          "Find out about the program that you can use on the My Verizon app."
+      }
+    ]
+  }
+}
