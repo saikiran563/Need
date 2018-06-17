@@ -36,11 +36,11 @@ class UserBlock extends Component {
           { name: '6-60 characters', error: false, type: 'character' },
           { name: 'Not all numbers', error: false, type: 'number' },
           { name: 'Contains no spaces', error: false, type: 'space' }
-
+          
         ]
       });
          this.setState({ useridInvalidMessages });
-
+        
     } else {
       this.setState({ requiredError: false });
       if(val.length < 6 || val.length > 60) {
@@ -81,7 +81,7 @@ class UserBlock extends Component {
     return (
       <div className={`row description_box ${editableClassName}`}>
 
-
+      
           <div className="col-xs-12 col-sm-4 description_box__header">
             <h4 tabIndex="0">{userInfo.title}</h4>
             <p>{userInfo.desc}</p>
@@ -101,7 +101,7 @@ class UserBlock extends Component {
                         <div className="form-group">
                           <label htmlFor="userId">User ID</label>
                           <InputField type="text" handleOnChange={this.handleOnChange} placeholder="User id" name="userid" valid={isValid} touched={this.state.istouched} value={userId}/>
-                          <p className="help-block">If avaliable, you may use youre email Address as your UserID.</p>
+                          <p className="help-block">If avaliable, you may use you're email Address as your UserID.</p>
                         </div>
                       </div>
                       <div className="col-xs-12 col-sm-6">
@@ -133,7 +133,7 @@ class UserBlock extends Component {
               }
             </div>
           </div>
-
+      
         {
           !showUserEdit && userEditMode && <div className="footer col-xs-12">
             <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>

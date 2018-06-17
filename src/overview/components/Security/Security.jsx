@@ -12,8 +12,6 @@ require('../../../assets/css/my-profile.css');
 require('../../../assets/css/oneD-Global.css');
 require('../../../assets/css/phoenixGlobal.css');
 
-
-
 class Security extends Component {
   constructor(props) {
     super(props)

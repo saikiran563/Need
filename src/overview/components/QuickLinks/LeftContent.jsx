@@ -9,7 +9,7 @@ return (
 
 <div className="leftcontent_wrapper">
               <span className="title title--xlg visible-xs visible-sm">My Profile</span>
-            
+
             <div className="hidden-scrollbar">
 
                 <ul className="menu-myprofile" role="menu">
@@ -18,7 +18,7 @@ return (
                     </li>
                     <li className="page page__title ">
                     <NavLink exact to='/security'>Security</NavLink>
-                     
+
                     </li>
                     <li className="">
                       <NavLink exact to='/userid'>User ID</NavLink>
@@ -39,8 +39,8 @@ return (
 
                     <li className="page page__title ">
                     <NavLink exact to='/#'>Contact & Billing</NavLink>
-                
-             
+
+
                     </li>
                     <li className=" ">
                         <a href="/my-profile-desktop-contact.html?section=emailAddressCB&page=cb">Email address</a>
@@ -60,9 +60,9 @@ return (
 
 
                     <li className="page page__title ">
-                    <NavLink exact to='/sai'>Manage account</NavLink>
-                     
-                       
+                    <NavLink exact to='/manage'>Manage account</NavLink>
+
+
                     </li>
                     <li className=" ">
                         <a href="/my-profile-desktop-manage.html?section=accountMA&page=ma">Account manager</a>
@@ -75,8 +75,8 @@ return (
                     </li>
                     <li className="page page__title ">
                     <NavLink exact to='/#'>Privacy & Permissions</NavLink>
-                    
-                       
+
+
                     </li>
                     <li className="">
                         <a href="/my-profile-desktop-privacy.html?section=privacySettingsP&page=pp" >Privacy settings</a>
@@ -91,7 +91,7 @@ return (
             )
 
 
- 
+
     }
 }
 
