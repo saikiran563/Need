@@ -71,7 +71,7 @@
   padding: 1%;
 }
 
-.greeting-fields {
+.greeting-fields, .greeting-fields-req{
   padding-top: 2%;
 }
 

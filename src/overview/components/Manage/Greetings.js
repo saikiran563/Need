@@ -5,16 +5,15 @@ import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
 import './style.css'
 
-class PasswordBlock extends Component {
+class GreetingBlock extends Component {
   constructor(props) {
     super(props)
     this.state= {
       requiredError: true,
       touched: false,
       useridInvalidMessages: [
-        { name: '6-60 characters', error: false, type: 'character'},
-        { name: 'Not all numbers', error: false, type: 'number' },
-        { name: 'Contains no spaces', error: false, type: 'space'}
+        { name: '1-10 characters', error: false, type: 'characterCount'},
+        { name: 'Does not contain certain special characters', error: false, type: 'special' }
       ],
     }
   }
@@ -26,30 +25,30 @@ class PasswordBlock extends Component {
   onChangeInput = () => {
     const val = this.state.user;
     const useridInvalidMessages = JSON.parse(JSON.stringify(this.state.useridInvalidMessages));
+    debugger
     if(val.length === 0) {
       this.setState( { requiredError : true,  useridInvalidMessages: [
-        { name: '6-60 characters', error: false, type: 'character'},
-        { name: 'Not all numbers', error: false, type: 'number' },
-        { name: 'Contains no spaces', error: false, type: 'space'}
+        { name: '1-10 characters', error: false, type: 'characterCount'},
+        { name: 'Does not contain certain special characters', error: false, type: 'special' }
       ] });
     } else {
       this.setState( { requiredError: false });
-        if (val.indexOf(" ") !== -1) {
-          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'space');
+        if (val.length > 10) {
+          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'characterCount');
             inavlidMessage.error = true;
             this.setState({ useridInvalidMessages });
         } else {
-            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'space');
+            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'characterCount');
             inavlidMessage.error = false;
             this.setState({ useridInvalidMessages });
         }
-        if (val.match(/^([^0-9]*)$/)) {
-            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'number');
-            inavlidMessage.error = false;
+        if (val.match(/[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'special');
+            inavlidMessage.error = true;
             this.setState({ useridInvalidMessages });
         } else {
-          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'number');
-            inavlidMessage.error = true;
+          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'special');
+            inavlidMessage.error = false;
             this.setState({ useridInvalidMessages });
         }
     }
@@ -78,9 +77,23 @@ class PasswordBlock extends Component {
                         <label >Change Greeting Name</label>
                         <InputField type="text" handleOnChange={this.handleOnChange} placeholder="Name" name="greeting" valid={requiredError} />
                     </div>
-                    <div className="greeting-fields col-md-5">
-                         <label>Greeting Name Requirements</label>
-
+                    <div className="greeting-fields-req col-xs-12 col-sm-6">
+                      <h3>Greeting Name Requirements</h3>
+                      <ul className="fieldErrors">
+                        {
+                          useridInvalidMessages.map((message) => {
+                            return (
+                              <li key={message.name}>
+                                {!requiredError &&
+                                    ( message.error ? <span className="text-danger"><i className="fa fa-check-circle"></i></span> :
+                                <span className="text-success"><i className="fa fa-check-circle"></i></span>)  }
+                                {requiredError && <span><i className="fa fa-check-circle"></i></span>}
+                                {message.name}
+                              </li>
+                            )
+                          })
+                        }
+                      </ul>
                     </div>
                  </div>
                 }
@@ -98,9 +111,15 @@ class PasswordBlock extends Component {
                }
             </div>
         </div>
+        {
+           !showGreetingEdit  && <div className="footer col-xs-12">
+              <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+              <button className="btn btn--round" disabled={requiredError}>Save Changes</button>
+            </div>
+         }
       </div>
     )
   }
 }
 
-export default PasswordBlock;
+export default GreetingBlock;
