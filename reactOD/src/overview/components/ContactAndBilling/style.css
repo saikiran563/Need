@@ -46,6 +46,23 @@
 .text-danger {
     color: red;
 }
+<<<<<<< HEAD:reactOD/src/overview/components/ContactAndBilling/style.css
+=======
+.add-manager-fields {
+    display:flex;
+}
+
+.add-manager-fields {
+  padding-top: 1%;
+}
+.manager-fn-cont {
+  padding: 1%;
+}
+
+.greeting-fields, .greeting-fields-req{
+  padding-top: 2%;
+}
+>>>>>>> 59e0cf40a7f246e2220668b86172f98569e69a5d:src/overview/components/Manage/style.css
 
 .email-block-input, .phone-block-input input {
     width: 150%;
