@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="format-detection" content="telephone=no">
+    <title>My Profile</title>
+
+    <!-- Global Nav -->
+    <link rel="stylesheet" href="https://scache.vzw.com/globalnav/css/globalnav-js.css?v=3" />
+    <!--For applications that require jQuery 1.9:-->
+    <script type="text/javascript" src="https://scache.vzw.com/globalnav/scripts/vzw_jquery19.js"></script>
+    <!--For applications that require jQuery 1.7:-->
+    <!--<script type="text/javascript" src="https://scache.vzw.com/globalnav/scripts/vzw_jquery17.js"></script>-->
+    
+    
+    <!-- <script type="text/javascript" src="https://scache.vzw.com/globalnav/gnav.js?v=3"></script> -->
+    <script type="text/javascript" src="//scache.vzw.com/ui-one-digital/gn/build/gnav.js"></script>
+    <link rel="stylesheet" href="//scache.vzw.com/ui-one-digital/gn/build/gnav.css" type="text/css">
+    
+    <!-- End Global Nav -->
+
+    <!-- Global Footer -->
+    <link rel="stylesheet" href="https://scache.vzw.com/globalnav/css/omnifooter.css" />
+    <script type="text/javascript" src="https://scache.vzw.com/globalnav/omnifooter.js"></script>
+    <!-- End Global Footer -->
+
+    <!-- Global Styles-->
+    <link rel="stylesheet" href="d/css/phoenixGlobal.css" />
+    <link rel="stylesheet" href="d/css/oneD-Global.css" />
+
+        <!-- Dynamic Assets for packaging -->
+
+    <!-- Page-specific styles -->
+        <!-- Page-specific styles: Begin -->
+    <link rel="stylesheet" href="d/css/my-profile/my-profile.css" />
+<!-- Page-specific styles: End -->
+
+</head>
+<body data-ng-app="vzw.myvzw" data-ng-strict-di>
+
+        
+
+        <div id="pageWrapper" data-overlay-page-wrap data-ng-controller="MyProfileDesktopController as ctrl" data-ng-cloak >
+            <!-- Global Nav -->
+            <div class="header globalclientheader">
+                <link rel="stylesheet" href="https://scache.vzw.com/ui-one-digital/gn/build/gnav.css" type="text/css">
+                <div id="vzw-gn" role="banner" class="sticky"></div>
+            </div>
+            <!-- End Global Nav -->
+            
+            
+<div id="aMyProfile" class="oneD-wrapper aMyProfile aMyProfile__manager">
+    <div class="row">
+        <div class="col-md-3 menu-container">
+            <span class="title title--xlg visible-xs visible-sm">My Profile</span>
+            <div class="hidden-scrollbar">
+<ul class="menu-myprofile" role="menu">
+    <li class="page page__title ">
+        <a href="/my-profile-desktop-landing.html">Quick links</a>
+    </li>
+    <li class="page page__title ">
+        <a href="/my-profile-desktop-security.html?page=ss">Security</a>
+    </li>
+    <li data-ng-class="activeSection == 'userIdS' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-security.html?section=userIdS&page=ss" >User ID</a>
+    </li>
+    <li data-ng-class="activeSection == 'passwordS' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-security.html?section=passwordS&page=ss">Password</a>
+    </li>
+    <li data-ng-class="activeSection == 'passwordAccountPinS' ? 'page__active' : '' ">
+        <a href="/my-profile-desktop-security.html?section=passwordAccountPinS&page=ss">Account PIN</a>
+    </li>
+    <li data-ng-class="activeSection == 'secretQuestionS' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-security.html?section=secretQuestionS&page=ss">Secret question</a>
+    </li>
+    <li data-ng-class="activeSection == 'securityImgS' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-security.html?section=securityImgS&page=ss">Security image</a>
+    </li>
+    <li class="page page__title ">
+        <a href="/my-profile-desktop-contact.html?page=cb" data-ng-click="changePage('cb', $event)">Contact & Billing</a>
+    </li>
+    <li data-ng-class="activeSection == 'emailAddressCB' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-contact.html?section=emailAddressCB&page=cb">Email address</a>
+    </li>
+    <li data-ng-class="activeSection == 'phoneCB' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-contact.html?section=phoneCB&page=cb">Primary phone</a>
+    </li>
+    <li data-ng-class="activeSection == 'billingAddressCB' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-contact.html?section=billingAddressCB&page=cb">Billing address</a>
+    </li>
+    <li data-ng-class="activeSection == 'serviceAddressCB' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-contact.html?section=serviceAddressCB&page=cb">Service addresses</a>
+    </li>
+    <li class="page page__title ">
+        <a href="/my-profile-desktop-manage.html?page=ma">Manage account</a>
+    </li>
+    <li data-ng-class="activeSection == 'accountMA' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-manage.html?section=accountMA&page=ma">Account manager</a>
+    </li>
+    <li data-ng-class="activeSection == 'greetingNameMA' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-manage.html?section=greetingNameMA&page=ma" data-ng-click="changePage('ma','greetingNameMA', $event)">Greeting name</a>
+    </li>
+    <li data-ng-class="activeSection == 'accountT' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-manage.html?section=accountT&page=ma">Transfer Service</a>
+    </li>
+    <li class="page page__title ">
+        <a href="/my-profile-desktop-privacy.html?page=pp" data-ng-click="changePage('pp', $event)">Privacy & Permissions</a>
+    </li>
+    <li data-ng-class="activeSection == 'privacySettingsP' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-privacy.html?section=privacySettingsP&page=pp" data-ng-click="changePage('pp','privacySettingsP', $event)">Privacy settings</a>
+    </li>
+    <li data-ng-class="activeSection == 'verizonPreP' ? 'page__active' : ''">
+        <a href="/my-profile-desktop-privacy.html?section=verizonPreP&page=pp" data-ng-click="changePage('pp', 'verizonPreP',$event)">Verizon Selects Preferences</a>
+    </li>
+</ul>
+
+</div>
+        </div>
+        <div class="col-md-9 a-quicklinks">
+            <h1 class="title title--lg">Manage account</h1>
+            <div class="col-xs-12">
+
+                <div aria-hidden="{{fieldClassController('accountMA') == 'description_box--disabled'}}"  class="row description_box {{fieldClassController('accountMA')}}">
+                    <div class="col-xs-12 col-sm-4 description_box__header">
+                        <h4>Account Managers</h4>
+                        <p>Assign Account Managers to let others access and make changes to all information and lines on your account. </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 description_box__large-container description_box__read">
+
+                        <div class="row">
+                            <div class="col-xs-12 description_box__details">
+                                <div class="description_box__account">
+                                    <p class="field-label">Firstname Lastname (Account Owner)</p>
+                                    <p>xxx.xxx.xxxx</p>
+                                    <p>name@domain.com</p>
+                                </div>
+                                <div class="description_box__account">
+                                    <p class="field-label">Firstname Lastname</p>
+                                    <p>xxx.xxx.xxxx</p>
+                                    <p>name@domain.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="section_saved" aria-hidden="true">Saved</span>
+                        <div class="description_box__edit description_box__edit_section">
+                            <a class="description_box__btn-edit" aria-expanded="{{activeSection == 'accountMA'}}" data-ng-click="editSection('accountMA','',$event)" href="#">Edit</a>
+                            <a class="description_box__btn-cancel" data-ng-click="editSection('', '',$event)" href="#">Cancel</a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-8 description_box__large-container description_box__form" aria-hidden="{{!(activeSection == 'accountMA')}}">
+
+                        <div class="row">
+                            <div class="col-xs-12 description_box__details">
+                                <h3 class="details__title details__bottom_divider">Current Account Managers</h3>
+                            </div>
+                            
+                        </div>
+                        <div class="row description_box__account">
+                            <div class="col-xs-12">
+                                <p class="field-label">Firstname Lastname (Account Owner)</p>
+                                <p>xxx.xxx.xxxx</p>
+                                <p>name@domain.com</p>
+                            </div>
+                        </div>
+                        <div class="row description_box__account">
+                            <div class="col-xs-10 description_box__account-data" data-ng-show="!removeAccount">
+                                <p class="field-label">Firstname Lastname</p>
+                                <p>xxx.xxx.xxxx</p>
+                                <p>name@domain.com</p>
+                            </div>
+                            <div class="col-xs-10" data-ng-show="removeAccount">
+                                <p class="description_box__removed" tabindex="0">Account Manager first lastname removed</p>
+                            </div>
+                            <div class="col-xs-2 description_box__edit description_box__edit_subsection">
+                                <a data-show-modal="remove-account-modal" data-ng-show="!removeAccount" href="#">Remove</a>
+                                <a class="btn-undo" data-ng-click="removeAccount=!removeAccount" data-ng-show="removeAccount" href="#" >Undo</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 details__divider">
+                                <h3 class="details__title">Account Manager Requests</h3>
+
+                                <p data-ng-show="!removeAccount">You may have a maximun of <strong>three Account Managers</strong> at a time. To add a new Account Manager, please remove one first.</p>
+                                
+                                <div class="row description_box__account">
+                                    <div class="col-xs-10 description_box__account-data" data-ng-show="!denyAccount">
+                                        <p>Requested by xxx.xxx.xxxx</p>
+                                        <p class="field-label">Firstname Lastname</p>
+                                        <p>xxx.xxx.xxxx</p>
+                                        <p>name@domain.com</p>
+                                        <div class="description_box__control-btn">
+                                            <a href="#" class="btn btn--round-invert" data-ng-click="denyAccount=!denyAccount;" role="button">Deny</a>
+                                            <button class="btn btn--round" data-ng-disabled="!removeAccount" data-ng-click="saveSection($event)">Approve</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10" data-ng-show="denyAccount">
+                                        <p class="description_box__removed" tabindex="0">Account Manager Request from xxx.xxx.xxxx denied</p>
+                                    </div>
+                                    <div class="col-xs-2 description_box__edit description_box__edit_subsection">
+                                        <a class="btn-undo" data-ng-click="denyAccount=!denyAccount" data-ng-show="denyAccount" href="#" >Undo</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-xs-12 details__divider">
+                                <h3 class="details__title">Add Account Managers</h3>
+                                <p><a href="#" data-show-modal="security-modal">What can an Account Manager do?</a></p>
+
+                                <p>Account Managers do NOT need to have a mobile number on your account. They can simply provide their names in retail stores or over the phone to Customer Service in order to manage all lines on the account.  </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6"><label for="fname">First Name</label><input id="fname" class="" type="text" placeholder=""></div>
+                            <div class="col-xs-6"><label for="lname">Last Name</label><input id="lname" class="" type="text" placeholder=""></div>  
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>If you assign a mobile number and email address, the Account Manager will be given access to your My Verizon Online account. </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <span class="label" >Mobile Number</span><select-box id="numbers-list" class="full-width" elemets="numbersList" select="questionSelect" placeholder="Select One"></select-box>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-7">
+                                <label for="email-addr">Email Address</label><input id="email-addr" class="" type="text" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="description_box__edit description_box__edit_section">
+                            <a class="description_box__btn-cancel" data-ng-click="editSection('', '',$event)" href="#">Cancel</a>
+                        </div>
+
+                        <div class="description_box__control-btn">
+                            <a href="#" class="btn btn--round-invert" data-ng-click="editSection('','', $event)" role="button">Cancel</a>
+                            <button class="btn btn--round" data-ng-click="saveSection($event)">Save Changes</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div aria-hidden="{{fieldClassController('greetingNameMA') == 'description_box--disabled'}}"  class="row description_box {{fieldClassController('greetingNameMA')}}">
+                    <div class="col-xs-12 col-sm-4 description_box__header">
+                        <h4>Greeting name</h4>
+                        <p>Tell us the name you would like to go by.</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 description_box__large-container">
+                        <div class="row">
+                            
+                                <div class="col-xs-12 description_box__details">
+                                    <div class="description_box__read">
+                                    <p>xxx</p>
+                                    </div>
+                                    <div class="description_box__form" aria-hidden="{{!(activeSection == 'greetingNameMA')}}">
+                                        <div class="row">
+                                        <fields-requiere
+                                            field='userGreeting'
+                                            title="Change Greeting Name"
+                                            title2='Greeting Name Requirements'
+                                            requirements='greetingRequirements'
+                                            is-valid="isValidGreeting"
+                                        ></fields-requiere>
+                                        </div>
+                                    </div>
+                                </div>   
+                                
+                                <span class="section_saved" aria-hidden="true">Saved</span>
+
+                                <div class="description_box__edit description_box__edit_section">
+                                    <a class="description_box__btn-edit" aria-expanded="{{activeSection == 'greetingNameMA'}}"  data-ng-click="editSection('greetingNameMA','',$event)" href="#">Edit</a>
+                                    <a class="description_box__btn-cancel" data-ng-click="editSection('', '',$event)" href="#">Cancel</a>
+                                </div>
+
+                                <div class="col-xs-12 description_box__control-btn">
+                                    <a href="#" class="btn btn--round-invert" data-ng-click="editSection('', '',$event)" role="button">Cancel</a>
+                                    <button class="btn btn--round" data-ng-disabled="!isValidGreeting" data-ng-click="saveSection($event)">Save Changes</button>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div aria-hidden="{{fieldClassController('accountT') == 'description_box--disabled'}}"  class="row description_box {{fieldClassController('accountT')}}">
+                    <div class="col-xs-12 col-sm-4 description_box__header">
+                        <h4>Transfer of service</h4>
+                        <p>Desciption goes here</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 description_box__large-container">
+                        <div class="row">
+                            
+                            <div class="col-xs-12 description_box__details">
+                                <a role="button" href="#" class="btn btn--round-invert btn-transfer">Transfer Service</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="a-hidden">
+    <div id="remove-account-modal" class="aMyProfile aMyProfile__modal">
+        <p class="title title--lg">Are you sure you want to remove this account manager?</p>
+        <p class="modal__divider remove-desc">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium aliquam ligula in lacinia. Ut dignissim, tortor eu aliquam bibendum, est leo rhoncus sem, nec bibendum nulla libero porttitor magna. Duis condimentum id tellus non tincidunt.
+            <br aria-hidden="true"><br aria-hidden="true"><br aria-hidden="true">
+        </p>
+
+        <div class="rol-permissions__buttons row">
+            <div class="col-xs-12 ">
+                <a href="#" class="btn btn--border" role="button">Cancel</a>
+                <a href="#" data-ng-click="removeAccount=!removeAccount;closeAccountModal()" class="btn btn--round" role="button">Remove manager</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="a-hidden">
+    <div id="security-modal" class="aMyProfile aMyProfile__modal">
+        <p class="title title--lg">Get to know your role.</p>
+        <p>
+            At Verizon, there are three different levels of online access for managing your account online: Account Owner, Account Manager and Account Member. Check out the differences between them below.
+            <br aria-hidden="true">
+            <br aria-hidden="true">
+            <strong>Account Owners:</strong> In this role, you’re financially responsible for the entire account. You’ll have complete access to all the info, and you can also manage all mobile phones on the account. There can only be one registered Account Owner.
+            <br aria-hidden="true">
+            <br aria-hidden="true">
+            <strong>Account Managers:</strong> As an Account Manager, you can access account info and manage all lines of service on the account. Your Account Owner can assign up to 3 different Account Managers at a time.
+            <br aria-hidden="true">
+            <br aria-hidden="true">
+            <strong>Account Members:</strong> If you’re simply a user on your account, you’re considered an Account Member. This means you have access to info and certain functions for your specific line but aren’t able to access sensitive billing information or make plan changes.
+        </p>
+        <div class="row rol-permissions">
+    <form action="#">
+        <div class="rol-permissions__matrix">
+            <div class="col-xs-12">
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <strong>Role Access</strong>
+                    </div>
+                    <div class="col-xs-2">
+                        <strong>Owner</strong>
+                    </div>
+                    <div class="col-xs-2">
+                        <strong>Manager</strong>
+                    </div>
+                    <div class="col-xs-2">
+                        <strong>Member</strong>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Assign Account Managers</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="assign-account-managers-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio2" aria-labelledby="assign-account-managers-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray" >
+                            <span class="a-hidden" id="assign-account-managers-manager-label">Manager Toggle</span>
+                            <input type="checkbox" name="radio2" aria-labelledby="assign-account-managers-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="assign-account-managers-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio2" aria-labelledby="assign-account-managers-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Change Billing Password</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="change-billing-password-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio1" aria-labelledby="change-billing-password-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="change-billing-password-manager-label">Manager Toggle</span>
+                            <input type="checkbox" name="radio1" aria-labelledby="change-billing-password-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="change-billing-password-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio1" aria-labelledby="change-billing-password-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Upgrade all Phones on Account</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="upgrade-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio3" aria-labelledby="upgrade-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="upgrade-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio3" aria-labelledby="upgrade-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="upgrade-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio3" aria-labelledby="upgrade-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Add a New line of Service</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="new-line-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio14" aria-labelledby="new-line-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="new-line-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio14" aria-labelledby="new-line-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="new-line-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio14" aria-labelledby="new-line-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Make Plan Changes and Manage Data</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="plan-changes-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio4" aria-labelledby="plan-changes-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="plan-changes-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio4" aria-labelledby="plan-changes-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="plan-changes-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio4" aria-labelledby="plan-changes-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>View <br class="visible-xs">Bill</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="view-bill-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio5" aria-labelledby="view-bill-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="view-bill-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio5" aria-labelledby="view-bill-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="view-bill-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio5" aria-labelledby="view-bill-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Enroll in Paperless Billing</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="paperless-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio6" aria-labelledby="paperless-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="paperless-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio6" aria-labelledby="paperless-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="paperless-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio6" aria-labelledby="paperless-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Cancel Pending Order*</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="cancel-pending-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio7" aria-labelledby="cancel-pending-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="cancel-pending-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio7" aria-labelledby="cancel-pending-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="cancel-pending-member-label">Member Toggle</span>
+                            <input type="checkbox" name="radio7" aria-labelledby="cancel-pending-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Setup Recurring Payments</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="recurring-payments-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio8" aria-labelledby="recurring-payments-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="recurring-payments-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio8" aria-labelledby="recurring-payments-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                        <span class="a-hidden" id="recurring-payments-member-label">Member Toggle</span>
+                        <input type="checkbox" name="radio8" aria-labelledby="recurring-payments-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Make One-time Payments</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="onetime-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="onetime-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="onetime-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="onetime-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="onetime-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="onetime-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>View <br class="visible-xs">Usage</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="usage-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="usage-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="usage-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="usage-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="usage-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio9" aria-labelledby="usage-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Change/Reset Voicemail Password</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="voicemail-password-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio10" aria-labelledby="voicemail-password-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="voicemail-password-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio10" aria-labelledby="voicemail-password-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="voicemail-password-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio10" aria-labelledby="voicemail-password-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Purchase Content for Phone</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="purchase-content-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio11" aria-labelledby="purchase-content-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="purchase-content-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio11" aria-labelledby="purchase-content-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="purchase-content-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio11" aria-labelledby="purchase-content-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Access Personal Photo Albums</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-photos-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio12" aria-labelledby="personal-photos-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-photos-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio12" aria-labelledby="personal-photos-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-photos-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio12" aria-labelledby="personal-photos-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row rol-permissions__row">
+                    <div class="col-xs-6">
+                        <p>Manage Personal Preferences</p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-pref-owner-label">Owner Toggle</span>
+                            <input type="checkbox" checked name="radio13" aria-labelledby="personal-pref-owner-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-pref-manager-label">Manager Toggle</span>
+                            <input type="checkbox" checked name="radio13" aria-labelledby="personal-pref-manager-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="custom-checkbox-gray">
+                            <span class="a-hidden" id="personal-pref-member-label">Member Toggle</span>
+                            <input type="checkbox" checked name="radio13" aria-labelledby="personal-pref-member-label">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rol-permissions__buttons">
+            <div class="col-xs-12 ">
+                <a href="#" >Learn more</a>
+                <a href="#" class="btn btn--round" role="button">Edit Account roles</a>
+            </div>
+        </div>
+    </form>
+</div>
+    </div>
+</div>
+
+        </div>
+
+        <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+<script type="text/javascript" src="lib/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="lib/angular-touch/angular-touch.min.js"></script>
+<script type="text/javascript" src="shared/js/app-stub.js"></script>
+
+        <!-- Global Footer -->
+        <div class="footer globalclientfooter">
+            <div id="vzw-gf"></div>
+            <script type="text/javascript" src="https://scache.vzw.com/ui-one-digital/gn/build/gnav.js"></script>
+        </div>
+        <!-- End Global Footer -->
+
+
+    <script type="text/javascript" src="shared/js/myvzw_libs.js"></script>
+    <script type="text/javascript" src="shared/js/models.js"></script>
+    <script type="text/javascript" src="shared/js/directives/directives.js"></script>
+    <script type="text/javascript" src="shared/js/overlay.min.js"></script>
+
+<!-- Page-specific scripts begin -->
+
+<!-- Page-specific scripts end -->
+    <!-- Flow-specific scripts: Begin -->
+    <script type="text/javascript" src="d/js/my-profile.js"></script>
+<!-- Flow-specific scripts: End -->
+
+</body>
+</html>
