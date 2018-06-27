@@ -60,7 +60,7 @@ const aocheck= window.reactGlobals.deviceLandingUrl.indexOf("ao")>-1;
 
 
                         <li className="page page__title ">
-                            <NavLink exact to='/#'>Manage account</NavLink>
+                            <NavLink exact to='/manage'>Manage account</NavLink>
 
 
                         </li>
