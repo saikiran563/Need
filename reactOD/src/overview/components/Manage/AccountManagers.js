@@ -59,6 +59,17 @@ class AccountManagerBlock extends Component {
         <div>
           {
             managers.map((eachManager)=>{
+              if(eachManager.type === 'accontOwner'){
+                return(
+                  <div>
+                     <div className="row owner-info">
+                         <h4 tabIndex="0">Firstname Lastname( Account Owner )</h4>
+                         <p>{eachManager.phoneNumber}</p>
+                         <p>{eachManager.emailId}</p>
+                     </div>
+                  </div>
+                )
+              }
               return(
                 <div className="row owner-info-second">
                      <div className="row col-xs-12 col-sm-11">

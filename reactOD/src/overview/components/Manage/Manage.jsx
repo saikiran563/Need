@@ -79,7 +79,7 @@ handleEditCancel = (type) =>  {
     const { managers } = this.state;
     return (
       <div>
-          <h1 className="title title--lg">Manage</h1>
+          <h1 className="title title--lg">Manage Account</h1>
           <div className="col-xs-12">
               <AccountManagers managers={managers}  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
@@ -104,23 +104,23 @@ const mapStateToProps = state => {
           type:"accontOwner",
           firstName: "Isacc",
           lastName:"Newton",
-          phoneNumber: "xxx.xxx.xxxx",
-          emailId: "name@domain.com",
+          phoneNumber: "(909)-505-603",
+          emailId: "Isacc@Newton.com",
           managerId: 1
         },
         {
           type: "none",
           firstName: "Benjamin",
           lastName:"Franklin",
-          phoneNumber: "xxx.xxx.xxxx",
+          phoneNumber: "(909)-505-603",
           emailId: "name@domain.com",
           managerId: 2
         },
         {
           type: "none",
-          firstName: "",
-          lastName:"",
-          phoneNumber: "xxx.xxx.xxxx",
+          firstName: "Abraham",
+          lastName:"Lincoln",
+          phoneNumber: "(909)-505-603",
           emailId: "name@domain.com",
           managerId: 3
         },
