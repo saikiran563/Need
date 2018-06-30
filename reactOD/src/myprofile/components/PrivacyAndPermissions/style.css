@@ -1,0 +1,3 @@
+.description_box__form, .description_box__read.showDetails{display: none;}
+
+.description_box__form.showDetails, .description_box__read.hideDetails,.aMyProfile .description_box--edit-view .description_box__control-btn{display: block}

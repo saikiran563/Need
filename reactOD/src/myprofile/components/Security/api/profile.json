@@ -1,0 +1,24 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+     "userIdInfo": {
+        "id": "test123",
+        "title": "User ID",
+        "desc": "Used to log in on the web and the MyVerizon app.",
+        "read": "userId"
+      },
+      "passwordInfo":  {
+         "id": "2",
+        "title": "Password",
+        "desc": "Pick a password to use with your Verizon login.",
+         "read": "**********"
+      },
+      "accountPinInfo": {
+         "id": "3",
+        "title": "Account PIN",
+        "desc": "An account PIN replaces the last four digits of the Account Owner's Social Security Number as the primary means of authentication on your account.",
+        "read": "****"
+      }
+    }
+}

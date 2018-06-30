@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: './src/overview/index.jsx',
+  entry: './src/myprofile/index.jsx',
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js'

@@ -111,7 +111,7 @@
     }
 }
 
-#overlayContainer.hidden,.aMyProfile .menu-myprofile li.hidemenu{
+#overlayContainer.hidden{
 
     display: none;
 }

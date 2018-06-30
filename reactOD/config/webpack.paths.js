@@ -3,7 +3,7 @@ const path = require('path');
 const cwd = process.cwd();
 
 const pagesEntryPoints = {
-  overview: path.join(cwd, 'src/overview/index.jsx')
+  myprofile: path.join(cwd, 'src/myprofile/index.jsx')
 };
 
 module.exports = pagesEntryPoints;

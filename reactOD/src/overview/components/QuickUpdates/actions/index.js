@@ -1,1 +1,0 @@
-export { fetchQuickUpdateTiles } from './fetchQuickUpdateTiles'

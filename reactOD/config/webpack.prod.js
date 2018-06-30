@@ -9,7 +9,7 @@ const envBundle = String(process.env.BUNDLE) || 'app';
 
 module.exports = {
   entry: {
-    overview: './src/overview/index.jsx'
+    myprofile: './src/myprofile/index.jsx'
   },
   output: {
     path: path.join(__dirname, '../build/'),

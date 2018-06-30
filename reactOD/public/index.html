@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
   <head>
@@ -6,6 +7,8 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=5" />
     <title>My Verizon</title>
     <link rel="stylesheet" href="//scache.vzw.com/ui-one-digital/gn/build/gnav.css" type="text/css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
       body{
         
@@ -62,4 +65,70 @@
       }
     </script>
   </body>
+=======
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=5" />
+    <title>My Verizon</title>
+    <link rel="stylesheet" href="//scache.vzw.com/ui-one-digital/gn/build/gnav.css" type="text/css">
+    <style>
+      body{
+        
+        overflow-x: hidden;
+      }
+      #vzw-gf .footer-container, #vzw-gn .sub-container-gnav, #vzw-gn .sub-global-nav-lower {
+          max-width: 79.5rem!important;
+          width: 100%;
+      }
+      #vzw-gf {
+          opacity: 0;
+      }
+      #app{
+        margin-right: auto;
+        margin-left: auto;
+      }
+      @media (min-width: 1200px){
+        #app {
+            width: 79.5rem;
+        }
+      }
+    </style>
+	<script th:inline="javascript">
+          var reactGlobals = reactGlobals || {};
+          reactGlobals.staticUrl = /*[[${staticUrl}]]*/ '';
+          reactGlobals.deviceLandingUrl = /*[[${deviceLandingUrl}]]*/ '';
+          reactGlobals.greetingName = /*[[${greetingName}]]*/ '';
+          reactGlobals.rotatingText = /*[[${rotatingText}]]*/ '';
+          reactGlobals.rotatingTextArr = ['How can we help you?','You can start chatting now.','Ask your question here.','Enter your search here.'];
+          if(reactGlobals.rotatingText){
+            try{
+              reactGlobals.rotatingTextArr = JSON.parse(reactGlobals.rotatingText);
+            }catch(err){
+              reactGlobals.rotatingTextArr = ['How can we help you?','You can start chatting now.','Ask your question here.','Enter your search here.'];
+            }
+          }
+    </script>
+      <link th:href="@{${staticUrl}+'/reactOD/build/static/myprofile/common.css'}" rel="stylesheet">
+  </head>
+  <body id="body" onload="footerDelay()">
+    <div id="vzw-gn"></div>
+    <div id="app"></div>
+    <div id="vzw-gf"></div>
+    <script type="text/javascript" src="//scache.vzw.com/ui-one-digital/gn/build/gnav.js"></script>
+    <script type="text/javascript" th:src="@{${staticUrl} +'/reactOD/build/static/myprofile/myprofile.js'}"></script>
+    <script>
+      function footerDelay() {
+        setTimeout(
+          function() {
+              var element = document.getElementById('vzw-gf');
+              element.style.opacity = "1";
+              element.style.filter  = 'alpha(opacity=100)';
+          }, 2500);
+      }
+    </script>
+  </body>
+>>>>>>> b1072e97a86b7e50d569695893344f9c9c373ead
 </html>
