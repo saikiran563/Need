@@ -137,7 +137,17 @@ class PasswordBlock extends Component {
     const { controlButtons, errorMessages, userId, requiredError, istouched, currentPassword, newPassword, confirmPassword,isCurrentPwdValid } = this.state;
     const { passwordInfo, showPasswordEdit, passwordEditMode ,pwdSaved } = this.props;
      const isValid = !errorMessages.find(user => user.error)
-     const isCPValid= isCurrentPwdValid;
+     const isCPValid= true;//isCurrentPwdValid;
+     let errorDisplay;
+     let errorMsg;
+     if(isCPValid) {
+       errorDisplay = "dontDisplay";
+       errorMsg="";
+     }
+     else {
+       errorDisplay = "errorDisplay";
+       errorMsg = "should not match with your ssn";
+     }
     const editableClassName = passwordEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
         <div className={`row description_box ${editableClassName}`}>
@@ -148,7 +158,7 @@ class PasswordBlock extends Component {
     </div>       
 	<div className="col-xs-12 col-sm-8 description_box__large-container">
 		<div className="row">
-			<div className="col-xs-12 description_box__details">
+			<div className="col-xs-10 description_box__details">
 				{
 					showPasswordEdit &&  
 					<div className="description_box__read">
@@ -170,6 +180,7 @@ class PasswordBlock extends Component {
 								  valid={isCPValid}
 								  touched={istouched}
 								  value={currentPassword} />
+                  <p className={errorDisplay}>{errorMsg}</p>
 								</div>
 								<div className="form-group">
 								  <label htmlFor="newPassword">New Password</label>
@@ -192,7 +203,7 @@ class PasswordBlock extends Component {
 								  value={confirmPassword} />
 								</div>
 							</div>
-							<div className="col-xs-12 col-sm-6">
+							<div className="col-xs-12 col-sm-7">
 								<h3>Password Requirements</h3>
 								<ul className="fieldErrors">
 									{
@@ -214,21 +225,22 @@ class PasswordBlock extends Component {
 					</div>
 				}
 			</div>	
-      {
-              showPasswordEdit && passwordEditMode && pwdSaved && <span className="section_saved text-success fa fa-check-circle"> Saved </span>
-            }
+      
       {
 			showPasswordEdit &&  
-			<div className="description_box__edit description_box__edit_section">
+			<div className="col-sm-2 description_box__edit description_box__edit_section">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('passwordblock')} role="button">Edit</a>
 			</div>
 			}	
        {
 			!showPasswordEdit && passwordEditMode &&   
-			<div className="description_box__edit description_box__edit_section">
+			<div className="col-sm-2 description_box__edit description_box__edit_section">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 			</div>
 			}	
+      {
+              showPasswordEdit && passwordEditMode && pwdSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
+            }
 			{
                !showPasswordEdit && passwordEditMode && 
 			   <div className="footer col-xs-12">

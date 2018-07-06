@@ -1,13 +1,11 @@
 import {
   FETCH_SECURITY_BEGIN,
   FETCH_SECURITY_SUCCESS,
-  GET_USER_INFO
+  GET_USER_INFO,
+  SET_USER_INFO,
+  SET_PIN_INFO
 } from '../actions/fetchSecurities'
 
-import {
-  SET_USERID_SUCCESS,
-  SET_USERID_ERROR
-} from '../actions/setUserId'
 
 import {
   createReducer,
@@ -41,6 +39,20 @@ const getUserIdSuccess = (state , action) => {
 
   })
 }
+const setUserIdSuccess = (state , action) => {
+  return updateObject(state, {
+    isFetching :false,
+    status:action.response
+
+  })
+}
+const setPinSuccess = (state , action) => {
+  return updateObject(state, {
+    isFetching :false,
+    status:action.response
+
+  })
+}
 const securityReducer = (state = initialState, action) => {
   const { type } = action
   switch (type) {
@@ -50,8 +62,12 @@ const securityReducer = (state = initialState, action) => {
       return fetchSecuritySuccess(state, action)
     case GET_USER_INFO:
       return getUserIdSuccess(state,action);
-    case SET_USERID_ERROR:
-      return ;
+    case SET_USER_INFO:
+      return  setUserIdSuccess(state,action);
+    case SET_PIN_INFO:
+      return  setPinSuccess(state,action);
+      
+      
     default:
       return state
   }

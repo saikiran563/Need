@@ -7,15 +7,23 @@ import InputField from '../FormElements/InputComponent'
 class VerizonSelects extends Component {
     constructor(props) {
         super(props)
+         this.state = {
+            verizonSelects: this.props.verizonSelectsInfo,
+        }
     }
 
 
     render() {
         const verizondata= this.props.verizonSelect && this.props.verizonSelect.verizonSelectsInfo;
+
+        const { verizonSelectsInfo, showPrivacyEdit, verizonSelectsEditMode } = this.props;
+        console.log(this.props);
+        const editableClassName = verizonSelectsEditMode ? "" : "description_box_disabled";
+        
         return (
            
             
-            <div className="row description_box ">
+            <div className={`row description_box ${editableClassName}`}>
             
                 <div className="col-sm-4 description_box__header">
                     <h4>{ verizondata.title}</h4>
@@ -23,7 +31,7 @@ class VerizonSelects extends Component {
                 </div>
                 <div className="col-sm-8 description_box__large-container">
                     <div className="row">
-                        <div className="description_box__details">
+                        <div className="col-xs-12 description_box__details">
                             <a href="#" role="button" className="btn btn--round-invert btn-transfer">Change settings</a>
                         </div>
                     </div>

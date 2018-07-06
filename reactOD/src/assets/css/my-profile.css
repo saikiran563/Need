@@ -1352,11 +1352,13 @@
 }
 
 .aMyProfile .description_box__edit_section {
-	/*position: absolute;*/
+	/*position: absolute;
 	top: 20px;
-	right: 15px;
+	right: 15px;*/
 	text-align: right;
 	z-index: 1;
+	padding-right: 0px !important ;
+	padding-left: opx !important;
 }
 
 .aMyProfile .description_box__btn-cancel {
@@ -1388,6 +1390,10 @@
 	width: 100%;
 }
 
+.section-saved {
+	padding-top: 5px;
+	text-align: right;
+}
 /*.aMyProfile .description_box__form {
 	display: none;
 }
@@ -1536,6 +1542,7 @@
 	color: #FFFFFF;
 	padding: 13px 38px;
 	font-family: "NeueHaasGroteskDisplayBold", arial;
+	cursor: pointer;
 }
 
 .aMyProfile a.btn--round-invert, .aMyProfile button.btn--round-invert {
@@ -1566,6 +1573,7 @@
 
 .aMyProfile a.btn:disabled, .aMyProfile button.btn:disabled {
 	opacity: 0.5;
+	cursor: default;
 }
 
 .aMyProfile .custom-checkbox-gray {
@@ -2396,4 +2404,11 @@ div.aMyProfile__modal:after {
 
 .aMyProfile__privacy .description_box__details p {
 	margin-bottom: 15px;
+}
+p.dontDisplay {
+	display: none;
+}
+p.errorDisplay {
+    color:red;
+	font-size: 10px;
 }

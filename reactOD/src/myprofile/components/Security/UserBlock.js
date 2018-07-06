@@ -8,7 +8,7 @@ class UserBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: props.userBlock.userId+"",
+      userId: props.userBlock?props.userBlock.userId+"":"",
       requiredError: true,
       isValid: '',
       istouched: false,
@@ -89,7 +89,7 @@ class UserBlock extends Component {
           
 	<div className="col-xs-12 col-sm-8 description_box__large-container">
 		<div className="row">
-			<div className="col-xs-12 description_box__details">
+			<div className="col-xs-10 description_box__details">
 				{
                   showUserEdit && 
 				  <div className="description_box__read">
@@ -103,9 +103,9 @@ class UserBlock extends Component {
 							<div className="col-xs-12 col-sm-5">
 								<div className="form-group">
 									<label htmlFor="userId">User ID</label>
-									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User id" name="userid" valid={isValid} touched={this.state.istouched} 
+									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User ID" name="userid" valid={isValid} touched={this.state.istouched} 
 											value={userId}/>
-									<p className="help-block">If avaliable, you may use you're email Address as your UserID.</p>
+									<p className="help-block">If available, you may use Email Address as your User ID.</p>
 								</div>
 							</div>
 							 
@@ -132,23 +132,23 @@ class UserBlock extends Component {
 				}
 			</div>
 			
-      {
-              userSaved && <span className="text-success fa fa-check-circle"> Saved </span>
-            }
+      
 			
             {
             showUserEdit && 
 				<div className="description_box__edit description_box__edit_section">
-					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('userblock')} role="button">Edit</a>
+					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('useridblock')} role="button">Edit</a>
 				</div>   
             }
             {
             !showUserEdit && userEditMode &&
-          <div className="description_box__edit description_box__edit_section">
+          <div className="col-sm-2 description_box__edit description_box__edit_section">
 					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 				</div>
         }
-          
+          {
+              userSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
+            }
 			
 			{
 			!showUserEdit && userEditMode && 

@@ -4,7 +4,6 @@ import Main from './components/Main'
 import QuickLinks from './components/QuickLinks/QLinks'
 import Security from './components/Security'
 import ContactAndBilling from './components/ContactAndBilling/contactBilling';
-
 import PrivacyAndPermissions from './components/PrivacyAndPermissions/privacyPermissions';
 import UserBlock from './components/Security/UserBlock'
 import LeftNav from './components/LeftNavBar/leftNav';
@@ -21,8 +20,10 @@ class ReactRouter extends Component {
         </div> 
         <div className="col-md-9 a-quicklinks">                        
           <Route exact path="/" component={QuickLinks} />
-          <Route path="/security" component={Security} />
-          <Route path="/userid" component={Security} />
+          <Route exact strict path="/security" component={Security} />
+          <Route exact strict path="/security/userid" component={Security} />
+          <Route exact strict path="/security/password" component={Security} />
+          <Route exact strict path="/security/accountPin" component={Security} />
           <Route path="/contactbilling" component={ContactAndBilling} />
           <Route path="/privacypermissions" component={PrivacyAndPermissions} />              
           </div>

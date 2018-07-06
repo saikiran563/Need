@@ -33,35 +33,42 @@ class Security extends Component {
 
   componentDidMount() {
     this.props.actions.fetchSecurity();
-    this.props.actions.getUserInfo();
+    this.props.actions.getUserInfo();    
+    const URL_MAP = this.props.match.url.split("/");
+    const type = URL_MAP[URL_MAP.length-1];
+    type?this.handleEditCancel(type+"block"):"";
   }
 
   handleEditCancel = (type) =>  {
     switch(type) {
-      case 'userblock':
+      case 'useridblock':
       this.setState({ showUserEdit: false, showPasswordEdit : false,userSaved:false, 
                        userEditMode: true, passwordEditMode: false ,pwdSaved:false,
                        showAccountPinEdit:false, accountPinEditMode: false,pinSaved:false
                        });
+                       this.props.history.push('/security/userid');
       break;
       case 'passwordblock':
       this.setState({ showUserEdit: false, showPasswordEdit : false, userSaved:false,
                       userEditMode: false, passwordEditMode: true ,pwdSaved:false,
                       showAccountPinEdit:false, accountPinEditMode: false,pinSaved:false
                       });
+                      this.props.history.push('/security/password');
       break;
       case 'accountPinblock':
       this.setState({ showUserEdit: false, showPasswordEdit : false, userSaved:false,
                       userEditMode: false, passwordEditMode: false ,pwdSaved:false,
                       showAccountPinEdit:false, accountPinEditMode: true,pinSaved:false
                       });
-      
+                      this.props.history.push('/security/accountPin');
       break;
       default:
+      this.props.history.push('/security');
       this.setState({ showUserEdit: true, showPasswordEdit : true, userSaved:false,
                       userEditMode: true, passwordEditMode: true ,pwdSaved:false,
                       showAccountPinEdit:true, accountPinEditMode: true,pinSaved:false
                       });
+                      
     }
   }
 
@@ -74,7 +81,7 @@ class Security extends Component {
       case 'userForm':
       
       this.refs.pwdBlock.updateUser(formData);
-      //this.props.actions.setUserId(formData)
+      this.props.actions.setUserId(formData)
       //this.setState({currentUser: formData,showUserEdit: true, userEditMode: true, userSaved:true});
       /*this.setState({ currentUser: formData, showUserEdit: true, showPasswordEdit : true,userSaved:true, 
                        userEditMode: true, passwordEditMode: false ,pwdSaved:false,
@@ -91,7 +98,7 @@ class Security extends Component {
                        this.setState({pwdSaved:true});
       break;
       case 'pinForm':
-     
+     this.props.actions.setPin(formData)
      this.setState({pinSaved:true});
       break;
     }
@@ -104,8 +111,7 @@ class Security extends Component {
   render() {
     
     const { securities ,updateState, match } = this.props;
-    const type = match.url.split("/")[2];
-    console.log(type);
+    
     
     return (
   <div>

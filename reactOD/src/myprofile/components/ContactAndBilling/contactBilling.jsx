@@ -8,7 +8,6 @@ import BillingAddressBlock from './billingAddressBlock'
 import VZModal from '../Modal/modal'
 
 import * as actions from './actions';
-import * as overviewactions from '../QuickLinks/actions';
 
 import './style.css'
 require('../../../assets/css/main.css');
@@ -30,10 +29,6 @@ class ContactAndBilling extends Component {
   }
   componentDidMount() {
     this.props.actions.fetchContactAndBilling();
-    this.props.editemail && this.handleEditCancel('emailBlock');
-  }
-   componentWillUnmount() {
-       this.props.overviewactions.editemail(false);
   }
 
     handleEditCancel = (type) =>  {
@@ -106,7 +101,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators(actions, dispatch),
-     overviewactions: bindActionCreators(overviewactions, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactAndBilling)

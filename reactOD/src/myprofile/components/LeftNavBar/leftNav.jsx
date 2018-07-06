@@ -38,13 +38,13 @@ let leftnav = this.props.leftNavBar;
 
                         </li>
                         <li className="">
-                            <NavLink exact to='/userid'>User ID</NavLink>
+                            <NavLink exact to='/security/userid'>User ID</NavLink>
                         </li>
                         <li className=" ">
-                            <a href="/my-profile-desktop-security.html?section=passwordS&page=ss">Password</a>
+                            <NavLink exact to='/security/password'>Password</NavLink>
                         </li>
                         <li className=" ">
-                            <a href="/my-profile-desktop-security.html?section=passwordAccountPinS&page=ss">Account PIN</a>
+                           <NavLink exact to='/security/accountPin'>Account PIN</NavLink>
                         </li>
                         <li className=" ">
                             <a href="/my-profile-desktop-security.html?section=secretQuestionS&page=ss">Secret question</a>

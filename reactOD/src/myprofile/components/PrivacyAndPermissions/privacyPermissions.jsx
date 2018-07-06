@@ -7,7 +7,7 @@ import PrivacySettings from './privacySettings';
 
 import VerizonSelects from './verizonSelects';
 
-// import './style.css'
+ import './style.css'
 
 require('../../../assets/css/main.css');
 require('../../../assets/css/my-profile.css');
@@ -34,15 +34,16 @@ class PrivacyPermissions extends Component {
 
 
    handleEditCancel = (type) =>  {
+    console.log(type);
     switch(type) {
-      case 'privacySettings':
+      case 'privacySettingsBlock':
       this.setState({ showPrivacyEdit: false, privacySettingsEditMode: false, userEditMode: true,  verizonSelectsEditMode: false});
       break;
-      case 'verizonSelects':
+      case 'verizonSelectsBlock':
       this.setState({verizonSelectsEditMode: true, userEditMode: false, privacySettingsEditMode: false})
       break;
       default:
-       this.setState({ showPrivacyEdit:true, userEditMode: true, privacySettingsEditMode: true, verizonSelectsEditMode: false })
+       this.setState({ showPrivacyEdit:true, userEditMode: true, privacySettingsEditMode: true, verizonSelectsEditMode: true })
     }
   }
 
@@ -51,11 +52,11 @@ class PrivacyPermissions extends Component {
     // through an API call.
     event.preventDefault();
      switch(formId) {
-      case 'privacySettings':
+      case 'privacySettingsBlock':
       console.log(`${formId} '------' ${formData}`);
       this.props.actions.setPrivacySettings(formData);
       break;
-      case 'verizonSelects':
+      case 'verizonSelectsBlock':
       console.log(`${formId} '------' ${formData}`);
       this.props.actions.setVerizonSelects(formData);
       break;
@@ -64,12 +65,14 @@ class PrivacyPermissions extends Component {
 
     render () {
 
+       const { privacyDetails } = this.props;
+
         return (
           <div>
        <h1 className="title title--lg">Privacy & Permissions</h1>
        <div className="col-xs-12">
-     
-           <VerizonSelects />
+       <PrivacySettings handleEditCancel={(type) => this.handleEditCancel(type)} {...this.state} />
+       <VerizonSelects {...this.state}/>
        </div>
        </div>
         )

@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 class TileProfile extends Component {
   constructor() {
     super();
-    this.routepage = this.routepage.bind(this);
+   
   }
   componentDidMount() {
 
@@ -16,15 +16,7 @@ class TileProfile extends Component {
     this.props.actions.showDeviceTiles();
 
   }
-  routepage() {
-    this.props.actions.editemail(true)
-    //<Redirect to="/contactandbilling" push />
-    // window.location.href="#/contactandbilling"
-    // let abc={}
-    // this.props.history.push("/contactbilling",abc:{
-    //              asas:"value"
-    //           })
-  }
+  
 
   render() {
 
@@ -34,7 +26,7 @@ class TileProfile extends Component {
 
       <div className="row quicklinks-list">
         {reactGlobals.role.toLocaleLowerCase() == "ao" || reactGlobals.role.toLocaleLowerCase() == "am" ?
-          <div className="col-sm-4" onClick={this.routepage}> <NavLink exact to='/contactbilling'> 
+          <div className="col-sm-4"> <NavLink exact to='/contactbilling'> 
               <img className="icon" src="../assets/images/email.png" alt="Email Icon" />
               <h3 className="a-subhead-md a-caret-right">{profiletiles.changeEmailAddressTitle}</h3>
               <p>{profiletiles.changeEmailAddressInfo} </p> </NavLink>
@@ -45,9 +37,10 @@ class TileProfile extends Component {
           <p>Assign Account Managers to let others access and make changes </p>
         </div> : ''}
         {reactGlobals.role.toLocaleLowerCase() == "ao" || reactGlobals.role.toLocaleLowerCase() == "am" ? <div className="col-sm-4">
+          <NavLink exact to='/security/password'>
           <img className="icon" src="../assets/images/change-password.png" alt="Change Password Icon" />
           <h3 className="a-subhead-md a-caret-right">Change password</h3>
-          <p>Pick a password to use with your Verizon login. </p>
+          <p>Pick a password to use with your Verizon login. </p> </NavLink>
         </div> : ''}
         {reactGlobals.role.toLocaleLowerCase() == "ao" ? <div className="col-sm-4">
           <img className="icon" src="../assets/images/billing-address.png" alt="Billing Address Icon" />

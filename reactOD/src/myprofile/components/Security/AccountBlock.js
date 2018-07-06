@@ -14,11 +14,13 @@ class AccountBlock extends Component {
        isValid: '',
        isCurrentPinValid: '',
       istouched: false,
+      isMismatch: false,
       currentAccountPin: "", newAccountPin: "", confirmAccountPin: "",
       errorMessages: [
         { name: '4 numbers in length', error: false, type: 'minmax'},
-        { name: 'Does not match your SSN', error: false, type: 'onSSN' },
-        { name: 'Is not easy to guess', error: false, type: 'onEasyGuess' }
+        { name: 'Can’t be sequential', error: false, type: 'onSeq' },
+        { name: 'Can’t be repetitive', error: false, type: 'onRepeat' }
+        
       ],
     }
   }
@@ -57,6 +59,13 @@ class AccountBlock extends Component {
   updateUser = (currentUser) => {
     this.setState({userId:currentUser});
   }
+  isSequential(numberStr) {
+    var digitArr = numberStr.split("");
+    return this.isSeq(digitArr) || this.isSeq(digitArr.reverse());
+  }
+  isSeq(numbers) {
+    return  numbers.every((digit,i)=> i===0  ||  digit == parseInt(numbers[i-1])+1);
+  }
   onChangeInput = () => {
     const newPin = this.state.newAccountPin;
     const confirmPin = this.state.confirmAccountPin;
@@ -65,8 +74,9 @@ class AccountBlock extends Component {
     if(newPin.length === 0) {
       this.setState( { requiredError : true,istouched: false, isValid: false,  errorMessages: [
         { name: '4 numbers in length', error: false, type: 'minmax'},
-        { name: 'Does not match your SSN', error: false, type: 'onSSN' },
-        { name: 'is not easy to guess', error: false, type: 'onEasyGuess' }
+        { name: 'Can’t be sequential', error: false, type: 'onSeq' },
+        { name: 'Can’t be repetitive', error: false, type: 'onRepeat' }
+       
       ] });
     } else {
       this.setState( { requiredError: false });
@@ -79,31 +89,37 @@ class AccountBlock extends Component {
         invalidMessage.error = true;
         this.setState({ errorMessages });
       }
-        if (newPin != this.state.userId){
-            let invalidMessage =  errorMessages.find(message => message.type === 'onSSN');
+        if (!this.isSequential(newPin)){ //sequential 1234, 2345, 4321,,,etc
+            let invalidMessage =  errorMessages.find(message => message.type === 'onSeq');
             invalidMessage.error = false;
             this.setState({ errorMessages });
         } else {
-          let invalidMessage =  errorMessages.find(message => message.type === 'onSSN');
+          let invalidMessage =  errorMessages.find(message => message.type === 'onSeq');
             invalidMessage.error = true;
             this.setState({ errorMessages });
         }
-        if (newPin === confirmPin){
-            let invalidMessage =  errorMessages.find(message => message.type === 'onEasyGuess');
+        if (newPin%1111 !=0){ //repetitive 1111,2222,etc
+            let invalidMessage =  errorMessages.find(message => message.type === 'onRepeat');
             invalidMessage.error = false;
             this.setState({ errorMessages });
         } else {
-          let invalidMessage =  errorMessages.find(message => message.type === 'onEasyGuess');
+          let invalidMessage =  errorMessages.find(message => message.type === 'onRepeat');
             invalidMessage.error = true;
             this.setState({ errorMessages });
+        }
+        if (newPin === confirmPin){ //to check match 
+            this.setState({ isMismatch:true });
+        } else {
+          this.setState({ isMismatch:false });
         }
     }
   }
 
   render() {
-    const { controlButtons, errorMessages, userId, requiredError, istouched, currentAccountPin, newAccountPin, confirmAccountPin,isCurrentPinValid } = this.state;
+    const { controlButtons, errorMessages, userId, requiredError, istouched, 
+          currentAccountPin, newAccountPin, confirmAccountPin,isCurrentPinValid ,  isMismatch } = this.state;
     const { accountPinInfo, showAccountPinEdit, accountPinEditMode ,pinSaved } = this.props;
-     const isValid = !errorMessages.find(user => user.error)
+     const isValid = !errorMessages.find(user => user.error) && isMismatch
      const isCPValid= isCurrentPinValid;
     const editableClassName = accountPinEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
@@ -117,7 +133,7 @@ class AccountBlock extends Component {
           
 	<div className="col-xs-12 col-sm-8 description_box__large-container">
 		<div className="row">
-			<div className="col-xs-12 description_box__details">
+			<div className="col-xs-12 col-sm-10 description_box__details">
 				{
 					showAccountPinEdit &&  
 					<div className="description_box__read">
@@ -150,7 +166,7 @@ class AccountBlock extends Component {
 								  value={confirmAccountPin} />
 								</div>
 							</div>
-							<div className="col-xs-12 col-sm-6">
+							<div className="col-xs-12 col-sm-7">
 								<h3>AccountPin Requirements</h3>
 								<ul className="fieldErrors">
 									{
@@ -174,23 +190,23 @@ class AccountBlock extends Component {
 					</div>
 				}
 			</div>
-		    	{
-              showAccountPinEdit && accountPinEditMode && pinSaved && <span className="section_saved text-success fa fa-check-circle"> Saved </span>
-            }
+		    
 			{ 
         !showAccountPinEdit && accountPinEditMode && 
-             <div className="description_box__edit description_box__edit_section">
+             <div className="col-sm-2 description_box__edit description_box__edit_section">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 			</div>
             }
 			
             {
 			showAccountPinEdit &&  
-			<div className="description_box__edit description_box__edit_section">
+			<div className="col-sm-2 description_box__edit description_box__edit_section">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('accountPinblock')} role="button">Edit</a>
 			</div>
 			}
-			
+				{
+              showAccountPinEdit && accountPinEditMode && pinSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
+            }
 			{
                !showAccountPinEdit && accountPinEditMode && 
 			   <div className="footer col-xs-12">

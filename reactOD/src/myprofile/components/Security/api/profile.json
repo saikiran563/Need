@@ -5,7 +5,7 @@
      "userIdInfo": {
         "id": "test123",
         "title": "User ID",
-        "desc": "Used to log in on the web and the MyVerizon app.",
+        "desc": "Select the username you'd like to use for your Verizon login.",
         "read": "userId"
       },
       "passwordInfo":  {

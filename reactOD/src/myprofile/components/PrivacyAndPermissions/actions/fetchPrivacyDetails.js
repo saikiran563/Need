@@ -2,7 +2,6 @@ import mockProfileAPI from '../api'
 import axios from 'axios'
 export const FETCH_PRIVACY_AND_PERMISSIONS_BEGIN = 'privacies/FETCH_PRIVACY_AND_PERMISSIONS_BEGIN'
 export const FETCH_PRIVACY_AND_PERMISSIONS_SUCCESS = 'privacies/FETCH_PRIVACY_AND_PERMISSIONS_SUCCESS'
-// export const GET_USER_EMAIL_INFO = 'contactsAndBilling/GET_USER_EMAIL_INFO'
 
 const customHeaders = {
  "Accept": "application/json",

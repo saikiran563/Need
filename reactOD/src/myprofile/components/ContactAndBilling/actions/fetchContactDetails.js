@@ -2,7 +2,6 @@ import mockProfileAPI from '../api'
 import axios from 'axios'
 export const FETCH_CONTACT_AND_BILLING_BEGIN = 'contacts/FETCH_CONTACT_AND_BILLING_BEGIN'
 export const FETCH_CONTACT_AND_BILLING_SUCCESS = 'contacts/FETCH_CONTACT_AND_BILLING_SUCCESS'
-export const GET_USER_EMAIL_INFO = 'contactsAndBilling/GET_USER_EMAIL_INFO'
 
 const customHeaders = {
  "Accept": "application/json",
