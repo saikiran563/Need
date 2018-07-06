@@ -12,7 +12,7 @@ import {
 } from '../actions/setModal'
 
 const initialState = {
-  showModal : false,
+  showpopup : false,
   modalContent : {
       header: '',
       list: []

@@ -60,9 +60,9 @@ let leftnav = this.props.leftNavBar;
                         <li className=" ">
                             <a href="/my-profile-desktop-contact.html?section=emailAddressCB&page=cb">Email address</a>
                         </li>
-                  
-                  
-                
+
+
+
                         { amRoles && <li >
                             <a href="/my-profile-desktop-contact.html?section=phoneCB&page=cb">Primary phone</a>
                         </li>}
@@ -75,7 +75,7 @@ let leftnav = this.props.leftNavBar;
 
 
                         <li className="page page__title ">
-                            <NavLink exact to='/#'>Manage account</NavLink>
+                            <NavLink exact to='/manage'>Manage account</NavLink>
 
 
                         </li>
@@ -104,9 +104,6 @@ let leftnav = this.props.leftNavBar;
             </div>
 
         )
-
-
-
     }
 }
 

@@ -29,20 +29,19 @@ class QuickLinks extends Component {
   render() {
     let profileobj = this.props.deviceTiles;
     let showpopup=this.props.state;
-    
     return (
       <React.Fragment>
-         <Popup showpop={showpopup.myprofile.showpopup}/>  
+         <Popup showpop={showpopup.myprofile.showpopup}/>
           <HeaderContent />
-        
+
             <TileProfile/>
-         
+
           {/* { profileobj.map(item => <TileProfile title={item.overline}/>)} */}
           {/*<Devices profile={this.props.profile} /> */}
           {/*<AccountCheckup profile={this.props.profile} />*/}
-       
-       
-      
+
+
+
       </React.Fragment >
     )
   }

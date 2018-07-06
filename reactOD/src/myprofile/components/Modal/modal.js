@@ -27,7 +27,7 @@ class VZModal extends Component {
   }
 
   render() {
-
+    console.log(this);
     return (
       <div>
         <p>Click to get the full Modal experience!</p>
@@ -42,7 +42,7 @@ class VZModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <h4>Text in a modal</h4>
-            
+
 
             <hr />
 

@@ -16,14 +16,14 @@ closepop(){
 }
 
     render() {
-    
+
         return (
 
-        
+
          <div id="overlayContainer" className={this.props.state?'visible':'hidden'}>
             <div id="overlayBackground"></div>
             <div id="overlayFrame" className="animated fadeIn a-fast">
-              <span className="close-wrapper"><a id="overlayClose" onClick={this.closepop} href="#" role="button"><span className="a-sr a-sr-fix" aria-hidden="false">Close</span><span className="a-icon-overlay-close" aria-hidden="true"></span></a></span>
+              <span className="close-wrapper"><a id="overlayClose" onClick={this.closepop} role="button"><span className="a-sr a-sr-fix" aria-hidden="false">Close</span><span className="a-icon-overlay-close" aria-hidden="true"></span></a></span>
               <div>
                 <div id="security-modal" className="aMyProfile aMyProfile__modal overlay-content">
 
@@ -31,9 +31,9 @@ closepop(){
                 </div>
                 </div>
                 </div>
-                
 
-         
+
+
 
          </div>
   )
@@ -46,7 +46,6 @@ const mapStateToProps = state => {
   return {
     isFetching: state.myprofile.isFetching,
     state:state.myprofile.showpopup
- 
   }
 }
 
