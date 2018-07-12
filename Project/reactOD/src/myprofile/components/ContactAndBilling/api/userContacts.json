@@ -1,0 +1,41 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+     "userEmailInfo": {
+        "id": "1",
+        "title": "Email Address",
+        "desc": "Choose the email address that we should use to contact you.",
+        "read": "Loremipsum@domain.com",
+        "editable": false,
+        "nonEditable": true,
+        "disabled": false
+      },
+      "userPrimaryPhoneInfo": {
+        "id": "2",
+        "title": "Primary Phone",
+        "desc": " Provide the phone numbers where we can best reach you. ",
+        "read": "",
+        "readPrimaryPhone": "000.000.0000",
+        "readAlternatePhone": "000.000.0000",
+        "editable": false,
+        "nonEditable": true,
+        "disabled": false
+      },
+      "userBillingInfo": {
+        "id": "3",
+        "title": "Billing Address",
+        "desc": "Let us know where to send your bill.",
+        "read": {
+          "address" : "0000 Street Name DR",
+          "apartment": "House No 42",
+          "city": "New York",
+          "state": "NY",
+          "zip": "00000-0000"
+        },
+        "editable": false,
+        "nonEditable": true,
+        "disabled": false
+      }
+  }
+}

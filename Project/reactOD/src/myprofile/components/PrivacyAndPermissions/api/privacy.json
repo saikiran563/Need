@@ -1,0 +1,21 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+     "privacySettingsInfo": {
+        "id": "1",
+        "title": "Privacy settings",
+        "desc": "Specify the kind of information Verizon can collect from you.",
+        "read": "Some information is being shared across 3 lines.",
+        "editable": false,
+        "nonEditable": true,
+        "disabled": false,
+        "phonenumbers":[1,2,3]
+      },
+      "verizonSelectsInfo":  {
+         "id": "2",
+        "title": "Verizon Selects",
+        "desc": "Participate in Verizon Selects and earn Smart Rewards."
+      }
+  }
+}

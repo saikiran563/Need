@@ -1,0 +1,22 @@
+.vz-odt--header__section {
+    font-family: "NeueHaasGroteskDisplayBold", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    height: 3.5rem;
+    display:flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    max-width: 79.5rem;
+    margin: 0rem auto 2rem auto;
+    outline: none;
+}
+
+.vz-odt--header__section_highlight {
+    width: 50px;
+    margin-top: 1.25rem;
+    border-bottom-color: rgba(213, 43, 30, 1);
+    border-bottom-style: solid;
+    border-width: 0 0 5px 0;
+}
+
+
+

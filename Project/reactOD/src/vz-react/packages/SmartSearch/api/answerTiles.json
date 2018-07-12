@@ -1,0 +1,28 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+    "answerTiles": [
+      {
+        "overline": "Payment",
+        "headline": "You can pay your bill of $251.53 here.",
+        "link": "https://qa6billpay.verizonwireless.com/vzw/accountholder/payment/payment-paybill-overview.action"
+      },
+      {
+        "overline": "Autopay",
+        "headline": "Setup Autopay to avoid late fee.",
+        "link": "https://qa6billpay.verizonwireless.com/vzw/accountholder/payment/autoPay-setup.action"
+      },
+      {
+        "overline": "FAQ",
+        "headline": "Check all Faqs for Pay bill here.",
+        "link": "'https://testman.verizonwireless.com/support/billing-and-payments"
+      },
+      {
+        "overline": "Support",
+        "headline": "Have a question?Let's chat.",
+        "link": "https://autochatva.verizonwireless.com/cv/cbav/#/virtualassistant?source=contactus&entry=pay%20my%20bill&category="
+      }
+    ]
+  }
+}

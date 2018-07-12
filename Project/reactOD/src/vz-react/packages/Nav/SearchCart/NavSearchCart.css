@@ -1,0 +1,63 @@
+.vz-odt--nav--searchcart__container {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.vz-odt--nav--searchcart--search_input {
+    font-family: "NeueHaasGroteskText", Arial, Helvetica, sans-serif;
+    font-size: .875rem;
+    border-bottom-color: #cccccc;
+    border-bottom-style: solid;
+    border-width: 0 0 1px 0; 
+    display: none;
+}
+
+.vz-odt--nav--searchcart--search_input::-webkit-input-placeholder {
+    color: #666666;
+}
+
+.vz-odt--nav--searchcart--search_input::-moz-placeholder {
+    color: #666666;
+}
+
+.vz-odt--nav--searchcart--search_input:focus {
+    outline: none
+}
+
+.vz-odt--nav--searchcart--search__magnifier {
+    margin-left: -.875rem;
+    display: none
+}
+
+.vz-odt--nav--searchcart--search__magnifier:focus {
+    outline: none
+}
+
+.vz-odt--nav--searchcart--search__magnifier_icon {
+    width: .875rem;
+    height: .875rem;
+}
+
+.vz-odt--nav--searchcart--search_magnifier_icon:hover {
+    fill: #999999;
+}
+
+.vz-odt--nav--searchcart--cart {
+    margin-left: .875rem;
+    width: .875rem;
+    height: .875rem;
+}
+
+@media (min-width: 780px) {
+    .vz-odt--nav--searchcart--search__magnifier {
+        display: block;
+    }
+}
+
+@media (min-width: 1024px) {
+    .vz-odt--nav--searchcart--search_input {
+        display: block;
+    }
+
+}
