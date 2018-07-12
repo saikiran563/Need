@@ -19,7 +19,9 @@ class Manage extends Component {
     this.state= {
       showManagerEdit: true,
       showGreetingEdit: true,
-      managers: []
+      managers: [],
+      addedManager: [],
+      revokedManager: []
       //showTransferOfServiceEdit: true,
     }
   }
@@ -71,17 +73,19 @@ handleEditCancel = (type) =>  {
          })
        })
        // Make a API call to generate Unique Id to the the Manager
+       const id = Math.round((new Date()).getTime() / 1000) // A unique id should generated each time a manager is added.
+       let addedManager = {
+         type: "none",
+         firstName: formData.firstName,
+         lastName: formData.lastName,
+         phoneNumber: formData.phoneNumber,
+         emailId: formData.emailId,
+         id: id
+     }
        this.setState({
-         managers: [...newManagers,{
-           type: "none",
-           firstName: formData.firstName,
-           lastName:formData.lastName,
-           isLastlyAdded: true,
-           phoneNumber: formData.phoneNumber,
-           emailId: formData.emailId,
-           id: Math.round((new Date()).getTime() / 1000) // A unique id should generated each time a manager is added.
-       }]}
-     )
+      managers: [...newManagers,addedManager],
+       addedManager
+     })
        break;
        case 'greetingblock':
        //
@@ -99,14 +103,28 @@ handleEditCancel = (type) =>  {
   handleRemoveManager(handleRemoveManager){
     let newManagers = []
      const { managers } = this.state
+     let revokedManager = []
      managers.forEach((eachManager)=>{
        if(handleRemoveManager.id != eachManager.id){
          newManagers.push(eachManager)
+       }else {
+         revokedManager = eachManager
        }
      })
      this.setState({
-       managers: newManagers
+       managers: newManagers,
+       revokedManager
      })
+  }
+
+  handleUndoRevoke(){
+      this.setState({
+        managers: [...this.state.managers,this.state.revokedManager]
+      },()=>{
+        this.setState({
+          revokedManager: {}
+        })
+      })
   }
 
   render() {
@@ -121,6 +139,7 @@ handleEditCancel = (type) =>  {
                   handleSave={(type, data, e) => this.handleSave(type, data, e)}
                   {...this.state}
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
+                  handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
                 />
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <TransferOfService/>
@@ -144,8 +163,7 @@ const mapStateToProps = state => {
           firstName: "Isacc",
           lastName:"Newton",
           phoneNumber: "(909)-505-603",
-          emailId: "Isacc@Newton.com",
-          managerId: 1
+          emailId: "Isacc@Newton.com"
         },
         {
           type: "none",
@@ -153,8 +171,7 @@ const mapStateToProps = state => {
           firstName: "Benjamin",
           lastName:"Franklin",
           phoneNumber: "(909)-505-603",
-          emailId: "name@domain.com",
-          managerId: 2
+          emailId: "name@domain.com"
         }
       ]
     }

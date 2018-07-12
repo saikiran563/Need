@@ -97,7 +97,7 @@ getinitialState(){
                          <p>{eachManager.emailId}</p>
                      </div>
                        {
-                         eachManager.isLastlyAdded &&
+                         this.props.addedManager.id  === eachManager.id &&
                          <span className="text-success fa fa-check-circle"> Added </span>
                        }
                 </div>
@@ -149,9 +149,35 @@ getinitialState(){
               )
             })
           }
+          {
+            this.props.revokedManager.id &&
+            <div className="row owner-info-second">
+                <div className="row col-xs-12 col-sm-11 undo-message-cont">
+                  <span className="text-success fa fa-check-circle"></span>
+                  <p className='undo-message'>Account Manager Firstname Lastname removed</p>
+                </div>
+                <div className="row col-xs-12 col-sm-1">
+                    <a className='undo' role="button" onClick={() => this.props.handleUndoRevoke()}>Undo</a>
+                </div>
+              </div>
+          }
         </div>
     )
   }
+
+  // <div className='undo-cont' style={{display:'inline-flex',marginLeft:'38%'}}>
+  //     <span className="text-success fa fa-check-circle" style={{paddingTop:'18px'}}></span>
+  //     <p style={{paddingLeft:'2%',paddingTop:'18px'}}>Account Manager Firstname Lastname removed</p>
+  //     <a className='undo' role="button" onClick={() => this.props.handleUndoRevoke()}>Undo</a>
+  // </div>
+  // <div className="row col-xs-12 col-sm-11">
+  //     <h4 tabIndex="0">{ eachManager.firstName } { eachManager.lastName }</h4>
+  //     <p>{eachManager.phoneNumber}</p>
+  //     <p>{eachManager.emailId}</p>
+  // </div>
+  // <div className="row col-xs-12 col-sm-1">
+  //      <a className="btn btn-anchor"  onClick={() => this.showConfirmPopUp(eachManager)} role="button">Remove</a>
+  // </div>
 
   handleSave = (e)=>{
     this.props.handleSave('accountManagerBlock', this.state, e)

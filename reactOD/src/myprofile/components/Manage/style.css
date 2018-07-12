@@ -71,6 +71,13 @@
      padding-top: 3%;
 }
 
+.undo-message-cont{
+  display:inline-flex;
+}
+
+.undo-message {
+  padding-left: 1%;
+}
 
 select {
 		width: 40% !important;
