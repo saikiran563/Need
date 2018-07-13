@@ -26,10 +26,6 @@ class Manage extends Component {
     }
   }
 
- //  openPopup(){
- //   this.props.actions.show_popup("manage"); /* calling to action */
- // }
-
   componentDidMount() {
     this.setState({
       managers: this.props.manage.list
@@ -64,7 +60,7 @@ handleEditCancel = (type) =>  {
        // Remove existing isLastlyAdded key if multiple managers are added
        managers.map((eachManager)=>{
          newManagers.push({
-           type: "none",
+           type: eachManager.type,
            firstName: eachManager.firstName,
            lastName:eachManager.lastName,
            phoneNumber: eachManager.phoneNumber,
@@ -158,7 +154,7 @@ const mapStateToProps = state => {
       show: false,
       list: [
         {
-          type:"accontOwner",
+          type:"accountOwner",
           id: 1,
           firstName: "Isacc",
           lastName:"Newton",

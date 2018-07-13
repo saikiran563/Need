@@ -23,11 +23,13 @@ class GreetingBlock extends Component {
   }
 
   handleOnChange = e => {
-    this.setState({ user: e.target.value }, () => this.onChangeInput());
+    if(e.target.value.length <= 10){
+          this.setState({ greetingName: e.target.value }, () => this.onChangeInput());
+    }
   };
 
   onChangeInput = () => {
-    const val = this.state.user;
+    const val = this.state.greetingName;
     const useridInvalidMessages = JSON.parse(
       JSON.stringify(this.state.useridInvalidMessages)
     );
@@ -110,6 +112,7 @@ class GreetingBlock extends Component {
                     handleOnChange={this.handleOnChange}
                     placeholder="Name"
                     name="greeting"
+                    value={this.state.greetingName}
                     valid={requiredError}
                   />
                 </div>
@@ -142,7 +145,7 @@ class GreetingBlock extends Component {
                 </div>
               </div>
             )}
-            
+
             {showGreetingEdit && (
               <div className="description_box__edit description_box__edit_section">
                 <a

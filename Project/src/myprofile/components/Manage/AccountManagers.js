@@ -20,7 +20,8 @@ getinitialState(){
       phoneNumber: "",
       emailId:"",
       showPopup: false,
-      managerToRemove: {}
+      managerToRemove: {},
+      isEditEmailOnAccountMemberSelected: false
     }
 }
 
@@ -121,7 +122,7 @@ getinitialState(){
         <div>
           {
             managers.map((eachManager)=>{
-              if(eachManager.type === 'accontOwner'){
+              if(eachManager.type === 'accountOwner'){
                 return(
                   <div>
                     <div className="row">
@@ -179,9 +180,160 @@ getinitialState(){
   //      <a className="btn btn-anchor"  onClick={() => this.showConfirmPopUp(eachManager)} role="button">Remove</a>
   // </div>
 
+
+  handleEditNewMemberEmail(){
+    this.setState({
+      isEditEmailOnAccountMemberSelected: true
+    })
+  }
+
+  handleSaveNewMemberEmail(){
+    this.setState({
+      isEditEmailOnAccountMemberSelected: false
+    })
+  }
+
   handleSave = (e)=>{
     this.props.handleSave('accountManagerBlock', this.state, e)
     this.setState(this.getinitialState())
+  }
+
+  getManagerAddView( managers,firstName, lastName, phoneNumber, emailId){
+    if(reactGlobals.role.toLocaleLowerCase()=="ao"){
+    return(
+      <div className="row add-manager-cont">
+          <h4 tabIndex="0">Add Account Managers</h4>
+          <a className="question"> What can an Account Manager do ?</a>
+          <p className="answer">
+            An Account Manager does NOT have to have a mobile number on your
+            account. By providing a name only, they will be able to manage all lines
+             on the account in retails stores and by calling Customer Service.
+          </p>
+          <div>
+           {
+             managers.length < 4 ?
+              <div>
+                <div>
+                  <div className="add-manager-fields">
+                     <div className="manager-fn-cont ">
+                        <label htmlFor="userId">First Name</label>
+                        <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder="Name" name="firstName" value={firstName}/>
+                     </div>
+                     <div className="manager-ln-cont ">
+                         <label htmlFor="userId">Last Name</label>
+                         <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder="Name" name="lastName"value={lastName}/>
+                     </div>
+                 </div>
+                </div>
+                <div>
+                     <p>If you assign a mobile number and email address, the Account
+                         Manager will be given My Verizon Online access to your account.</p>
+                 </div>
+                 <div className="contact-cont">
+                     <div>
+                       <h4>Mobile Number</h4>
+                       <select>
+                           <option>No Line Assigned</option>
+                       </select>
+                     </div>
+                     <div>
+                         <h4>Email Address</h4>
+                         <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder="name@domain.com" name="email" value={emailId}/>
+                     </div>
+                 </div>
+                 <div className="footer col-xs-12">
+                   <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel("cancelblock")}>Cancel</a>
+                   <button className="btn btn--round"  onClick={(e) =>this.handleSave(e)}>Add Manager</button>
+                 </div>
+               </div> :
+               <div className='warning'>
+                    <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
+                </div>
+             }
+            </div>
+          </div>
+        ) }
+    return(
+      <div className="row add-manager-cont">
+          <h4 tabIndex="0">Request Account Manager Access</h4>
+          <a className="question"> What can an Account Manager do ?</a>
+          <p className="answer">
+            Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.
+          </p>
+          <div>
+           {
+             managers.length < 4 ?
+              <div>
+                <div>
+                  <div className="add-manager-fields">
+                     <div className="manager-fn-cont ">
+                        <label htmlFor="userId">First Name</label>
+                        <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder="Name" name="firstName" value={firstName}/>
+                     </div>
+                     <div className="manager-ln-cont ">
+                         <label htmlFor="userId">Last Name</label>
+                         <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder="Name" name="lastName"value={lastName}/>
+                     </div>
+                 </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-3'>
+                        <label>Phone Number</label>
+                    </div>
+                    <div className='p-t-7 col-sm-3'>
+                        <p>989.235.3666</p>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-sm-3'>
+                        <label>Email Address</label>
+                    </div>
+                    <div className='p-t-7 col-sm-3'>
+                      {
+                        this.state.isEditEmailOnAccountMemberSelected  ?
+                        <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder="name@domain.com" name="email" value={emailId}/> :
+                        <p>samurai.jack@verizon.com</p>
+                      }
+                    </div>
+                    <div className='col-sm-1'>
+                      {
+                        this.state.isEditEmailOnAccountMemberSelected  ?
+                        <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
+                        <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
+                      }
+                    </div>
+                    <div className="footer col-xs-12">
+                          <a className="btn" role="button" onClick={() => this.props.handleEditCancel("cancelblock")}>Cancel</a>
+                          <button className="btn btn--round"  onClick={(e) =>{}}>Send Request</button>
+                    </div>
+                    {/*
+                      this.state.isEditEmailOnAccountMemberSelected ?
+                      <div className='row'>
+                        <div className='col-sm-6'>
+                          <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder="name@domain.com" name="email" value={emailId}/> :
+                        </div>
+                        <div className='col-sm-6'>
+                          <p>samurai.jack@verizon.com</p> <a>edit </a>
+                        </div>
+                      </div>   :
+                      <div className='row col-sm-6'>
+                        <div className='col-sm-6'>
+                          <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder="name@domain.com" name="email" value={emailId}/> :
+                        </div>
+                        <div className='col-sm-6'>
+                          <p>samurai.jack@verizon.com</p> <a>edit </a>
+                        </div>
+                      </div>
+                    */}
+                </div>
+               </div> :
+               <div className='warning'>
+                    <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
+                </div>
+             }
+            </div>
+          </div>
+        )
   }
 
   render() {
@@ -202,62 +354,13 @@ getinitialState(){
             <div className="col-xs-12 col-sm-8 description_box__large-container">
               {
                 showManagerEdit && this.getManagersView()
-               }
-               {
+              }
+              {
                  !showManagerEdit &&
                   <div>
-                    {this.getManagersEditView()}
-                     <div className="row add-manager-cont">
-                         <h4 tabIndex="0">Add Account Managers</h4>
-                         <a className="question"> What can an Account Manager do ?</a>
-                         <p className="answer">
-                           An Account Manager does NOT have to have a mobile number on your
-                           account. By providing a name only, they will be able to manage all lines
-                            on the account in retails stores and by calling Customer Service.
-                         </p>
-                <div>
-                    { managers.length < 4 ?
-                       <div>
-                         <div>
-                           <div className="add-manager-fields">
-                              <div className="manager-fn-cont ">
-                                 <label htmlFor="userId">First Name</label>
-                                 <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder="Name" name="firstName" value={firstName}/>
-                              </div>
-                              <div className="manager-ln-cont ">
-                                  <label htmlFor="userId">Last Name</label>
-                                  <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder="Name" name="lastName"value={lastName}/>
-                              </div>
-                          </div>
-                         </div>
-                         <div>
-                              <p>If you assign a mobile number and email address, the Account
-                                  Manager will be given My Verizon Online access to your account.</p>
-                          </div>
-                          <div className="contact-cont">
-                              <div>
-                                <h4>Mobile Number</h4>
-                                <select>
-                                    <option>No Line Assigned</option>
-                                </select>
-                              </div>
-                              <div>
-                                  <h4>Email Address</h4>
-                                  <InputField type="text" handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder="name@domain.com" name="email" value={emailId}/>
-                              </div>
-                          </div>
-                          <div className="footer col-xs-12">
-                            <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel("cancelblock")}>Cancel</a>
-                            <button className="btn btn--round"  onClick={(e) =>this.handleSave(e)}>Add Manager</button>
-                          </div>
-                        </div> :
-                        <div className='warning'>
-                             <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
-                         </div>
-                      }
-                     </div>
-                </div>
-                 </div>
+                      {this.getManagersEditView()}
+                      {this.getManagerAddView(managers,firstName, lastName, phoneNumber, emailId)}
+                  </div>
                 }
                 {
                   showManagerEdit &&
