@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:inline="text">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=5"/>
+      <title>My Profile</title>
+
+      <link href="https://scache.vzw.com/ui-one-digital/gn/build/gnav.css" rel="stylesheet">
+
+           <style>
+    #vzw-gf .footer-container, #vzw-gn .sub-container-gnav, #vzw-gn .sub-global-nav-lower {
+          max-width: 79.5rem!important;
+          width: 100%;
+     }
+      #vzw-gf {
+          opacity: 1\9;
+          transition: opacity 0.5s;
+          -webkit-transition: opacity 0.5s;
+      }
+      #app{
+        margin-right: auto;
+        margin-left: auto;
+      }
+      @media (min-width: 1200px){
+        #app {
+            width: 79.5rem;
+        }
+      }
+    </style>
+      <script th:inline="javascript">
+          var reactGlobals = reactGlobals || {};
+          reactGlobals.staticUrl = 'http://localhost:3002';
+          reactGlobals.greetingName = 'Lebowski';
+          reactGlobals.role = 'AO';
+          reactGlobals.rotatingText = "['How can we help you?','You can start chatting now.','Ask your question here.','Enter your search here.']";
+          reactGlobals.rotatingTextArr = [];
+          if(reactGlobals.rotatingText){
+            try{
+              reactGlobals.rotatingTextArr = JSON.parse(reactGlobals.rotatingText);
+            }catch(err){
+              reactGlobals.rotatingTextArr = ['How can we help you?','You can start chatting now.','Ask your question here.','Enter your search here.'];
+            }
+          }
+    </script>
+   </head>
+
+
+   <body id="body">
+      <div id="vzw-gn"></div>
+      <div id="app"></div>
+      <div id="vzw-gf"></div>
+
+      <script type="text/javascript" src="https://scache.vzw.com/ui-one-digital/gn/build/gnav.js"></script>
+
+
+   </body>
+</html>
