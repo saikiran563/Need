@@ -59,14 +59,23 @@ class TransferofService extends Component {
     return(
       <div className='row description_box'>
         <div className="clearfix"></div>
-        <div className="body">
+        <div className="body row">
           <div className="col-xs-12 col-sm-4 description_box__header">
             <h4 tabIndex="0">Transfer of service </h4>
             <p>[Short Description of what it is and how it's used.] </p>
           </div>
-          <div>
-           <p>Transfer of Service Lorem Ipsum</p>
-         </div>
+          <div className="col-xs-12 col-sm-4">
+            <p>Transfer of Service Lorem Ipsum</p>
+          </div>
+          <div className="col-xs-12 col-sm-4 transferofService-cont">
+            <a
+              className="btn btn--round-invert"
+              role="button"
+              href='https://www.verizonwireless.com/UFDRender/Flows/RelinquishingService'
+            >
+              Transfer of Service
+            </a>
+          </div>
         </div>
       </div>
     )

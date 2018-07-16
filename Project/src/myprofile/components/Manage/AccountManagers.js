@@ -79,7 +79,7 @@ getinitialState(){
         <div>
           {
             managers.map((eachManager)=>{
-              if(eachManager.type === 'accontOwner'){
+              if(eachManager.type === 'accountOwner'){
                 return(
                   <div>
                      <div className="row owner-info">
