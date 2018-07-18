@@ -101,7 +101,7 @@ handleEditCancel = (type) =>  {
       switch(formId) {
        case 'accountManagerBlock':
 
-       const { managers } = this.props
+       const { managers } = this.state
        let newManagers = []
        // Remove existing isLastlyAdded key if multiple managers are added
        managers.map((eachManager)=>{
