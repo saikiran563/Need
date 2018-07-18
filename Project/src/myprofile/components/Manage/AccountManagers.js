@@ -361,13 +361,13 @@ getinitialState(){
                       {this.getManagersEditView()}
                       {this.getManagerAddView(managers,firstName, lastName, phoneNumber, emailId)}
                   </div>
-                }
-                {
+              }
+              {
                   showManagerEdit &&
                   <div className="description_box__edit description_box__edit_section">
-                    <a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel("manageblock")} role="button">Edit</a>
+                    <a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel("accountManagerblock")} role="button">Edit</a>
                   </div>
-                }
+              }
             </div>
           </div>
         </div>

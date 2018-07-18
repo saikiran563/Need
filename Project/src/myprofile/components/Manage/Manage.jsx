@@ -45,10 +45,12 @@ class Manage extends Component {
   componentDidMount() {
     //this.props.actions.fetchSecurity();
     //this.props.actions.getUserInfo();
-    //debugger
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
+      this.setState({
+        managers: this.props.manage.list
+      })
   }
 
   // componentDidMount() {
@@ -65,7 +67,7 @@ handleEditCancel = (type) =>  {
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
         });
-        //this.props.history.push('/manage/accountManager');
+        this.props.history.push('/manage/accountManager');
       break;
 
       case 'greetingblock':
@@ -99,7 +101,7 @@ handleEditCancel = (type) =>  {
       switch(formId) {
        case 'accountManagerBlock':
 
-       const { managers } = this.state
+       const { managers } = this.props
        let newManagers = []
        // Remove existing isLastlyAdded key if multiple managers are added
        managers.map((eachManager)=>{
