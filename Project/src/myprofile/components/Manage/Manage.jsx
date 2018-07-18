@@ -18,33 +18,77 @@ class Manage extends Component {
     super(props)
     this.state= {
       showManagerEdit: true,
+      managerEditMode: true,
       showGreetingEdit: true,
+      greetingEditMode: true,
+      showTransferOfServiceEdit: true,
+      transferOfServiceEditMode: true,
+
       managers: [],
       addedManager: [],
       revokedManager: []
-      //showTransferOfServiceEdit: true,
+
+      // //showTransferOfServiceEdit: true,
+      // showUserEdit: true,
+      // showPasswordEdit: true,
+      // userEditMode: true,
+      // passwordEditMode: true,
+      // showAccountPinEdit: true,
+      // accountPinEditMode:true,
+      // currentUser:"",
+      // userSaved:false,
+      // pwdSaved:false,
+      // pinSaved:false
     }
   }
 
   componentDidMount() {
-    this.setState({
-      managers: this.props.manage.list
-    })
+    //this.props.actions.fetchSecurity();
+    //this.props.actions.getUserInfo();
+    //debugger
+    const URL_MAP = this.props.match.url.split("/");
+    const type = URL_MAP[URL_MAP.length-1];
+    type?this.handleEditCancel(type+"block"):"";
   }
+
+  // componentDidMount() {
+  //
+  //   this.setState({
+  //     managers: this.props.manage.list
+  //   })
+  // }
 
 handleEditCancel = (type) =>  {
     switch(type) {
-      case 'manageblock':
-      this.setState({ showManagerEdit: false, showGreetingEdit : true , showTransferOfServiceEdit: true});
+      case 'accountManagerblock':
+        this.setState({
+          showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
+          managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
+        });
+        //this.props.history.push('/manage/accountManager');
       break;
+
       case 'greetingblock':
-      this.setState({ showManagerEdit: true, showGreetingEdit : false, showTransferOfServiceEdit: true });
+        this.setState({
+          showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
+          managerEditMode: false,greetingEditMode: true,transferOfServiceEditMode:false
+         });
+        this.props.history.push('/manage/greeting');
       break;
-      /*case 'TransferOfService':
-      this.setState({ showManagerEdit: true, showGreetingEdit : true, showTransferOfServiceEdit : false});
-      break;*/
+
+      case 'transferofServiceblock':
+        this.setState({
+          showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
+          managerEditMode: false,greetingEditMode: false,transferOfServiceEditMode:true
+         });
+          this.props.history.push('/manage/transferofservice');
+      break;
+
       default:
-      this.setState({ showManagerEdit: true, showGreetingEdit : true, showTransferOfServiceEdit: true})
+      this.setState({
+          showManagerEdit: true, showGreetingEdit : true , showTransferOfServiceEdit: true,
+          managerEditMode: true,greetingEditMode: true,transferOfServiceEditMode:true
+         });
     }
   }
 
@@ -138,7 +182,7 @@ handleEditCancel = (type) =>  {
                   handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
                 />
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
-              <TransferOfService/>
+              <TransferOfService {...this.state}/>
           </div>
       </div>
     )

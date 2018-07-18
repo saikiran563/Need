@@ -33,7 +33,7 @@ class Security extends Component {
 
   componentDidMount() {
     this.props.actions.fetchSecurity();
-    this.props.actions.getUserInfo();    
+    this.props.actions.getUserInfo();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
@@ -42,11 +42,11 @@ class Security extends Component {
   handleEditCancel = (type) =>  {
     switch(type) {
       case 'useridblock':
-      this.setState({ showUserEdit: false, showPasswordEdit : false,userSaved:false, 
+      this.setState({ showUserEdit: false, showPasswordEdit : false,userSaved:false,
                        userEditMode: true, passwordEditMode: false ,pwdSaved:false,
                        showAccountPinEdit:false, accountPinEditMode: false,pinSaved:false
                        });
-                       this.props.history.push('/security/userid');
+                       this.props.history.push('/manage/accountManager');
       break;
       case 'passwordblock':
       this.setState({ showUserEdit: false, showPasswordEdit : false, userSaved:false,
@@ -68,22 +68,22 @@ class Security extends Component {
                       userEditMode: true, passwordEditMode: true ,pwdSaved:false,
                       showAccountPinEdit:true, accountPinEditMode: true,pinSaved:false
                       });
-                      
+
     }
   }
 
    handleSave = (formId, formData, event) => {
-    
+
     // Action Dispatch will take place here to save the new userid to database
     // through an API call.
     event.preventDefault();
      switch(formId) {
       case 'userForm':
-      
+
       this.refs.pwdBlock.updateUser(formData);
       this.props.actions.setUserId(formData)
       //this.setState({currentUser: formData,showUserEdit: true, userEditMode: true, userSaved:true});
-      /*this.setState({ currentUser: formData, showUserEdit: true, showPasswordEdit : true,userSaved:true, 
+      /*this.setState({ currentUser: formData, showUserEdit: true, showPasswordEdit : true,userSaved:true,
                        userEditMode: true, passwordEditMode: false ,pwdSaved:false,
                        showAccountPinEdit:false, accountPinEditMode: false,pinSaved:false
                        });*/
@@ -91,7 +91,7 @@ class Security extends Component {
       break;
       case 'pwdForm':
       //this.setState({currentUser: formData,showPasswordEdit: true, passwordEditMode: true, pwdSaved:true});
-      /*this.setState({ currentUser: formData, showUserEdit: false, showPasswordEdit : false,userSaved:false, 
+      /*this.setState({ currentUser: formData, showUserEdit: false, showPasswordEdit : false,userSaved:false,
                        userEditMode: true, passwordEditMode: false ,pwdSaved:false,
                        showAccountPinEdit:false, accountPinEditMode: false,pinSaved:false
                        });*/
@@ -102,28 +102,28 @@ class Security extends Component {
      this.setState({pinSaved:true});
       break;
     }
-     this.setState({ showUserEdit: true, showPasswordEdit : true, 
+     this.setState({ showUserEdit: true, showPasswordEdit : true,
                       userEditMode: true, passwordEditMode: true ,
                       showAccountPinEdit:true, accountPinEditMode: true
                       });
   }
 
   render() {
-    
+
     const { securities ,updateState, match } = this.props;
-    
-    
+
+
     return (
   <div>
           <h1 className="title title--lg">Security</h1>
             {
               securities && <div className="col-xs-12">
-                <UserBlock id= "userId" userInfo={securities.userIdInfo} userBlock={updateState} handleEditCancel={(type) => this.handleEditCancel(type)} 
+                <UserBlock id= "userId" userInfo={securities.userIdInfo} userBlock={updateState} handleEditCancel={(type) => this.handleEditCancel(type)}
                             handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
-                <PasswordBlock ref="pwdBlock" passwordInfo={securities.passwordInfo} handleEditCancel={(type) => this.handleEditCancel(type)} {...this.state} 
+                <PasswordBlock ref="pwdBlock" passwordInfo={securities.passwordInfo} handleEditCancel={(type) => this.handleEditCancel(type)} {...this.state}
                             handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
-                
-                <AccountBlock  accountPinInfo={securities.accountPinInfo} handleEditCancel={(type) => this.handleEditCancel(type)} {...this.state} 
+
+                <AccountBlock  accountPinInfo={securities.accountPinInfo} handleEditCancel={(type) => this.handleEditCancel(type)} {...this.state}
                             handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               </div>
             }

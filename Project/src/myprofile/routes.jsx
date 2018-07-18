@@ -26,6 +26,9 @@ class ReactRouter extends Component {
           <Route exact strict path="/security/password" component={Security} />
           <Route exact strict path="/security/accountPin" component={Security} />
           <Route exact strict path="/manage" component={Manage} />
+          <Route exact strict path="/manage/accountManager" component={Manage} />
+          <Route exact strict path="/manage/greeting" component={Manage} />
+          <Route exact strict path="/manage/transferofservice" component={Manage} />
           <Route path="/contactbilling" component={ContactAndBilling} />
           <Route path="/privacypermissions" component={PrivacyAndPermissions} />
           </div>

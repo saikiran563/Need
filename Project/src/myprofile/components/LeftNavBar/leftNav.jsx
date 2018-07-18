@@ -80,13 +80,13 @@ let leftnav = this.props.leftNavBar;
 
                         </li>
                         <li className=" ">
-                            <a href="/my-profile-desktop-manage.html?section=accountMA&page=ma">Account manager</a>
+                            <NavLink exact to="/manage/accountManager">Account manager</NavLink>
                         </li>
                         <li className=" ">
-                            <a href="/my-profile-desktop-manage.html?section=greetingNameMA&page=ma" >Greeting name</a>
+                            <NavLink exact to="/manage/greeting">Greeting name</NavLink>
                         </li>
-                        <li className="activeSection == 'accountT' ? 'page__active' : ''">
-                            <a href="/my-profile-desktop-manage.html?section=accountT&page=ma">Transfer Service</a>
+                        <li className=" ">
+                            <NavLink exact to="/manage/transferofService">Transfer Service</NavLink>
                         </li>
                         <li className="page page__title ">
                             <NavLink exact to='/privacypermissions'>Privacy & Permissions</NavLink>

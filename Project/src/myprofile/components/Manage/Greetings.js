@@ -86,106 +86,94 @@ class GreetingBlock extends Component {
       useridValid,
       requiredError
     } = this.state;
-
-    const { showGreetingEdit } = this.props;
-
+    const { showGreetingEdit, greetingEditMode } = this.props;
+    const editableClassName = greetingEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
-      <div className="row description_box">
-        <div className="clearfix" />
-        <div className="body">
-          <div className="col-xs-12 col-sm-4 description_box__header">
-            <h4 tabIndex="0">Greeting Name</h4>
-            <p>Short Description</p>
-          </div>
-          <div className="col-xs-12 col-sm-8 description_box__large-container">
-            {showGreetingEdit && (
-              <div>
-                <p>Name</p>
-              </div>
-            )}
-            {!showGreetingEdit && (
-              <div>
-                <div className="greeting-fields col-md-5">
-                  <label>Change Greeting Name</label>
-                  <InputField
-                    type="text"
-                    handleOnChange={this.handleOnChange}
-                    placeholder="Name"
-                    name="greeting"
-                    value={this.state.greetingName}
-                    valid={requiredError}
-                  />
+        <div className={`row description_box ${editableClassName}`}>
+          <div className="clearfix" />
+            <div className="body">
+            <div className="col-xs-12 col-sm-4 description_box__header">
+              <h4 tabIndex="0">Greeting Name</h4>
+              <p>Short Description</p>
+            </div>
+            <div className="col-xs-12 col-sm-8 description_box__large-container">
+              {
+                showGreetingEdit  &&  (
+                <div>
+                  <p>Name</p>
                 </div>
-                <div className="greeting-fields-req col-xs-12 col-sm-6">
-                  <h3>Greeting Name Requirements</h3>
-                  <ul className="fieldErrors">
-                    {useridInvalidMessages.map(message => {
-                      return (
-                        <li key={message.name}>
-                          {!requiredError &&
-                            (message.error ? (
-                              <span className="text-danger">
-                                <i className="fa fa-times-circle" />
-                              </span>
-                            ) : (
-                              <span className="text-success">
+              )}
+              { !showGreetingEdit && greetingEditMode && (
+                <div>
+                  <div className="greeting-fields col-md-5">
+                    <label>Change Greeting Name</label>
+                    <InputField
+                      type="text"
+                      handleOnChange={this.handleOnChange}
+                      placeholder="Name"
+                      name="greeting"
+                      value={this.state.greetingName}
+                      valid={requiredError}
+                    />
+                  </div>
+                  <div className="greeting-fields-req col-xs-12 col-sm-6">
+                    <h3>Greeting Name Requirements</h3>
+                    <ul className="fieldErrors">
+                      {useridInvalidMessages.map(message => {
+                        return (
+                          <li key={message.name}>
+                            {!requiredError &&
+                              (message.error ? (
+                                <span className="text-danger">
+                                  <i className="fa fa-times-circle" />
+                                </span>
+                              ) : (
+                                <span className="text-success">
+                                  <i className="fa fa-check-circle" />
+                                </span>
+                              ))}
+                            {requiredError && (
+                              <span>
                                 <i className="fa fa-check-circle" />
                               </span>
-                            ))}
-                          {requiredError && (
-                            <span>
-                              <i className="fa fa-check-circle" />
-                            </span>
-                          )}
-                          {message.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                            )}
+                            {message.name}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {showGreetingEdit && (
-              <div className="description_box__edit description_box__edit_section">
-                <a
-                  className="btn btn-anchor"
-                  onClick={() => this.props.handleEditCancel("greetingblock")}
-                  role="button"
-                >
-                  Edit
-                </a>
-              </div>
-            )}
-
-            {!showGreetingEdit && (
-              <div className="description_box__edit description_box__edit_section">
-                <a
-                  className="btn btn-anchor"
-                  onClick={() => this.props.handleEditCancel("cancelblock")}
-                  role="button"
-                >
-                  Cancel
-                </a>
-              </div>
-            )}
+              {showGreetingEdit && (
+                <div className="description_box__edit description_box__edit_section">
+                  <a
+                    className="btn btn-anchor"
+                    onClick={() => this.props.handleEditCancel("greetingblock")}
+                    role="button"
+                  >
+                    Edit
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        {!showGreetingEdit && (
-          <div className="footer col-xs-12">
-            <a
-              className="btn btn--round-invert"
-              role="button"
-              onClick={() => this.props.handleEditCancel("cancelblock")}
-            >
-              Cancel
-            </a>
-            <button className="btn btn--round" disabled={requiredError}>
-              Save Changes
-            </button>
-          </div>
-        )}
+          {!showGreetingEdit && greetingEditMode && (
+            <div className="footer col-xs-12">
+              <a
+                className="btn btn--round-invert"
+                role="button"
+                onClick={() => this.props.handleEditCancel("cancelblock")}
+              >
+                Cancel
+              </a>
+              <button className="btn btn--round" disabled={requiredError}>
+                Save Changes
+              </button>
+            </div>
+          )}
       </div>
     );
   }

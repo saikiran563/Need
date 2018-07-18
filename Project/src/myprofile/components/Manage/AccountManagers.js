@@ -338,10 +338,10 @@ getinitialState(){
 
   render() {
     const { firstName, lastName, phoneNumber, emailId } = this.state;
-    const { passwordInfo, showManagerEdit, showGreetingEdit,managers } = this.props;
-    //const editableClassName = showManagerEdit ? "" : "description_box_disabled";
+    const { showManagerEdit, managerEditMode,managers } = this.props;
+    const editableClassName = managerEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
-        <div className="row description_box">
+        <div className={`row description_box ${editableClassName}`}>
           <Popup showPopup={this.state.showPopup} onClosePopup ={()=>{this.handleClosePopup()}}>
               <RevokeAccess handleRevokeAccess={()=>{this.handleRevokeAccess()}} onClosePopup ={()=>{this.handleClosePopup()}}/>
           </Popup>
@@ -356,7 +356,7 @@ getinitialState(){
                 showManagerEdit && this.getManagersView()
               }
               {
-                 !showManagerEdit &&
+                 !showManagerEdit && managerEditMode &&
                   <div>
                       {this.getManagersEditView()}
                       {this.getManagerAddView(managers,firstName, lastName, phoneNumber, emailId)}
