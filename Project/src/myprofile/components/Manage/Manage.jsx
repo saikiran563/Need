@@ -26,8 +26,9 @@ class Manage extends Component {
 
       managers: [],
       addedManager: [],
-      revokedManager: []
-
+      revokedManager: [],
+      accountManagerRequests: [],
+      deniedAccountManagerRequests: null
       // //showTransferOfServiceEdit: true,
       // showUserEdit: true,
       // showPasswordEdit: true,
@@ -49,7 +50,8 @@ class Manage extends Component {
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
       this.setState({
-        managers: this.props.manage.list
+        managers: this.props.manage.list,
+        accountManagerRequests: this.props.manage.accountManagerRequests
       })
   }
 
@@ -59,6 +61,58 @@ class Manage extends Component {
   //     managers: this.props.manage.list
   //   })
   // }
+
+  handleAppproveAccountManagerRequest(newRequest){
+      let { managers, accountManagerRequests }  = this.state
+      managers.push({
+        id: newRequest.id,
+        firstName: newRequest.firstName,
+        lastName:newRequest.lastName,
+        phoneNumber: newRequest.phoneNumber,
+        emailId: newRequest.emailId
+      })
+
+      let pendingAccountManagerRequests = []
+      accountManagerRequests.forEach(eachRequest=>{
+        eachRequest.id !== newRequest.id ? pendingAccountManagerRequests.push(eachRequest) : {}
+      })
+      this.setState({
+        managers,
+        accountManagerRequests: pendingAccountManagerRequests,
+        deniedAccountManagerRequests: null
+      })
+  }
+
+  handleUndoDenyAccountManagerRequest(){
+      let { accountManagerRequests, deniedAccountManagerRequests }  = this.state
+      accountManagerRequests.push(deniedAccountManagerRequests)
+      this.setState({
+        accountManagerRequests,
+        deniedAccountManagerRequests: null
+      })
+  }
+
+  handleDenyAccountManagerRequest(newRequest){
+      let { accountManagerRequests , deniedAccountManagerRequests}  = this.state
+      // managers.push({
+      //   id: newRequest.id,
+      //   firstName: newRequest.firstName,
+      //   lastName:newRequest.lastName,
+      //   phoneNumber: newRequest.phoneNumber,
+      //   emailId: newRequest.emailId
+      // })
+
+      let pendingAccountManagerRequests = []
+      accountManagerRequests.forEach(eachRequest=>{
+        eachRequest.id !== newRequest.id ?
+        pendingAccountManagerRequests.push(eachRequest) :
+        deniedAccountManagerRequests = eachRequest
+      })
+      this.setState({
+        accountManagerRequests: pendingAccountManagerRequests,
+        deniedAccountManagerRequests
+      })
+  }
 
 handleEditCancel = (type) =>  {
     switch(type) {
@@ -170,7 +224,7 @@ handleEditCancel = (type) =>  {
   }
 
   render() {
-    const { managers } = this.state;
+    const { managers, accountManagerRequests,deniedAccountManagerRequests } = this.state;
     return (
       <div>
           <h1 className="title title--lg">Manage Account</h1>
@@ -180,7 +234,12 @@ handleEditCancel = (type) =>  {
                   handleEditCancel={(type) => this.handleEditCancel(type)}
                   handleSave={(type, data, e) => this.handleSave(type, data, e)}
                   {...this.state}
+                  handleAppproveAccountManagerRequest={(newRequest)=>this.handleAppproveAccountManagerRequest(newRequest)}
+                  handleDenyAccountManagerRequest={(newRequest)=>this.handleDenyAccountManagerRequest(newRequest)}
+                  accountManagerRequests={accountManagerRequests}
+                  deniedAccountManagerRequests={deniedAccountManagerRequests}
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
+                  handleUndoDenyAccountManagerRequest={(deniedRequest)=>this.handleUndoDenyAccountManagerRequest(deniedRequest)}
                   handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
                 />
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
@@ -198,6 +257,32 @@ const mapStateToProps = state => {
       manage: null,
       isFetching: false,
       show: false,
+      accountManagerRequests: [
+        {
+          id: 10,
+          firstName: "Samurai",
+          lastName:"Jack",
+          phoneNumber: "(909)-505-603",
+          emailId: "samuraijack@verizon..com",
+          type:"accountManager",
+        },
+        {
+          id: 12,
+          firstName: "Bruce",
+          lastName:"Lee",
+          phoneNumber: "(909)-505-603",
+          emailId: "Brucelee@verizon..com",
+          type:"accountManager",
+        },
+        {
+          id: 11,
+          firstName: "Jackie",
+          lastName:"Chan",
+          phoneNumber: "(909)-505-603",
+          emailId: "jackieChan@verizon..com",
+          type:"accountManager",
+        }
+      ],
       list: [
         {
           type:"accountOwner",

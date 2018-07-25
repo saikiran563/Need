@@ -88,7 +88,32 @@
     justify-content: center;
 }
 
+.request-cont {
+  margin-top: 7%;
+}
+
 select {
 		width: 40% !important;
 		border-bottom: 3px solid black;
+}
+
+.request-header {
+    margin-top: 4%;
+}
+
+.seperator{
+  height: 1px;
+  margin-top: 4%;
+  background-color: grey;
+  opacity: 0.3;
+}
+
+.disabled-button {
+  border: 1px solid #c5c4c4 !important;
+  background-color: #c5c4c4 !important;
+}
+
+.max-account-managers-message {
+  margin-top: 6%;
+    width: 60%;
 }

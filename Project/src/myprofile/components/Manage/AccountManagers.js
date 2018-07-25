@@ -7,10 +7,70 @@ import "./style.css"
 import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
 
+
+
 class AccountManagerBlock extends Component {
   constructor(props) {
     super(props)
     this.state = this.getinitialState()
+  }
+
+  getAccountManagerRequestCard=(request)=>{
+    const { managers } = this.props
+    if( managers.length < 4 ){
+      return(
+        <div>
+          <div className="row request-cont">
+              <p>Requested by { request.phoneNumber } </p>
+          </div>
+           <div className="row">
+               <h4 tabIndex="0">{request.firstName+ '  ' + request.lastName}</h4>
+               <p>{request.phoneNumber}</p>
+               <p>{request.emailId}</p>
+           </div>
+           <div className='row'>
+             <div className='col-md-1'/>
+              <div className='col-md-5'>
+                  <button className="btn btn--round-invert"  onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
+              </div>
+              <div className='col-md-2'/>
+              <div className='col-md-5'>
+                <button className="btn btn--round"  onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
+              </div>
+              <div className='col-md-1'/>
+           </div>
+           <div className='row seperator'/>
+        </div>
+      )
+    }
+    return(
+      <div>
+        <div className='row max-account-managers-message'>
+          <p >You may have a maximum of three Account Managers at a time.
+            To add a new Account Manger, please remove one first. </p>
+        </div>
+        <div className="row request-cont">
+            <p>Requested by { request.phoneNumber } </p>
+        </div>
+         <div className="row">
+             <h4 tabIndex="0">{request.firstName+ '  ' + request.lastName}</h4>
+             <p>{request.phoneNumber}</p>
+             <p>{request.emailId}</p>
+         </div>
+         <div className='row'>
+           <div className='col-md-1'/>
+            <div className='col-md-5'>
+                <button className="btn btn--round-invert"  onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
+            </div>
+            <div className='col-md-2'/>
+            <div className='col-md-5'>
+              <button className="btn btn--round disabled-button"  onClick={(e) =>{}}>Approve</button>
+            </div>
+            <div className='col-md-1'/>
+         </div>
+         <div className='row seperator'/>
+      </div>
+    )
   }
 
 getinitialState(){
@@ -83,7 +143,7 @@ getinitialState(){
                 return(
                   <div>
                      <div className="row owner-info">
-                         <h4 tabIndex="0">Firstname Lastname( Account Owner )</h4>
+                         <h4 tabIndex="0">{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
                          <p>{eachManager.phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
@@ -117,7 +177,7 @@ getinitialState(){
   }
 
   getManagersEditView(){
-    const { managers } = this.props
+    const { managers, revokedManager } = this.props
     return(
         <div>
           {
@@ -129,7 +189,7 @@ getinitialState(){
                         <h1>Current Account Manager</h1>
                     </div>
                      <div className="row owner-info">
-                         <h4 tabIndex="0">Firstname Lastname( Account Owner )</h4>
+                         <h4 tabIndex="0">{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
                          <p>{eachManager.phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
@@ -151,11 +211,11 @@ getinitialState(){
             })
           }
           {
-            this.props.revokedManager.id &&
+            revokedManager.id &&
             <div className="row owner-info-second">
                 <div className="row col-xs-12 col-sm-11 undo-message-cont">
                   <span className="text-success fa fa-check-circle"></span>
-                  <p className='undo-message'>Account Manager Firstname Lastname removed</p>
+                  <p className='undo-message'>Account Manager { revokedManager.firstName  + ' '+ revokedManager.lastName }</p>
                 </div>
                 <div className="row col-xs-12 col-sm-1">
                     <a className='undo' role="button" onClick={() => this.props.handleUndoRevoke()}>Undo</a>
@@ -191,6 +251,51 @@ getinitialState(){
     this.setState({
       isEditEmailOnAccountMemberSelected: false
     })
+  }
+
+  handleDenyAccountManagerRequest(newRequest){
+    this.props.handleDenyAccountManagerRequest(newRequest)
+  }
+
+  handleAppproveAccountManagerRequest(newRequest){
+    this.props.handleAppproveAccountManagerRequest(newRequest)
+  }
+
+  getAccountManagerRequestsView(){
+    const { accountManagerRequests, deniedAccountManagerRequests } = this.props
+    if(accountManagerRequests.length || deniedAccountManagerRequests){
+      return(
+        <div>
+          <div className='row seperator'/>
+            <div className="row request-header">
+                <h1> Account Manager Requests </h1>
+            </div>
+            {
+              accountManagerRequests.map(eachRequest =>{
+                  return (
+                    <div>
+                        { this.getAccountManagerRequestCard(eachRequest) }
+                    </div>
+                  )
+              })
+            }
+            {
+              deniedAccountManagerRequests  &&
+              <div className="row owner-info-second">
+                  <div className="row col-xs-12 col-sm-11 undo-message-cont">
+                    <span className="text-success fa fa-check-circle"></span>
+                    <p className='undo-message'>Account Manager Request from {deniedAccountManagerRequests.phoneNumber} is denied </p>
+                  </div>
+                  <div className="row col-xs-12 col-sm-1">
+                      <a className='undo' role="button" onClick={() => this.props.handleUndoDenyAccountManagerRequest()}>Undo</a>
+                  </div>
+              </div>
+            }
+        </div>
+      )
+    }
+
+    return <div/>
   }
 
   handleSave = (e)=>{
@@ -359,6 +464,7 @@ getinitialState(){
                  !showManagerEdit && managerEditMode &&
                   <div>
                       {this.getManagersEditView()}
+                      {this.getAccountManagerRequestsView()}
                       {this.getManagerAddView(managers,firstName, lastName, phoneNumber, emailId)}
                   </div>
               }
