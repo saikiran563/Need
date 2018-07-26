@@ -139,7 +139,7 @@ getinitialState(){
         <div>
           {
             managers.map((eachManager)=>{
-              if(eachManager.type === 'accountOwner'){
+              if(eachManager.role === 'accountHolder'){
                 return(
                   <div>
                      <div className="row owner-info">
@@ -158,7 +158,7 @@ getinitialState(){
                          <p>{eachManager.emailId}</p>
                      </div>
                        {
-                         this.props.addedManager.id  === eachManager.id &&
+                         this.props.addedManager.phoneNumber  === eachManager.phoneNumber &&
                          <span className="text-success fa fa-check-circle"> Added </span>
                        }
                 </div>
@@ -182,7 +182,7 @@ getinitialState(){
         <div>
           {
             managers.map((eachManager)=>{
-              if(eachManager.type === 'accountOwner'){
+              if(eachManager.role === 'accountHolder'){
                 return(
                   <div>
                     <div className="row">

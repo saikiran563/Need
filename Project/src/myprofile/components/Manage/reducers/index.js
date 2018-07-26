@@ -13,7 +13,8 @@ const initialState = {
   manager: null,
   isFetching: false,
   show: false,
-  userId: null
+  userId: null,
+
 }
 
 const fetchManageBegin = (state, action) => {

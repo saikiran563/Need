@@ -23,49 +23,30 @@ class Manage extends Component {
       greetingEditMode: true,
       showTransferOfServiceEdit: true,
       transferOfServiceEditMode: true,
-
       managers: [],
       addedManager: [],
       revokedManager: [],
       accountManagerRequests: [],
       deniedAccountManagerRequests: null
-      // //showTransferOfServiceEdit: true,
-      // showUserEdit: true,
-      // showPasswordEdit: true,
-      // userEditMode: true,
-      // passwordEditMode: true,
-      // showAccountPinEdit: true,
-      // accountPinEditMode:true,
-      // currentUser:"",
-      // userSaved:false,
-      // pwdSaved:false,
-      // pinSaved:false
     }
   }
 
-  componentDidMount() {
-    //this.props.actions.fetchSecurity();
+  componentDidMount(){
+    this.props.actions.fetchManage();
+    debugger
     //this.props.actions.getUserInfo();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
       this.setState({
-        managers: this.props.manage.list,
-        accountManagerRequests: this.props.manage.accountManagerRequests
+        managers: this.props.customerInfo,
+        accountManagerRequests: this.props.accountManagerRequests
       })
   }
-
-  // componentDidMount() {
-  //
-  //   this.setState({
-  //     managers: this.props.manage.list
-  //   })
-  // }
 
   handleAppproveAccountManagerRequest(newRequest){
       let { managers, accountManagerRequests }  = this.state
       managers.push({
-        id: newRequest.id,
         firstName: newRequest.firstName,
         lastName:newRequest.lastName,
         phoneNumber: newRequest.phoneNumber,
@@ -74,7 +55,7 @@ class Manage extends Component {
 
       let pendingAccountManagerRequests = []
       accountManagerRequests.forEach(eachRequest=>{
-        eachRequest.id !== newRequest.id ? pendingAccountManagerRequests.push(eachRequest) : {}
+        eachRequest.phoneNumber !== newRequest.phoneNumber ? pendingAccountManagerRequests.push(eachRequest) : {}
       })
       this.setState({
         managers,
@@ -104,7 +85,7 @@ class Manage extends Component {
 
       let pendingAccountManagerRequests = []
       accountManagerRequests.forEach(eachRequest=>{
-        eachRequest.id !== newRequest.id ?
+        eachRequest.phoneNumber !== newRequest.phoneNumber ?
         pendingAccountManagerRequests.push(eachRequest) :
         deniedAccountManagerRequests = eachRequest
       })
@@ -160,12 +141,11 @@ handleEditCancel = (type) =>  {
        // Remove existing isLastlyAdded key if multiple managers are added
        managers.map((eachManager)=>{
          newManagers.push({
-           type: eachManager.type,
+           role: eachManager.role,
            firstName: eachManager.firstName,
            lastName:eachManager.lastName,
            phoneNumber: eachManager.phoneNumber,
-           emailId: eachManager.emailId,
-           id: eachManager.id
+           emailId: eachManager.emailId
          })
        })
        // Make a API call to generate Unique Id to the the Manager
@@ -201,7 +181,7 @@ handleEditCancel = (type) =>  {
      const { managers } = this.state
      let revokedManager = []
      managers.forEach((eachManager)=>{
-       if(handleRemoveManager.id != eachManager.id){
+       if(handleRemoveManager.phoneNumber != eachManager.phoneNumber){
          newManagers.push(eachManager)
        }else {
          revokedManager = eachManager
@@ -252,8 +232,39 @@ handleEditCancel = (type) =>  {
 
 const mapStateToProps = state => {
   return {
-    state:state,
-    manage: {
+  "statusCode": "0",
+  "greetingName": "testUser",
+  "customerInfo": [
+    {
+      "role": "accountHolder",
+      "phoneNumber": "3143060179",
+      "emailId": "ASHLEYJACOBY@CHARTER.NET",
+      "alreadyRegistered": true,
+      "newlyRegistered": true
+    },
+    {
+      "role": "accountManager",
+      "firstName": "JEFFREY",
+      "lastName": "LEBOWSKI",
+      "phoneNumber": "3144125593",
+      "emailId": "ASHLEY@JACOBY.COM",
+      "alreadyRegistered": true,
+      "newlyRegistered": true
+    },
+    {
+      "role": "accountManager",
+      "firstName": "JEFFREY",
+      "lastName": "LEBOWSKI",
+      "phoneNumber": "3144128530",
+      "emailId": "ASHLEY@JACOBY.COM",
+      "alreadyRegistered": true,
+      "newlyRegistered": true
+    }
+  ],
+  "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
+  accountManagerRequests: [],
+  state:state,
+  /*  manage: {
       manage: null,
       isFetching: false,
       show: false,
@@ -301,7 +312,7 @@ const mapStateToProps = state => {
           emailId: "name@domain.com"
         }
       ]
-    }
+    } */
   }
 }
 
