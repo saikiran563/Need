@@ -19,7 +19,7 @@ class AccountManagerBlock extends Component {
     const { managers } = this.props
     if( managers.length < 4 ){
       return(
-        <div>
+        <div key={request.phoneNumber}>
           <div className="row request-cont">
               <p>Requested by { request.phoneNumber } </p>
           </div>
@@ -141,7 +141,7 @@ getinitialState(){
             managers.map((eachManager)=>{
               if(eachManager.role === 'accountHolder'){
                 return(
-                  <div>
+                  <div key={eachManager.phoneNumber}>
                      <div className="row owner-info">
                          <h4 tabIndex="0">{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
                          <p>{eachManager.phoneNumber}</p>
@@ -151,7 +151,7 @@ getinitialState(){
                 )
               }
               return(
-                <div className="row owner-info-second">
+                <div className="row owner-info-second" key={eachManager.phoneNumber}>
                      <div className="row col-xs-12 col-sm-11">
                          <h4 tabIndex="0">{ eachManager.firstName } { eachManager.lastName }</h4>
                          <p>{eachManager.phoneNumber}</p>
@@ -184,7 +184,7 @@ getinitialState(){
             managers.map((eachManager)=>{
               if(eachManager.role === 'accountHolder'){
                 return(
-                  <div>
+                  <div key={eachManager.phoneNumber}>
                     <div className="row">
                         <h1>Current Account Manager</h1>
                     </div>
@@ -197,7 +197,7 @@ getinitialState(){
                 )
               }
               return(
-                <div className="row owner-info-second">
+                <div className="row owner-info-second" key={eachManager.phoneNumber}>
                      <div className="row col-xs-12 col-sm-11">
                          <h4 tabIndex="0">{ eachManager.firstName } { eachManager.lastName }</h4>
                          <p>{eachManager.phoneNumber}</p>
@@ -273,7 +273,7 @@ getinitialState(){
             {
               accountManagerRequests.map(eachRequest =>{
                   return (
-                    <div>
+                    <div key={eachManager.phoneNumber}>
                         { this.getAccountManagerRequestCard(eachRequest) }
                     </div>
                   )

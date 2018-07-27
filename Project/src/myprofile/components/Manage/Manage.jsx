@@ -26,20 +26,9 @@ class Manage extends Component {
 
       managers: [],
       addedManager: [],
-      revokedManager: [],
+      revokedManager: {},
       accountManagerRequests: [],
       deniedAccountManagerRequests: null
-      // //showTransferOfServiceEdit: true,
-      // showUserEdit: true,
-      // showPasswordEdit: true,
-      // userEditMode: true,
-      // passwordEditMode: true,
-      // showAccountPinEdit: true,
-      // accountPinEditMode:true,
-      // currentUser:"",
-      // userSaved:false,
-      // pwdSaved:false,
-      // pinSaved:false
     }
   }
 
@@ -197,7 +186,7 @@ handleEditCancel = (type) =>  {
   handleRemoveManager(handleRemoveManager){
     let newManagers = []
      const { managers } = this.state
-     let revokedManager = []
+     let revokedManager
      managers.forEach((eachManager)=>{
        if(handleRemoveManager.phoneNumber != eachManager.phoneNumber){
          newManagers.push(eachManager)
