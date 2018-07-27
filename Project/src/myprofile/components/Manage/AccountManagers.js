@@ -273,7 +273,7 @@ getinitialState(){
             {
               accountManagerRequests.map(eachRequest =>{
                   return (
-                    <div key={eachManager.phoneNumber}>
+                    <div key={eachRequest.phoneNumber}>
                         { this.getAccountManagerRequestCard(eachRequest) }
                     </div>
                   )
