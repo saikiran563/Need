@@ -10,11 +10,10 @@ import {
 } from '../../../../utils/reducer'
 
 const initialState = {
-  manager: null,
+  manageResponse: null,
   isFetching: false,
   show: false,
   userId: null,
-
 }
 
 const fetchManageBegin = (state, action) => {
@@ -22,9 +21,9 @@ const fetchManageBegin = (state, action) => {
 }
 
 const fetchManageSuccess = (state, action) => {
-  return updateObject(state, {
+  return  updateObject(state, {
     isFetching: false,
-    list: action.secutiries,
+    manageResponse: action.manage,
   })
 }
 
@@ -32,9 +31,9 @@ const manageReducer = (state = initialState, action) => {
   const { type } = action
   switch (type) {
     case FETCH_MANAGE_BEGIN:
-      return fetchManagerBegin(state, action)
+      return fetchManageBegin(state, action)
     case FETCH_MANAGE_SUCCESS:
-      return fetchManagerSuccess(state, action)
+      return fetchManageSuccess(state, action)
     default:
       return state
   }

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import myprofileReducer from './components/QuickLinks/reducers'
 import SecurityReducer from './components/Security/reducers'
+import ManageReducer from './components/Manage/reducers'
 
 import contactDetailsReducer from './components/ContactAndBilling/reducers'
 
@@ -12,6 +13,7 @@ import leftNavReducer from './components/LeftNavBar/reducers'
 const rootReducer = combineReducers({
   myprofile: myprofileReducer,
   security: SecurityReducer,
+  manage: ManageReducer,
   contactDetails : contactDetailsReducer,
   privacyDetails : privacyDetailsReducer,
   leftNav: leftNavReducer,

@@ -23,25 +23,43 @@ class Manage extends Component {
       greetingEditMode: true,
       showTransferOfServiceEdit: true,
       transferOfServiceEditMode: true,
+
       managers: [],
       addedManager: [],
       revokedManager: [],
       accountManagerRequests: [],
       deniedAccountManagerRequests: null
+      // //showTransferOfServiceEdit: true,
+      // showUserEdit: true,
+      // showPasswordEdit: true,
+      // userEditMode: true,
+      // passwordEditMode: true,
+      // showAccountPinEdit: true,
+      // accountPinEditMode:true,
+      // currentUser:"",
+      // userSaved:false,
+      // pwdSaved:false,
+      // pinSaved:false
     }
   }
 
   componentDidMount(){
     this.props.actions.fetchManage();
-    debugger
     //this.props.actions.getUserInfo();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
       this.setState({
-        managers: this.props.customerInfo,
         accountManagerRequests: this.props.accountManagerRequests
       })
+  }
+
+  componentWillReceiveProps(newProps){
+    if(newProps.manage.manageResponse){
+        this.setState({
+          managers: newProps.manage.manageResponse.customerInfo
+        })
+    }
   }
 
   handleAppproveAccountManagerRequest(newRequest){
@@ -232,36 +250,37 @@ handleEditCancel = (type) =>  {
 
 const mapStateToProps = state => {
   return {
-  "statusCode": "0",
-  "greetingName": "testUser",
-  "customerInfo": [
-    {
-      "role": "accountHolder",
-      "phoneNumber": "3143060179",
-      "emailId": "ASHLEYJACOBY@CHARTER.NET",
-      "alreadyRegistered": true,
-      "newlyRegistered": true
-    },
-    {
-      "role": "accountManager",
-      "firstName": "JEFFREY",
-      "lastName": "LEBOWSKI",
-      "phoneNumber": "3144125593",
-      "emailId": "ASHLEY@JACOBY.COM",
-      "alreadyRegistered": true,
-      "newlyRegistered": true
-    },
-    {
-      "role": "accountManager",
-      "firstName": "JEFFREY",
-      "lastName": "LEBOWSKI",
-      "phoneNumber": "3144128530",
-      "emailId": "ASHLEY@JACOBY.COM",
-      "alreadyRegistered": true,
-      "newlyRegistered": true
-    }
-  ],
-  "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
+  // "statusCode": "0",
+  // "greetingName": "testUser",
+  // "customerInfo": [
+  //   {
+  //     "role": "accountHolder",
+  //     "phoneNumber": "3143060179",
+  //     "emailId": "ASHLEYJACOBY@CHARTER.NET",
+  //     "alreadyRegistered": true,
+  //     "newlyRegistered": true
+  //   },
+  //   {
+  //     "role": "accountManager",
+  //     "firstName": "JEFFREY",
+  //     "lastName": "LEBOWSKI",
+  //     "phoneNumber": "3144125593",
+  //     "emailId": "ASHLEY@JACOBY.COM",
+  //     "alreadyRegistered": true,
+  //     "newlyRegistered": true
+  //   },
+  //   {
+  //     "role": "accountManager",
+  //     "firstName": "JEFFREY",
+  //     "lastName": "LEBOWSKI",
+  //     "phoneNumber": "3144128530",
+  //     "emailId": "ASHLEY@JACOBY.COM",
+  //     "alreadyRegistered": true,
+  //     "newlyRegistered": true
+  //   }
+  // ],
+  // "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
+  manage: state.manage,
   accountManagerRequests: [],
   state:state,
   /*  manage: {

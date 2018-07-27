@@ -211,11 +211,11 @@ getinitialState(){
             })
           }
           {
-            revokedManager.id &&
+            revokedManager.phoneNumber &&
             <div className="row owner-info-second">
                 <div className="row col-xs-12 col-sm-11 undo-message-cont">
                   <span className="text-success fa fa-check-circle"></span>
-                  <p className='undo-message'>Account Manager { revokedManager.firstName  + ' '+ revokedManager.lastName }</p>
+                  <p className='undo-message'>Account Manager { revokedManager.firstName  + ' '+ revokedManager.lastName } revoked</p>
                 </div>
                 <div className="row col-xs-12 col-sm-1">
                     <a className='undo' role="button" onClick={() => this.props.handleUndoRevoke()}>Undo</a>
