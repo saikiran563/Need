@@ -5,9 +5,9 @@ export const SET_EMAILID_SUCCESS = 'contacts/SET_EMAILID_SUCCESS'
 export const SET_EMAILID_ERROR = 'contacts/SET_EMAILID_ERROR'
 
 
-export const setEmailId = (id) => dispatch => {
+export const setEmailId = (data) => dispatch => {
     // API CAll WILL BE CALLED HERE
-    axios.post(SOME_URL,{data: id})
+    axios.post('https://vzwqa3.verizonwireless.com/ui/acct/secure/data/secure/profile/emailAddress',data)
       .then((response) => {
         dispatch(getEmailIdSuccess(response))
       })

@@ -150,7 +150,7 @@ class GreetingBlock extends Component {
                 <div className="description_box__edit description_box__edit_section">
                   <a
                     className="btn btn-anchor"
-                    onClick={() => this.props.handleEditCancel("greetingblock")}
+                    onClick={() => this.props.handleEditCancel("greetingnameblock")}
                     role="button"
                   >
                     Edit

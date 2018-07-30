@@ -14,14 +14,14 @@ class PasswordBlock extends Component {
        isValid: '',
        isCurrentPwdValid: '',
       istouched: false,
+      isMismatch: false,
       currentPassword: "", newPassword: "", confirmPassword: "",
       errorMessages: [
-        { name: '6-20 characters', error: false, type: 'minmax'},
+        { name: '8-20 characters', error: false, type: 'minmax'},
         { name: 'Contains at least one letter', error: false, type: 'onChar' },
         { name: 'Contains at least one number', error: false, type: 'oneNum' },
         { name: 'Contains no spaces', error: false, type: 'space'},
-        { name: 'Does not contain your user ID', error: false, type: 'sameId'},
-        { name: 'new password should match', error: false, type: 'mismatch'},
+        { name: 'Does not contain your user ID', error: false, type: 'sameId'}
       ],
     }
   }
@@ -70,8 +70,8 @@ class PasswordBlock extends Component {
         { name: 'Contains at least one letter', error: false, type: 'onChar' },
         { name: 'Contains at least one number', error: false, type: 'oneNum' },
         { name: 'Contains no spaces', error: false, type: 'space'},
-        { name: 'Does not contain your user ID', error: false, type: 'sameId'},
-        { name: 'new password should match', error: false, type: 'mismatch'},
+        { name: 'Does not contain your user ID', error: false, type: 'sameId'}
+      
       ] });
     } else {
       this.setState( { requiredError: false });
@@ -122,32 +122,31 @@ class PasswordBlock extends Component {
             this.setState({ errorMessages });
         }
         if (newPwd === confirmPwd){
-            let invalidMessage =  errorMessages.find(message => message.type === 'mismatch');
-            invalidMessage.error = false;
-            this.setState({ errorMessages });
+             this.setState({ isMismatch:true });
         } else {
-          let invalidMessage =  errorMessages.find(message => message.type === 'mismatch');
-            invalidMessage.error = true;
-            this.setState({ errorMessages });
+           this.setState({ isMismatch:false });
         }
     }
   }
 
   render() {
-    const { controlButtons, errorMessages, userId, requiredError, istouched, currentPassword, newPassword, confirmPassword,isCurrentPwdValid } = this.state;
-    const { passwordInfo, showPasswordEdit, passwordEditMode ,pwdSaved } = this.props;
-     const isValid = !errorMessages.find(user => user.error)
+    const { controlButtons, errorMessages, userId, requiredError, istouched, currentPassword, newPassword, confirmPassword,isCurrentPwdValid, isMismatch} = this.state;
+    const { passwordInfo, showPasswordEdit, passwordEditMode, pwdSaved, pwdBlock} = this.props;
+     const isValid = !errorMessages.find(user => user.error)  
      const isCPValid= true;//isCurrentPwdValid;
      let errorDisplay;
      let errorMsg;
-     if(isCPValid) {
+     if(pwdSaved) {
+      if(pwdBlock && pwdBlock.status)
+      {
        errorDisplay = "dontDisplay";
        errorMsg="";
-     }
-     else {
+         }
+      else {
        errorDisplay = "errorDisplay";
        errorMsg = "should not match with your ssn";
-     }
+         }
+       }
     const editableClassName = passwordEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
         <div className={`row description_box ${editableClassName}`}>
@@ -196,9 +195,9 @@ class PasswordBlock extends Component {
 								  <label htmlFor="confirmPassword">Re-enter New Password</label>
 								  <InputField type="password"
 								  handleOnChange={this.handleOnChange}
-								  placeholder="re-enter new Password"
+								  placeholder="Re-enter new Password"
 								  name="confirmPassword"
-								  valid={isValid}
+								  valid={isMismatch}
 								  touched={istouched}
 								  value={confirmPassword} />
 								</div>
@@ -211,8 +210,8 @@ class PasswordBlock extends Component {
 									return ( 
 									  <li key={message.name}>
 										{!requiredError &&
-											( message.error ? <span className="text-danger"><i className="fa fa-times-circle"></i> </span> : 
-										<span className="text-success"><i className="fa fa-check-circle"></i> </span> )  }
+											( message.error ? <span className="text-warning"><i className="fa fa-times-circle"></i> </span> : 
+										<span><i className="fa fa-check-circle"></i> </span> )  }
 										{requiredError && <span><i className="fa fa-check-circle"></i> </span> }
 										{message.name}
 									  </li>
@@ -238,14 +237,15 @@ class PasswordBlock extends Component {
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 			</div>
 			}	
-      {
-              showPasswordEdit && passwordEditMode && pwdSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
+       {
+              pwdSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
             }
+     
 			{
                !showPasswordEdit && passwordEditMode && 
 			   <div className="footer col-xs-12">
                   <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid} onClick={this.handleOnSave}>Save Changes</button>
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}>Save Changes</button> 
                 </div>
              }
 		</div>

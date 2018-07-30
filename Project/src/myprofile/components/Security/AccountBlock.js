@@ -36,8 +36,7 @@ class AccountBlock extends Component {
     }
   }
   
-  handleOnSave = (e) => {
-       let pin = '1234'; // TODO suppose make server call to get pin with pin getPWd(userId);
+ /* handleOnSave = (e) => {
        let  {userId , currentAccountPin , requiredError , newAccountPin,isCurrentPinValid} = this.state;
        if(pin === currentAccountPin )
            { 
@@ -50,7 +49,7 @@ class AccountBlock extends Component {
           else {
             this.setState({ isCurrentPinValid: false }); 
           }
-  }
+  }*/
   
   handleOnChangeCurrentPin= (e) => {
     this.setState({ currentAccountPin: e.target.value });
@@ -119,7 +118,7 @@ class AccountBlock extends Component {
     const { controlButtons, errorMessages, userId, requiredError, istouched, 
           currentAccountPin, newAccountPin, confirmAccountPin,isCurrentPinValid ,  isMismatch } = this.state;
     const { accountPinInfo, showAccountPinEdit, accountPinEditMode ,pinSaved } = this.props;
-     const isValid = !errorMessages.find(user => user.error) && isMismatch
+     const isValid = !errorMessages.find(user => user.error) ;
      const isCPValid= isCurrentPinValid;
     const editableClassName = accountPinEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
@@ -146,7 +145,13 @@ class AccountBlock extends Component {
 						<div className="row">
 							<div className="col-xs-12 col-sm-5">
 								<div className="form-group">
-								  <label htmlFor="newAccountPin">Create Account PIN</label>
+								  <label htmlFor="accountpinInfo">Set an account PIN</label>
+								  <p id="accountpinInfo">
+                     Create your PIN by setting a customer number below. Be sure not to use your SSN.
+								  </p>
+								</div>
+                <div className="form-group">
+								  <label htmlFor="newAccountPin">Create custom PIN</label>
 								  <InputField type="password"
 								  handleOnChange={this.handleOnChange}
 								  placeholder="****"
@@ -156,26 +161,26 @@ class AccountBlock extends Component {
 								  value={newAccountPin} />
 								</div>
 								<div className="form-group">
-								  <label htmlFor="confirmAccountPin">Confirm Account PIN</label>
+								  <label htmlFor="confirmAccountPin">Confirm custom PIN</label>
 								  <InputField type="password"
 								  handleOnChange={this.handleOnChange}
 								  placeholder="****"
 								  name="confirmAccountPin"
-								  valid={isValid}
+								  valid={isMismatch}
 								  touched={istouched}
 								  value={confirmAccountPin} />
 								</div>
 							</div>
 							<div className="col-xs-12 col-sm-7">
-								<h3>AccountPin Requirements</h3>
+								<h3>PIN Requirements</h3>
 								<ul className="fieldErrors">
 									{
 									errorMessages.map((message) => {
 									return ( 
 									  <li key={message.name}>
 										{!requiredError &&
-											( message.error ? <span className="text-danger"><i className="fa fa-times-circle"></i> </span> : 
-										<span className="text-success"><i className="fa fa-check-circle"></i> </span> )  }
+											( message.error ? <span className="text-warning"><i className="fa fa-times-circle"></i> </span> : 
+										<span><i className="fa fa-check-circle"></i> </span> )  }
 										{requiredError && <span><i className="fa fa-check-circle"></i> </span> }
 										{message.name}
 									  </li>
@@ -211,7 +216,7 @@ class AccountBlock extends Component {
                !showAccountPinEdit && accountPinEditMode && 
 			   <div className="footer col-xs-12">
                   <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid} onClick={this.handleOnSave}>Save Changes</button>
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch} onClick={() => this.props.handleSave('pinForm', {enteredPin: newAccountPin,reEnteredPin: confirmAccountPin}, event)}>Save Changes</button>
                 </div>
              }
 		</div>

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import ReactRouter from './routes'
 import configureStore from '../store/configureStore'
 import rootReducer from './reducers'
+import ErrorBoundary from './components/QuickLinks/ErrorBoundary'
 
 import initStyle from '../assets/js/globalStyles'
 
@@ -19,7 +20,9 @@ const store = configureStore(rootReducer)
 render(
   <Provider store={store}>
   <HashRouter>
+    <ErrorBoundary>
     <ReactRouter/>
+    </ErrorBoundary>
     </HashRouter>
   </Provider>,
   document.getElementById('app')

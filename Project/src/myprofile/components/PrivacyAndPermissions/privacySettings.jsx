@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import InputField from '../FormElements/InputComponent'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import DetailsMarkup from './privacyDetails'
+import { join } from 'path';
 
 class PrivacySettings extends Component {
     constructor(props) {
@@ -22,8 +22,13 @@ class PrivacySettings extends Component {
 
     render() {
         const { privacySettings } = this.state;
-        const { privacySettingsInfo, showPrivacyEdit, userEditMode } = this.props;
+        const { privacySettingsInfo, showPrivacyEdit, privacySettingsEditMode, userEditMode } = this.props;
+
+        const privacydata= this.props.privacyDetails.privacySettingsInfo;
+
         const editableClassName = userEditMode ? "description_box--edit-view" : "description_box_disabled";
+        let radiocunt1= 0;
+        let radiocunt2= 1;
         return (
             <div className="aMyProfile__privacy">
                 <div className={`row description_box ${editableClassName}`}>
@@ -41,7 +46,7 @@ class PrivacySettings extends Component {
                                 {
                                     !(!showPrivacyEdit && userEditMode) && <div className="description_box__read">
 
-                                        <p>Some information is being shared across 3 lines.</p>
+                                        <p>{privacydata.read}</p>
 
                                     </div>
                                 }
@@ -64,18 +69,23 @@ class PrivacySettings extends Component {
                                                 <div className="col-xs-3"><p className="radio_table__share">Share</p></div>
                                                 <div className="col-xs-3"><p className="radio_table__share">Don’t share</p></div>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-xs-6 radio_table__header">xxx.xxx.xxxx</div>
+                                            {privacydata.phonenumbers && privacydata.phonenumbers.map(function(i,j){
+                                          
+                                            return (<div className="row">
+                                                <div className="col-xs-6 radio_table__header">{i}</div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-cpni-share-0-label">Share</span>
-                                                    <input aria-labelledby="share-cpni-share-0-label" id="radio0" type="radio" name="radio1" value="true" />
+                                                    <input aria-labelledby="share-cpni-share-0-label" id={"radio"+(radiocunt1+1)} type="radio" name={"radio"+j} value="true" />
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-cpni-dontshare-0-label">Don't Share</span>
-                                                    <input aria-labelledby="share-cpni-dontshare-0-label" id="radio1" type="radio" name="radio1" value="false" />
+                                                    <input aria-labelledby="share-cpni-dontshare-0-label" id={"radio"+(radiocunt2+2)} type="radio" name={"radio"+j} value="false" defaultChecked />
                                                 </div>
-                                            </div>
-                                            <div className="row">
+                                            </div>)
+                                            }
+                                        )
+                                            }
+                                            {/* <div className="row">
                                                 <div className="col-xs-6 radio_table__header">xxx.xxx.xxxx</div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-cpni-share-1-label">Share</span>
@@ -83,7 +93,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-cpni-dontshare-1-label">Don't Share</span>
-                                                    <input aria-labelledby="share-cpni-dontshare-1-label" id="radio3" type="radio" name="radio2" value="false" />
+                                                    <input aria-labelledby="share-cpni-dontshare-1-label" id="radio3" type="radio" name="radio2" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -94,9 +104,9 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-cpni-dontshare-2-label">Don't Share</span>
-                                                    <input aria-labelledby="share-cpni-dontshare-2-label" id="radio5" type="radio" name="radio3" value="false" />
+                                                    <input aria-labelledby="share-cpni-dontshare-2-label" id="radio5" type="radio" name="radio3" value="false" defaultChecked />
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         <h3 className="details__title">Business & Marketing Insights</h3>
@@ -118,7 +128,7 @@ class PrivacySettings extends Component {
                                             <div className="row">
                                                 <div className="col-xs-6 radio_table__header"><h4 className="details__title">May we use your information for Business and Marketing Insights?</h4></div>
                                                 <div className="col-xs-3"><p className="radio_table__share">Use</p></div>
-                                                <div className="col-xs-3"><p className="radio_table__share">Don’t use</p></div>
+                                                <div className="col-xs-3"><p className="radio_table__share">Don’t use</p></div>                         
                                             </div>
                                             <div className="row">
                                                 <div className="col-xs-6 radio_table__header">xxx.xxx.xxxx</div>
@@ -128,7 +138,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-insight-dontuse-0-label">Don't Use</span>
-                                                    <input aria-labelledby="share-insight-dontuse-0-label" id="radio7" type="radio" name="radio4" value="false" />
+                                                    <input aria-labelledby="share-insight-dontuse-0-label" id="radio7" type="radio" name="radio4" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -139,7 +149,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-insight-dontuse-1-label">Don't Use</span>
-                                                    <input aria-labelledby="share-insight-dontuse-1-label" id="radio9" type="radio" name="radio5" value="false" />
+                                                    <input aria-labelledby="share-insight-dontuse-1-label" id="radio9" type="radio" name="radio5" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -150,7 +160,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="share-insight-dontuse-2-label">Don't Use</span>
-                                                    <input aria-labelledby="share-insight-dontuse-2-label" id="radio11" type="radio" name="radio6" value="false" />
+                                                    <input aria-labelledby="share-insight-dontuse-2-label" id="radio11" type="radio" name="radio6" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +196,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="ad-no-0-label">Don't Participate</span>
-                                                    <input aria-labelledby="ad-no-0-label" id="radio13" type="radio" name="radio7" value="false" />
+                                                    <input aria-labelledby="ad-no-0-label" id="radio13" type="radio" name="radio7" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -197,7 +207,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="ad-no-1-label">Don't Participate</span>
-                                                    <input aria-labelledby="ad-no-1-label" id="radio15" type="radio" name="radio8" value="false" />
+                                                    <input aria-labelledby="ad-no-1-label" id="radio15" type="radio" name="radio8" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -208,7 +218,7 @@ class PrivacySettings extends Component {
                                                 </div>
                                                 <div className="col-xs-3">
                                                     <span className="a-hidden" id="ad-no-2-label">Don't Participate</span>
-                                                    <input aria-labelledby="ad-no-2-label" id="radio17" type="radio" name="radio9" value="false" />
+                                                    <input aria-labelledby="ad-no-2-label" id="radio17" type="radio" name="radio9" value="false" defaultChecked />
                                                 </div>
                                             </div>
                                         </div>
@@ -221,21 +231,21 @@ class PrivacySettings extends Component {
                             </div>
                             {
                                 showPrivacyEdit && <div className="description_box__edit description_box__edit_section">
-                                    <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('privacySettingsBlock')} role="button">Edit</a>
+                                    <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('privacysettingsblock')} role="button">Edit</a>
                                 </div>
                             }
-                        </div>
-                    </div>
-
-                    {
+                
+           
+                  {
                         !showPrivacyEdit && userEditMode && <div className="row description_box__control-btn">
                             <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</button>
                             <button className="btn btn--round" >Save Changes</button>
                         </div>
                     }
-
-                </div>
-            </div>
+                    </div>
+ </div>
+    </div>
+                    </div>
 
         )
     }

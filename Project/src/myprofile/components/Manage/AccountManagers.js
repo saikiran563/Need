@@ -6,7 +6,6 @@ import InputField from "../FormElements/InputComponent"
 import "./style.css"
 import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
-import RequestSent  from './Popup/RequestSent'
 
 
 
@@ -263,7 +262,6 @@ getinitialState(){
   }
 
   getAccountManagerRequestsView(){
-    if(reactGlobals.role.toLocaleLowerCase()=="am") return <div /> // Account Members do not see pending requests
     const { accountManagerRequests, deniedAccountManagerRequests } = this.props
     if(accountManagerRequests.length || deniedAccountManagerRequests){
       return(
@@ -275,7 +273,7 @@ getinitialState(){
             {
               accountManagerRequests.map(eachRequest =>{
                   return (
-                    <div key={eachRequest.phoneNumber}>
+                    <div key={eachManager.phoneNumber}>
                         { this.getAccountManagerRequestCard(eachRequest) }
                     </div>
                   )
@@ -301,7 +299,7 @@ getinitialState(){
   }
 
   handleSave = (e)=>{
-    this.props.handleSave('accountManagerBlock', this.state, e)
+    this.props.handleSave('accountmanagerBlock', this.state, e)
     this.setState(this.getinitialState())
   }
 
@@ -411,7 +409,7 @@ getinitialState(){
                     </div>
                     <div className="footer col-xs-12">
                           <a className="btn" role="button" onClick={() => this.props.handleEditCancel("cancelblock")}>Cancel</a>
-                          <button className="btn btn--round"  onClick={(e) =>{this.props.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
+                          <button className="btn btn--round"  onClick={(e) =>{}}>Send Request</button>
                     </div>
                     {/*
                       this.state.isEditEmailOnAccountMemberSelected ?
@@ -445,15 +443,12 @@ getinitialState(){
 
   render() {
     const { firstName, lastName, phoneNumber, emailId } = this.state;
-    const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
+    const { showManagerEdit, managerEditMode,managers } = this.props;
     const editableClassName = managerEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
         <div className={`row description_box ${editableClassName}`}>
-          <Popup showPopup={this.state.showPopup} onClosePopup ={()=>{this.handleClosePopup()}} showCrossWires>
+          <Popup showPopup={this.state.showPopup} onClosePopup ={()=>{this.handleClosePopup()}}>
               <RevokeAccess handleRevokeAccess={()=>{this.handleRevokeAccess()}} onClosePopup ={()=>{this.handleClosePopup()}}/>
-          </Popup>
-          <Popup showPopup={this.props.showRequestSuccessPopup}>
-              <RequestSent onClosePopup ={()=>{this.props.toggleRequestSuccessPopup()}}/>
           </Popup>
           <div className="clearfix"></div>
           <div className="body">
@@ -476,7 +471,7 @@ getinitialState(){
               {
                   showManagerEdit &&
                   <div className="description_box__edit description_box__edit_section">
-                    <a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel("accountManagerblock")} role="button">Edit</a>
+                    <a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel("accountmanagerblock")} role="button">Edit</a>
                   </div>
               }
             </div>

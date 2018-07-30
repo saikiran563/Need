@@ -25,8 +25,8 @@ const fetchPrivacyAndPermissionsBegin = (state, action) => {
 const fetchPrivacyAndPermissionsSuccess = (state, action) => {
   return updateObject(state, {
     isFetching: false,
-    verizonSelectsInfo: action.privacies.verizonSelectsInfo,
     privacySettingsInfo: action.privacies.privacySettingsInfo,
+    verizonSelectsInfo: action.privacies.verizonSelectsInfo,
   })
 }
 

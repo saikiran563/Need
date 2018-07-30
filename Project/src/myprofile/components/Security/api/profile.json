@@ -3,7 +3,7 @@
   "statusMessage": "",
   "data": {
      "userIdInfo": {
-        "id": "test123",
+        "id": "1",
         "title": "User ID",
         "desc": "Select the username you'd like to use for your Verizon login.",
         "read": "userId"
@@ -17,7 +17,13 @@
       "accountPinInfo": {
          "id": "3",
         "title": "Account PIN",
-        "desc": "An account PIN replaces the last four digits of the Account Owner's Social Security Number as the primary means of authentication on your account.",
+        "desc": "Set a PIN number to verify your identity when calling customer care. This is different than your voicemail PIN and will become the primary means of verification when you or an Account Manager contacts us.",
+        "read": "****"
+      },
+      "questionInfo":{
+         "id": "4",
+        "title": "Security Question",
+        "desc": "Choose a security question to verify identity when logging in from a new device.",
         "read": "****"
       }
     }

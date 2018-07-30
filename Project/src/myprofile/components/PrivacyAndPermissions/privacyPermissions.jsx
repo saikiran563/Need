@@ -30,19 +30,27 @@ class PrivacyPermissions extends Component {
 
    componentDidMount() {
     this.props.actions.fetchPrivacyAndPermissions();
+
+    const URL_MAP = this.props.match.url.split("/");
+    const type = URL_MAP[URL_MAP.length-1];
+    type?this.handleEditCancel(type+"block"):"";
+
    }
 
 
    handleEditCancel = (type) =>  {
     console.log(type);
     switch(type) {
-      case 'privacySettingsBlock':
+      case 'privacysettingsblock':
       this.setState({ showPrivacyEdit: false, privacySettingsEditMode: false, userEditMode: true,  verizonSelectsEditMode: false});
+      this.props.history.push('/privacypermissions/privacysettings');
       break;
-      case 'verizonSelectsBlock':
-      this.setState({verizonSelectsEditMode: true, userEditMode: false, privacySettingsEditMode: false})
+      case 'verizonselectsblock':
+      this.setState({verizonSelectsEditMode: true, userEditMode: false, privacySettingsEditMode: false, showPrivacyEdit: false})
+      this.props.history.push('/privacypermissions/verizonselects');
       break;
       default:
+      this.props.history.push('/privacypermissions');
        this.setState({ showPrivacyEdit:true, userEditMode: true, privacySettingsEditMode: true, verizonSelectsEditMode: true })
     }
   }
@@ -52,7 +60,7 @@ class PrivacyPermissions extends Component {
     // through an API call.
     event.preventDefault();
      switch(formId) {
-      case 'privacySettingsBlock':
+      case 'privacysettingsblock':
       console.log(`${formId} '------' ${formData}`);
       this.props.actions.setPrivacySettings(formData);
       break;
@@ -82,7 +90,7 @@ class PrivacyPermissions extends Component {
 
 const mapStateToProps = state => {
   return {
-    privacyDetails: state.privacyDetails.list,
+    privacyDetails: state.privacyDetails,
   }
 }
 

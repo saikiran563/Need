@@ -1,1 +1,1 @@
-export {showModalPopup, hideModalPopup, setModalContents} from './setModal'
+export {showModalPopup, hideModalPopup, setModalContents, setBillingAddress} from './setModal'

@@ -32,7 +32,7 @@ class VerizonSelects extends Component {
                 <div className="col-sm-8 description_box__large-container">
                     <div className="row">
                         <div className="col-xs-12 description_box__details">
-                            <a href="#" role="button" className="btn btn--round-invert btn-transfer">Change settings</a>
+                            <a href="https://wbillpay.verizonwireless.com/vzw/secure/mcm/mcmDisplayPreferences.action" role="button" className="btn btn--round-invert btn-transfer">Change settings</a>
                         </div>
                     </div>
                 </div>

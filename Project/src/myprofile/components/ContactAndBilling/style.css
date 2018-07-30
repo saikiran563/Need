@@ -51,12 +51,124 @@
     top: -10px !important;
 }
 .state-select {
+   padding-bottom: 0.6rem !important;
+   line-height: 1.4rem;
+   border-bottom: 2.3px solid black !important;
+   width: 100% !important;
+}
+
+@media only screen and (min-width: 320px)and (max-width: 450px)  {
+   .aMyProfile .description_box__edit_section {
+	position: absolute !important;
+    top: 20px;
+    right: 15px;
+    text-align: right;
+    z-index: 1;
+	
+}
+}
+.description_box__read_service_line{
+    padding: 0.3rem;
+}
+.aMyProfile .description_box__control-btn {
+    float: left !important;
+    text-align: right !important;
+    display: block !important;
+}
+.section-saved_block {
+    position: relative;
+    bottom: 1rem;
+    color: #0ac00a !important;
+}
+.help-block {
+    display: block;
+    margin-top: -13px;
+    margin-bottom: 10px;
+    color: #737373;
+    font-size: 11px;
+}
+.aMyProfile .description_box {
+    margin-top: 10px !important;
+}
+.gquxWn {
+    border-bottom: 2px solid #ed7000 !important;
+}
+.state-select {
    padding-bottom: 0.6rem !important; 
 }
 
+.modal-contents{
+  padding: 0 0 0 1.4rem;  
+}
+.address-modal-footer {
+ margin-top: 0 !important;
+} 
+.modal-footer {
+    border-top: none !important;
+} 
+.address-suggested{
+    margin-left: 2px;
+} 
+.address-suggested .description_box__read {
+    padding-bottom: 1.2rem;
+}
+.modal-header {
+    border-bottom: none !important;
+}
+.address-suggested .description_box__read label{
+   font-family: inherit !important;
+   font-size: 16px !important;
+}
+
+.btn--round {
+    border-radius: 50px;
+    background: #000000;
+    border: 1px solid #000000;
+    color: #FFFFFF;
+    padding: 13px 38px;
+    font-family: "NeueHaasGroteskDisplayBold", arial;
+}
+.address-modal-footer .btn--round:hover {
+   color: #FFFFFF !important;  
+}
+
+.modal-title {
+    padding-left: 1.5rem;
+}
+
+#verify-address-modal {
+    overflow: hidden;
+}
+#verify-address-modal h1.title {
+    font-size: 16px;
+}
+.suggested-address{
+        float: right;
+    margin-left: 1rem;
+}
+.suggested-address p, .address-entered p{
+    font-size: 15px !important;
+}
+
+#verify-address-modal .description_box__edit.description_box__edit_section {
+    font-size: 15px;
+    text-align: unset;
+    cursor: pointer;
+}
+
+#verify-address-modal .description_box__edit.description_box__edit_section a{
+    border-bottom: 1px solid;
+}
+.service-line {
+    margin-left: 0;
+    padding-left: 10px;
+}
 @media only screen and (max-width: 600px) {
-   .aMyProfile .description_box__edit_section {
+   .edit-address {
 	position: absolute !important;
-	
+    bottom: 20px;
+    right: 15px;
+    text-align: right;
+    z-index: 1;	
 }
 }

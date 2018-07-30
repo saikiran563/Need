@@ -28,8 +28,7 @@ class Manage extends Component {
       addedManager: [],
       revokedManager: {},
       accountManagerRequests: [],
-      deniedAccountManagerRequests: null,
-      showRequestSuccessPopup: false
+      deniedAccountManagerRequests: null
     }
   }
 
@@ -42,21 +41,6 @@ class Manage extends Component {
       this.setState({
         accountManagerRequests: this.props.accountManagerRequests
       })
-  }
-
-
-  handleSendRequestForAccountManager(newManagerInfo){
-        //Api call to Save new Manager Info
-        this.toggleRequestSuccessPopup()
-        // this.setState({
-        //   showRequestSuccessPopup: true
-        // })
-  }
-
-  toggleRequestSuccessPopup(){
-    this.setState({
-      showRequestSuccessPopup: !this.state.showRequestSuccessPopup
-    })
   }
 
   componentWillReceiveProps(newProps){
@@ -120,23 +104,23 @@ class Manage extends Component {
 
 handleEditCancel = (type) =>  {
     switch(type) {
-      case 'accountManagerblock':
+      case 'accountmanagerblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
         });
-        this.props.history.push('/manage/accountManager');
+        this.props.history.push('/manage/accountmanager');
       break;
 
-      case 'greetingblock':
+      case 'greetingnameblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: false,greetingEditMode: true,transferOfServiceEditMode:false
          });
-        this.props.history.push('/manage/greeting');
+        this.props.history.push('/manage/greetingname');
       break;
 
-      case 'transferofServiceblock':
+      case 'transferofserviceblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: false,greetingEditMode: false,transferOfServiceEditMode:true
@@ -157,7 +141,7 @@ handleEditCancel = (type) =>  {
    // through an API call.
      event.preventDefault();
       switch(formId) {
-       case 'accountManagerBlock':
+       case 'accountmanagerBlock':
 
        const { managers } = this.state
        let newManagers = []
@@ -186,10 +170,10 @@ handleEditCancel = (type) =>  {
        addedManager
      })
        break;
-       case 'greetingblock':
+       case 'greetingnameblock':
        //
        break
-       case 'transferOfServiceblock':
+       case 'transferOfserviceblock':
        //
        break;
        default:
@@ -244,9 +228,6 @@ handleEditCancel = (type) =>  {
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
                   handleUndoDenyAccountManagerRequest={(deniedRequest)=>this.handleUndoDenyAccountManagerRequest(deniedRequest)}
                   handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
-                  handleSendRequestForAccountManager={(newManagerInfo)=>this.handleSendRequestForAccountManager(newManagerInfo)}
-                  showRequestSuccessPopup={this.state.showRequestSuccessPopup}
-                  toggleRequestSuccessPopup={()=>this.toggleRequestSuccessPopup()}
                 />
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <TransferOfService {...this.state}/>
@@ -289,17 +270,7 @@ const mapStateToProps = state => {
   // ],
   // "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
   manage: state.manage,
-  accountManagerRequests: [
-    {
-       "role": "accountManager",
-       "firstName": "JEFFREY",
-       "lastName": "LEBOWSKI",
-       "phoneNumber": "3144128530",
-       "emailId": "ASHLEY@JACOBY.COM",
-       "alreadyRegistered": true,
-       "newlyRegistered": true
-     }
-  ],
+  accountManagerRequests: [],
   state:state,
   /*  manage: {
       manage: null,

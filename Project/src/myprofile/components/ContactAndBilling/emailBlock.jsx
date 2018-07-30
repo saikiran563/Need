@@ -5,12 +5,13 @@ class EmailAddress extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userEmail: this.props.userEmailInfo.read,
+//      userEmail: this.props.userEmailInfo.read.emailId,
+      userEmail: this.props.userEmailInfo.emailID,
       requiredError: true,
-      isValid: '',
+      isValid: true,
       istouched: false,
       emailidInvalidMessages: [
-        { name: 'Invalid email address', error: false, type: 'character' }
+        { name: 'Invalid email address format', error: false, type: 'character' }
       ],
     }
   }
@@ -21,7 +22,7 @@ class EmailAddress extends Component {
 
     handleOnEditCancel = (type) => {
       this.setState({
-        userEmail: this.props.userEmailInfo.read
+        userEmail: this.props.userEmailInfo.emailID
       });
       this.props.handleEditCancel(type);
     }
@@ -36,7 +37,7 @@ class EmailAddress extends Component {
     } else {
        this.setState({
         requiredError: true, isValid: false, emailidInvalidMessages: [
-          { name: 'Not valid email address', error: false, type: 'character' }
+          { name: 'Invalid email address format', error: false, type: 'character' }
         ]
       });
     }
@@ -45,14 +46,17 @@ class EmailAddress extends Component {
 
   render() {
     const {  emailidInvalidMessages, requiredError, userEmail } = this.state;
-    const { userEmailInfo, showEmailEdit, userEditMode } = this.props;
-   const isValid = this.state.isValid;
+    const { userEmailInfo, showEmailEdit, userEditMode, emailSaved } = this.props;
+    const isValid = this.state.isValid;
     const editableClassName = userEditMode ? "" : "description_box_disabled";
+    const savedSectionStyle = {
+      "display": "inline"
+    };
     return (
      <div className={`row description_box ${editableClassName}`}>
                     <div className="col-xs-12 col-sm-4 description_box__header">
-                        <h4 tabIndex="0">{userEmailInfo.title}</h4>
-                        <p>{userEmailInfo.desc}</p>
+                        <h4 tabIndex="0">Email Address</h4>
+                        <p>Choose the email address that we should use to contact you</p>
                     </div>
                     <div className="col-xs-12 col-sm-8 description_box__large-container">
                         <div className="row">
@@ -61,7 +65,7 @@ class EmailAddress extends Component {
                                 {
                                   !(!showEmailEdit && userEditMode) &&  <div className="description_box__read">
 
-                                        <p>{userEmailInfo.read}</p>
+                                        <p>{userEmail}</p>
 
                                     </div>
                                 }
@@ -71,25 +75,38 @@ class EmailAddress extends Component {
                       <div className="col-xs-12">
                         <div className="form-group email-block-input">
                           <label htmlFor="email">Change Email Address</label>
-                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="name@domain.com" name="emailid" touched={this.state.istouched} value={userEmail} />
+                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="name@domain.com" name="emailid" valid={isValid} touched={this.state.istouched} value={userEmail} />
+                          {!isValid && <span className="help-block">{emailidInvalidMessages[0].name}</span>}
                         </div>
                       </div>
                     </div>
                   </div>
                 }
+                
+               {
+                 emailSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                &nbsp;Saved
+                 </span>
+               } 
               </div>
               {
                 showEmailEdit && <div className="description_box__edit description_box__edit_section">
-                  <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('emailBlock')} role="button">Edit</a>
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('emailBlock')} role="button">Edit</a>
+                </div>
+              }
+              {
+                !showEmailEdit && userEditMode &&
+                  <div className="description_box__edit description_box__edit_section">
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
                 </div>
               }
             </div>
           </div>
       
         {
-          !showEmailEdit && userEditMode && <div className="footer col-xs-12">
+          !showEmailEdit && userEditMode && <div className="footer description_box__control-btn col-xs-12">
             <a className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</a>
-            <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('emailBlock', userEmail, event)}>Save Changes</button>
+            <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('emailBlock', {emailID:userEmail}, event)}>Save Changes</button>
           </div>
         }
       </div>

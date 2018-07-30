@@ -3,7 +3,7 @@ import axios from 'axios'
 export const FETCH_MANAGE_BEGIN = 'manage/FETCH_MANAGE_BEGIN'
 export const FETCH_MANAGE_SUCCESS = 'manage/FETCH_MANAGE_SUCCESS'
 
-const MANAGE_URL = 'http://api.myjson.com/bins/10l0qy' // Fake API for now
+const MANAGE_URL = 'https://vzwqa3.verizonwireless.com/ui/acct/secure/data/ao/profile/accountmanager' // Fake API for now
 
 const customHeaders = {
  "Accept": "application/json"

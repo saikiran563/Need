@@ -11,7 +11,12 @@ class RevokeAccess extends Component {
               <br aria-hidden="true" />
               <br aria-hidden="true" />
                 <p>
-                  Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum in erat vel
+                consequat. Nulla dictum erat non sapien semper, id malesuada velit consectetur.
+                </p>
+                <p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas rutrum in erat vel
+                consequat. Nulla dictum erat non sapien semper, id malesuada velit consectetur.
                 </p>
               <div>
                   <a>Learn More</a>

@@ -15,7 +15,23 @@ const initialState = {
   showModal : false,
   modalContent : {
       header: '',
-      list: []
+      error: '',
+      addressEntered: {
+                 address : "",
+                 apartment: "",
+                 city: "",
+                 state: "",
+                 zip: ""
+      },
+      addressSuggessions: [
+        {
+                      address : "",
+                      apartment: "",
+                      city: "",
+                      state: "",
+                      zip: ""
+        }
+      ]
   }
 }
 

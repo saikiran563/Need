@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect, Link, withRouter, NavLink } from "react-router-dom"
 
 class AccessRoles extends Component {
     render() {
@@ -490,12 +491,12 @@ class AccessRoles extends Component {
                         {reactGlobals.role.toLocaleLowerCase() == "ao" ? <div className="rol-permissions__buttons">
                             <div className="col-xs-12 ">
                                 <a href="#">Learn more</a>
-                                <a href="#" className="btn btn--round" role="button">Edit Account roles</a>
+                            <a href="#/manage/accountmanager" className="btn btn--round" role="button">Edit Account roles</a>
                             </div>
                         </div> : <div className="rol-permissions__buttons">
                                 <div className="col-xs-12 ">
                                     <a href="#">Learn more</a>
-                                     <a href="#" className="btn btn--round" role="button">Request Access</a>
+                                    <a href="#/manage/accountmanager" className="btn btn--round" role="button">Request Access</a>
                                 </div>
                             </div>}
 

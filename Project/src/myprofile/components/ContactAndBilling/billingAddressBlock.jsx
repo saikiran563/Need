@@ -6,11 +6,11 @@ class BillingAddressBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: this.props.userBillingInfo.read.address,
-      apartment: this.props.userBillingInfo.read.apartment,
-      USstate: this.props.userBillingInfo.read.state,
-      city: this.props.userBillingInfo.read.city,
-      zip: this.props.userBillingInfo.read.zip,
+      address: this.props.userBillingInfo.addressLine1,
+      apartment: this.props.userBillingInfo.addressLine2,
+      USstate: this.props.userBillingInfo.state,
+      city: this.props.userBillingInfo.city,
+      zip: this.props.userBillingInfo.zip,
       requiredError: true,
       isValid: '',
       istouched: false,
@@ -154,8 +154,8 @@ class BillingAddressBlock extends Component {
         <div className="clearfix"></div>
         <div className="body">
         <div className="col-xs-12 col-sm-4 description_box__header">
-                        <h4 tabIndex="0">{userBillingInfo.title}</h4>
-                        <p>{userBillingInfo.desc}</p>
+                        <h4 tabIndex="0">Billing Address</h4>
+                        <p>Let us know where to send your bill.</p>
                     </div>
                     <div className="col-xs-12 col-sm-8 description_box__large-container">
                         <div className="row">
@@ -164,7 +164,9 @@ class BillingAddressBlock extends Component {
                                 {
                                     !(!showBillingEdit && billingAddressEditMode) &&  <div className="description_box__read">
 
-                                        <p>{`${userBillingInfo.read.address} ${userBillingInfo.read.apartment}`}</p>
+                                        <p>{userBillingInfo.addressLine1}</p>
+                                        <p>{userBillingInfo.addressLine2 ? userBillingInfo.addressLine2 : ''}</p>
+                                        <p>{userBillingInfo.city ? userBillingInfo.city : ''} {userBillingInfo.state} {userBillingInfo.zip ? userBillingInfo.zip : ''}</p>
 
                                     </div>
                                 }
@@ -205,19 +207,26 @@ class BillingAddressBlock extends Component {
                                     </div>
                   </div>
                 }
+                <span className="section_saved" aria-hidden="true" tabIndex="0">Saved</span>
               </div>
               {
                 showBillingEdit && <div className="description_box__edit description_box__edit_section">
-                  <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button">Edit</a>
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button">Edit</a>
+                </div>
+              }
+              {
+                !showBillingEdit && billingAddressEditMode &&
+                  <div className="description_box__edit description_box__edit_section">
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
                 </div>
               }
             </div>
           </div>
       
         {
-          !showBillingEdit && billingAddressEditMode && <div className="footer col-xs-12">
+          !showBillingEdit && billingAddressEditMode && <div className="footer description_box__control-btn col-xs-12">
             <a className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</a>
-            <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('billingAddressBlock', {address,apartment,city,zip,state: USstate}, event)}>Save Changes</button>
+            <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('billingAddressBlock', {addressLine1:address,addressLine2:apartment,city,zip,state: USstate}, event)}>Save Changes</button>
           </div>
         }
         </div>

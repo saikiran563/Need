@@ -5,9 +5,9 @@ export const SET_PRIMARY_PHONE_SUCCESS = 'contacts/SET_PRIMARY_PHONE_SUCCESS'
 export const SET_PRIMARY_PHONE_ERROR = 'contacts/SET_PRIMARY_PHONE_ERROR'
 
 
-export const setPrimaryPhone = (id) => dispatch => {
+export const setPrimaryPhone = (data) => dispatch => {
     // API CAll WILL BE CALLED HERE
-    axios.post(SOME_URL,{data: id})
+    axios.post('http://localhost:3000/contact',data)
       .then((response) => {
         dispatch(getPrimaryPhoneSuccess(response))
       })

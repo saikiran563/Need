@@ -8,7 +8,7 @@ class UserBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: props.userBlock?props.userBlock.userId+"":"",
+      userId: props.metaBlock ? props.metaBlock.userId:"",
       requiredError: true,
       isValid: '',
       istouched: false,
@@ -75,7 +75,7 @@ class UserBlock extends Component {
 
   render() {
     const {  useridInvalidMessages, requiredError, userId } = this.state;
-    const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock} = this.props;
+    const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock, metaBlock} = this.props;
    const isValid = !useridInvalidMessages.find(user => user.error)
    const editableClassName = userEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
@@ -91,9 +91,9 @@ class UserBlock extends Component {
 		<div className="row">
 			<div className="col-xs-10 description_box__details">
 				{
-                  showUserEdit && 
+                  showUserEdit &&
 				  <div className="description_box__read">
-                    <p>{userBlock.userId}</p>
+                    <p>{userBlock? userBlock.data.userId:metaBlock.userId }</p>
                   </div>
                 }
 				{
@@ -117,8 +117,8 @@ class UserBlock extends Component {
 										return (
 										<li key={message.name}>
 										{!requiredError &&
-											(message.error ? <span className="text-danger"><i className="fa fa-times-circle"></i> </span> :
-										<span className="text-success"><i className="fa fa-check-circle"></i> </span>)}
+											(message.error ? <span className="text-warning"><i className="fa fa-times-circle"></i> </span> :
+										<span><i className="fa fa-check-circle"></i> </span>)}
 										{requiredError && <span><i className="fa fa-check-circle"></i> </span>}
 										{message.name}
 										</li>

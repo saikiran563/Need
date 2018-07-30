@@ -6,7 +6,9 @@
         "id": "1",
         "title": "Email Address",
         "desc": "Choose the email address that we should use to contact you.",
-        "read": "Loremipsum@domain.com",
+        "read": {
+          "emailId": "Loremipsum@domain.com"
+        },
         "editable": false,
         "nonEditable": true,
         "disabled": false
@@ -14,10 +16,11 @@
       "userPrimaryPhoneInfo": {
         "id": "2",
         "title": "Primary Phone",
-        "desc": " Provide the phone numbers where we can best reach you. ",
-        "read": "",
-        "readPrimaryPhone": "000.000.0000",
-        "readAlternatePhone": "000.000.0000",
+        "desc": "Provide the phone numbers where we can best reach you.",
+        "read": {
+           "primaryPhone": "000.000.0000",
+           "alternatePhone": ""
+        },
         "editable": false,
         "nonEditable": true,
         "disabled": false
@@ -32,6 +35,71 @@
           "city": "New York",
           "state": "NY",
           "zip": "00000-0000"
+        },
+        "editable": false,
+        "nonEditable": true,
+        "disabled": false
+      }, 
+      "userServiceAddressInfo": {
+        "id": "4",
+        "title": "Service Address",
+        "desc": "Tell us where you use the service so we can calculate the right taxes and surcharges.",
+        "read": {
+          "sameAsBilling" : {
+            "billingAddress": {
+            "address" : "0000 Street Name DR",
+            "apartment": "House No 42",
+            "city": "New York",
+            "state": "NY",
+            "zip": "00000-0000"
+            },
+            "serviceLines" : [
+              {
+                "line":"0000-000"
+              },{
+                "line":"000-001"
+              }
+            ]
+          },
+          "serviceAddress":[
+            {
+              "serviceAddress":{
+                "address":{
+                   "address" : "0000 Street Name DR",
+                    "apartment": "House No 42",
+                    "city": "New York",
+                    "state": "NY",
+                    "zip": "00000-0000"
+                  },
+                "serviceLines" : [
+                  {
+                    "line":"0000-000"
+                  },{
+                    "line":"000-001"
+                  }
+                ]
+              }
+            },
+            {
+              "serviceAddress":{
+                "address":{
+                   "address" : "0000 Street Name R",
+                    "apartment": "House No 42",
+                    "city": "New York",
+                    "state": "NY",
+                    "zip": "00000-0000"
+                  },
+                "serviceLines" : [
+                  {
+                    "line":"0000-002"
+                  },{
+                    "line":"000-004"
+                  }
+                ]
+              }
+            }
+          ]
+         
         },
         "editable": false,
         "nonEditable": true,

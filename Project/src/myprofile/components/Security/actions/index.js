@@ -1,2 +1,4 @@
-export { fetchSecurity, fetchSecurityBegin, getUserInfo,setUserId } from './fetchSecurities'
+export { fetchSecurity, fetchSecurityBegin, getMetaData, getUserInfo,setUserId, setPassword,
+        getQuestionInfo, setPin , setQuestionInfo} from './fetchSecurities'
+
 
