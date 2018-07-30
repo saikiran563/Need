@@ -6,14 +6,18 @@ class Popup extends Component {
       <div id="overlayContainer" className={this.props.showPopup ? "visible" : "hidden"}>
         <div id="overlayBackground">
           <div id="overlayFrame" style={{marginTop:'15%'}} className="animated fadeIn a-fast">
-            <span className="close-wrapper">
-              <a id="overlayClose" onClick={()=>{this.props.onClosePopup()}} role="button">
-                <span className="a-sr a-sr-fix" aria-hidden="false">
-                  Close
-                </span>
-                <span className="a-icon-overlay-close" aria-hidden="true">
-                </span></a>
-            </span>
+              {
+                this.props.showCrossWires &&
+                <span className="close-wrapper">
+                  <a id="overlayClose" onClick={()=>{this.props.onClosePopup()}} role="button">
+                    <span className="a-sr a-sr-fix" aria-hidden="false">
+                      Close
+                    </span>
+                    <span className="a-icon-overlay-close" aria-hidden="true">
+                    </span>
+                  </a>
+              </span>
+              }
             <div>
               <div id="security-modal" className="aMyProfile aMyProfile__modal overlay-content">
                   {this.props.children}

@@ -28,7 +28,8 @@ class Manage extends Component {
       addedManager: [],
       revokedManager: {},
       accountManagerRequests: [],
-      deniedAccountManagerRequests: null
+      deniedAccountManagerRequests: null,
+      showRequestSuccessPopup: false
     }
   }
 
@@ -41,6 +42,21 @@ class Manage extends Component {
       this.setState({
         accountManagerRequests: this.props.accountManagerRequests
       })
+  }
+
+
+  handleSendRequestForAccountManager(newManagerInfo){
+        //Api call to Save new Manager Info
+        this.toggleRequestSuccessPopup()
+        // this.setState({
+        //   showRequestSuccessPopup: true
+        // })
+  }
+
+  toggleRequestSuccessPopup(){
+    this.setState({
+      showRequestSuccessPopup: !this.state.showRequestSuccessPopup
+    })
   }
 
   componentWillReceiveProps(newProps){
@@ -228,6 +244,9 @@ handleEditCancel = (type) =>  {
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
                   handleUndoDenyAccountManagerRequest={(deniedRequest)=>this.handleUndoDenyAccountManagerRequest(deniedRequest)}
                   handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
+                  handleSendRequestForAccountManager={(newManagerInfo)=>this.handleSendRequestForAccountManager(newManagerInfo)}
+                  showRequestSuccessPopup={this.state.showRequestSuccessPopup}
+                  toggleRequestSuccessPopup={()=>this.toggleRequestSuccessPopup()}
                 />
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <TransferOfService {...this.state}/>
@@ -270,7 +289,17 @@ const mapStateToProps = state => {
   // ],
   // "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
   manage: state.manage,
-  accountManagerRequests: [],
+  accountManagerRequests: [
+    {
+       "role": "accountManager",
+       "firstName": "JEFFREY",
+       "lastName": "LEBOWSKI",
+       "phoneNumber": "3144128530",
+       "emailId": "ASHLEY@JACOBY.COM",
+       "alreadyRegistered": true,
+       "newlyRegistered": true
+     }
+  ],
   state:state,
   /*  manage: {
       manage: null,

@@ -91,15 +91,18 @@ class TransferofService extends Component {
                 <div className="col-xs-12 col-sm-4">
                   <p>Transfer of Service Lorem Ipsum</p>
                 </div>
-                <div className="col-xs-12 col-sm-4 transferofService-cont">
-                  <a
-                    className="btn btn--round-invert"
-                    role="button"
-                    href='https://www.verizonwireless.com/UFDRender/Flows/RelinquishingService'
-                  >
-                    Transfer of Service
-                  </a>
-                </div>
+                {
+                  reactGlobals.role.toLocaleLowerCase() !="am" &&
+                  <div className="col-xs-12 col-sm-4 transferofService-cont">
+                    <a
+                      className="btn btn--round-invert"
+                      role="button"
+                      href='https://www.verizonwireless.com/UFDRender/Flows/RelinquishingService'
+                    >
+                      Transfer of Service
+                    </a>
+                  </div>
+                }
             </div>
             )
           }

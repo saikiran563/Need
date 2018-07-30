@@ -117,3 +117,7 @@ select {
   margin-top: 6%;
     width: 60%;
 }
+
+.request-sent-close-cont{
+  float: right;
+}
