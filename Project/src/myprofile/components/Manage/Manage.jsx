@@ -35,7 +35,6 @@ class Manage extends Component {
 
   componentDidMount(){
     this.props.actions.fetchManage();
-    debugger
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
