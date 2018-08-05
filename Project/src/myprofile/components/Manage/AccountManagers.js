@@ -8,7 +8,7 @@ import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
 import RequestSent  from './Popup/RequestSent'
 
-
+const MAXIMUM_ACCOUNT_MANAGERS = 3
 
 class AccountManagerBlock extends Component {
   constructor(props) {
@@ -18,7 +18,8 @@ class AccountManagerBlock extends Component {
 
   getAccountManagerRequestCard=(request)=>{
     const { managers } = this.props
-    if( managers.length < 4 ){
+    const isMaxManagersReached = managers.length > MAXIMUM_ACCOUNT_MANAGERS
+    if( isMaxManagersReached == false ){
       return(
         <div key={request.phoneNumber}>
           <div className='row request-cont'>
@@ -32,11 +33,11 @@ class AccountManagerBlock extends Component {
            <div className='row'>
              <div className='col-md-1'/>
               <div className='col-md-5'>
-                  <button className='btn btn--round-invert'  onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
+                  <button className='btn btn--round-invert' onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
               </div>
               <div className='col-md-2'/>
               <div className='col-md-5'>
-                <button className='btn btn--round'  onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
+                <button className='btn btn--round' onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
               </div>
               <div className='col-md-1'/>
            </div>
@@ -61,11 +62,11 @@ class AccountManagerBlock extends Component {
          <div className='row'>
            <div className='col-md-1'/>
             <div className='col-md-5'>
-                <button className='btn btn--round-invert'  onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
+                <button className='btn btn--round-invert'  disabled={isMaxManagersReached} onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
             </div>
             <div className='col-md-2'/>
             <div className='col-md-5'>
-              <button className='btn btn--round disabled-button'  onClick={(e) =>{}}>Approve</button>
+              <button className='btn btn--round' disabled={isMaxManagersReached} onClick={(e) =>{}}>Approve</button>
             </div>
             <div className='col-md-1'/>
          </div>
@@ -76,10 +77,10 @@ class AccountManagerBlock extends Component {
 
 getinitialState(){
   return {
-      firstName:'',
+      firstName: '',
       lastName: '',
       phoneNumber: '',
-      emailId:'',
+      emailId: '',
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false
@@ -99,8 +100,8 @@ getinitialState(){
 
   handleOnChange = (inputType,inputValue) => {
     if(inputType == 'firstName' || inputType == 'lastName'){
-      const regex = /^[a-zA-Z]*$/// Avoid Special Characters and numbers as part of first name and last name
-      if(regex.test(inputValue)){
+      const validateName = /^[a-zA-Z]*$/// Avoid Special Characters and numbers as part of first name and last name
+      if(validateName.test(inputValue)){
           this.setState({ [inputType]: inputValue })
       }
     }else{
@@ -151,7 +152,7 @@ getinitialState(){
                 return(
                   <div key={eachManager.phoneNumber}>
                      <div className='row owner-info'>
-                         <h4 tabIndex='0'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
+                         <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
                          <p>{eachManager.phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
@@ -161,7 +162,7 @@ getinitialState(){
               return(
                 <div className='row owner-info-second' key={eachManager.phoneNumber}>
                      <div className='row col-xs-12 col-sm-11'>
-                         <h4 tabIndex='0'>{ eachManager.firstName } { eachManager.lastName }</h4>
+                         <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
                          <p>{eachManager.phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
@@ -197,23 +198,30 @@ getinitialState(){
                         <h1>Current Account Manager</h1>
                     </div>
                      <div className='row owner-info'>
-                         <h4 tabIndex='0'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
+                         <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
                          <p>{eachManager.phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
+                     <div className='row seperator'/>
                   </div>
                 )
               }
               return(
-                <div className='row owner-info-second' key={eachManager.phoneNumber}>
-                     <div className='row col-xs-12 col-sm-11'>
-                         <h4 tabIndex='0'>{ eachManager.firstName } { eachManager.lastName }</h4>
-                         <p>{eachManager.phoneNumber}</p>
-                         <p>{eachManager.emailId}</p>
-                     </div>
-                     <div className='row col-xs-12 col-sm-1'>
-                          <a className='btn btn-anchor'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
-                     </div>
+                <div>
+                    <div className='row owner-info-second' key={eachManager.phoneNumber}>
+                         <div className='row col-xs-12 col-sm-11'>
+                             <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
+                             <p>{eachManager.phoneNumber}</p>
+                             <p>{eachManager.emailId}</p>
+                         </div>
+                         {
+                           reactGlobals.role.toLocaleLowerCase()=='ao' &&
+                           <div className='row col-xs-12 col-sm-1'>
+                                <a className='btn btn-anchor'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
+                           </div>
+                         }
+                    </div>
+                    <div className='row seperator'/>
                 </div>
               )
             })
@@ -312,7 +320,7 @@ getinitialState(){
     this.setState(this.getinitialState())
   }
 
-  getManagerAddView( managers,firstName, lastName, phoneNumber, emailId){
+  getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
     if(reactGlobals.role.toLocaleLowerCase()=='ao'){
     return(
       <div className='row add-manager-cont'>
@@ -371,9 +379,30 @@ getinitialState(){
             </div>
           </div>
         ) }
+
+    if(this.props.newAccountMemberRequest){
+      return(
+        <div className='row'>
+              <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
+              <p className='account-member-'>
+                  Submit a request to your Account Owner to gain Account Manager access and abilities.
+                  You must be 18 years or older to be an Account Manager.
+                  <br/>
+                  <br/>
+                  <br/>
+                  Your request will be provided to the Account Owner, mobile number xxx.xxx.xxxx.
+                  If accepted, you will receive an email to change your role to Account Manager.
+                  You will then have access to manage all lines on the account in retails stores, by calling Customer Service, or through My Verizon Online.
+            </p>
+            <h3 className='account-manager-request-pending'>
+                You have one (1) request currently pending. Please contact your Account Owner for updates on open requests.
+            </h3>
+        </div>
+      )
+    }
     return(
       <div className='row add-manager-cont'>
-          <h4 tabIndex='0'>Request Account Manager Access</h4>
+          <h4 tabIndex='0'>Request to Become an Account Manager</h4>
           <a className='question'> What can an Account Manager do ?</a>
           <p className='answer'>
             Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.

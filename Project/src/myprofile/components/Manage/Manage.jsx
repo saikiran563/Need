@@ -29,7 +29,8 @@ class Manage extends Component {
       revokedManager: {},
       accountManagerRequests: [],
       deniedAccountManagerRequests: null,
-      showRequestSuccessPopup: false
+      showRequestSuccessPopup: false,
+      newAccountMemberRequest: null
     }
   }
 
@@ -47,9 +48,14 @@ class Manage extends Component {
   handleSendRequestForAccountManager(newManagerInfo){
         //Api call to Save new Manager Info
         this.toggleRequestSuccessPopup()
-        // this.setState({
-        //   showRequestSuccessPopup: true
-        // })
+        this.setState({
+          newAccountMemberRequest: {
+            firstName: newManagerInfo.firstName,
+            lastName: newManagerInfo.lastName,
+            phoneNumber: newManagerInfo.phoneNumber,
+            emailId: newManagerInfo.emailId
+          }
+        })
   }
 
   toggleRequestSuccessPopup(){
@@ -157,7 +163,6 @@ handleEditCancel = (type) =>  {
      event.preventDefault();
       switch(formId) {
        case 'accountManagerBlock':
-
        const { managers } = this.state
        let newManagers = []
        // Remove existing isLastlyAdded key if multiple managers are added
@@ -297,7 +302,16 @@ const mapStateToProps = state => {
        "emailId": "ASHLEY@JACOBY.COM",
        "alreadyRegistered": true,
        "newlyRegistered": true
-     }
+     },
+     {
+        "role": "accountManager",
+        "firstName": "sapien",
+        "lastName": "Razor",
+        "phoneNumber": "54544",
+        "emailId": "ASHLEY@JACOBY.COM",
+        "alreadyRegistered": true,
+        "newlyRegistered": true
+      }
   ],
   state:state,
   /*  manage: {
