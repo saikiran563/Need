@@ -98,7 +98,14 @@ getinitialState(){
   }
 
   handleOnChange = (inputType,inputValue) => {
-    this.setState({ [inputType]: inputValue }, () => this.onChangeInput());
+    if(inputType == 'firstName' || inputType == 'lastName'){
+      const regex = /^[a-zA-Z]*$/// Avoid Special Characters and numbers as part of first name and last name
+      if(regex.test(inputValue)){
+          this.setState({ [inputType]: inputValue })
+      }
+    }else{
+          this.setState({ [inputType]: inputValue }, () => this.onChangeInput());
+    }
   }
 
   onChangeInput = () => {

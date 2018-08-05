@@ -35,7 +35,7 @@ class Manage extends Component {
 
   componentDidMount(){
     this.props.actions.fetchManage();
-    //this.props.actions.getUserInfo();
+    debugger
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
@@ -139,7 +139,7 @@ handleEditCancel = (type) =>  {
       case 'transferofServiceblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
-          managerEditMode: false,greetingEditMode: false,transferOfServiceEditMode:true
+          managerEditMode: false,greetingEditMode: false, transferOfServiceEditMode:true
          });
           this.props.history.push('/manage/transferofservice');
       break;

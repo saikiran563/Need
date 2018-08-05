@@ -5,58 +5,8 @@ import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
 import './style.css'
 
-class TransferofService extends Component {
-  constructor(props) {
-    super(props)
-    this.state= {
-      requiredError: true,
-      touched: false,
-      useridInvalidMessages: [
-        { name: '6-60 characters', error: false, type: 'character'},
-        { name: 'Not all numbers', error: false, type: 'number' },
-        { name: 'Contains no spaces', error: false, type: 'space'}
-      ],
-    }
-  }
-
-  handleOnChange = (e) => {
-    this.setState({ user: e.target.value }, () => this.onChangeInput());
-  }
-
-  onChangeInput = () => {
-    const val = this.state.user;
-    const useridInvalidMessages = JSON.parse(JSON.stringify(this.state.useridInvalidMessages));
-    if(val.length === 0) {
-      this.setState( { requiredError : true,  useridInvalidMessages: [
-        { name: '6-60 characters', error: false, type: 'character'},
-        { name: 'Not all numbers', error: false, type: 'number' },
-        { name: 'Contains no spaces', error: false, type: 'space'}
-      ] });
-    } else {
-      this.setState( { requiredError: false });
-        if (val.indexOf(" ") !== -1) {
-          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'space');
-            inavlidMessage.error = true;
-            this.setState({ useridInvalidMessages });
-        } else {
-            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'space');
-            inavlidMessage.error = false;
-            this.setState({ useridInvalidMessages });
-        }
-        if (val.match(/^([^0-9]*)$/)) {
-            let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'number');
-            inavlidMessage.error = false;
-            this.setState({ useridInvalidMessages });
-        } else {
-          let inavlidMessage =  useridInvalidMessages.find(message => message.type === 'number');
-            inavlidMessage.error = true;
-            this.setState({ useridInvalidMessages });
-        }
-    }
-  }
-
+class TransferofService extends Component {  
   render() {
-
     const { showTransferOfServiceEdit, transferOfServiceEditMode } = this.props;
     const editableClassName = transferOfServiceEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
