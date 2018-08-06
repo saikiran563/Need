@@ -10,6 +10,22 @@ import RequestSent  from './Popup/RequestSent'
 
 const MAXIMUM_ACCOUNT_MANAGERS = 3
 
+const ManagerCard = ({managerInfo,isNewlyAdded}) => {
+  return(
+    <div className='row owner-info-second' key={managerInfo.phoneNumber}>
+       <div className='row col-xs-12 col-sm-11'>
+           <h4 className='manager-name'>{ managerInfo.firstName } { managerInfo.lastName }</h4>
+           <p>{managerInfo.phoneNumber}</p>
+           <p>{managerInfo.emailId}</p>
+       </div>
+         {
+           isNewlyAdded &&
+           <span className='text-success fa fa-check-circle'> Added </span>
+         }
+    </div>
+  )
+}
+
 class AccountManagerBlock extends Component {
   constructor(props) {
     super(props)
@@ -159,19 +175,7 @@ getinitialState(){
                   </div>
                 )
               }
-              return(
-                <div className='row owner-info-second' key={eachManager.phoneNumber}>
-                     <div className='row col-xs-12 col-sm-11'>
-                         <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
-                         <p>{eachManager.phoneNumber}</p>
-                         <p>{eachManager.emailId}</p>
-                     </div>
-                       {
-                         this.props.addedManager.phoneNumber  === eachManager.phoneNumber &&
-                         <span className='text-success fa fa-check-circle'> Added </span>
-                       }
-                </div>
-              )
+              return <ManagerCard managerInfo={eachManager} isNewlyAdded={this.props.addedManager.phoneNumber===eachManager.phoneNumber }/>
             })
           }
         </div>
@@ -246,21 +250,6 @@ getinitialState(){
         </div>
     )
   }
-
-  // <div className='undo-cont' style={{display:'inline-flex',marginLeft:'38%'}}>
-  //     <span className='text-success fa fa-check-circle' style={{paddingTop:'18px'}}></span>
-  //     <p style={{paddingLeft:'2%',paddingTop:'18px'}}>Account Manager Firstname Lastname removed</p>
-  //     <a className='undo' role='button' onClick={() => this.props.handleUndoRevoke()}>Undo</a>
-  // </div>
-  // <div className='row col-xs-12 col-sm-11'>
-  //     <h4 tabIndex='0'>{ eachManager.firstName } { eachManager.lastName }</h4>
-  //     <p>{eachManager.phoneNumber}</p>
-  //     <p>{eachManager.emailId}</p>
-  // </div>
-  // <div className='row col-xs-12 col-sm-1'>
-  //      <a className='btn btn-anchor'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
-  // </div>
-
 
   handleEditNewMemberEmail(){
     this.setState({
@@ -474,25 +463,6 @@ getinitialState(){
                           <a className='btn' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
                           <button className='btn btn--round'  onClick={(e) =>{this.props.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
                     </div>
-                    {/*
-                      this.state.isEditEmailOnAccountMemberSelected ?
-                      <div className='row'>
-                        <div className='col-sm-6'>
-                          <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
-                        </div>
-                        <div className='col-sm-6'>
-                          <p>samurai.jack@verizon.com</p> <a>edit </a>
-                        </div>
-                      </div>   :
-                      <div className='row col-sm-6'>
-                        <div className='col-sm-6'>
-                          <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
-                        </div>
-                        <div className='col-sm-6'>
-                          <p>samurai.jack@verizon.com</p> <a>edit </a>
-                        </div>
-                      </div>
-                    */}
                 </div>
                </div> :
                <div className='warning'>
