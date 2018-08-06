@@ -30,7 +30,9 @@ class Manage extends Component {
       accountManagerRequests: [],
       deniedAccountManagerRequests: null,
       showRequestSuccessPopup: false,
-      newAccountMemberRequest: null
+      newAccountMemberRequest:  {
+          status: 'request denied' // request pending , request denied
+      }
     }
   }
 
@@ -50,6 +52,7 @@ class Manage extends Component {
         this.toggleRequestSuccessPopup()
         this.setState({
           newAccountMemberRequest: {
+            status: 'request pending',
             firstName: newManagerInfo.firstName,
             lastName: newManagerInfo.lastName,
             phoneNumber: newManagerInfo.phoneNumber,

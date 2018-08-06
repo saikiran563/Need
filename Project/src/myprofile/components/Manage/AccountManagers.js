@@ -283,7 +283,6 @@ getinitialState(){
     if(accountManagerRequests.length || deniedAccountManagerRequests){
       return(
         <div>
-          <div className='row seperator'/>
             <div className='row request-header'>
                 <h1> Account Manager Requests </h1>
             </div>
@@ -380,7 +379,7 @@ getinitialState(){
           </div>
         ) }
 
-    if(this.props.newAccountMemberRequest){
+    if(this.props.newAccountMemberRequest.status === 'request pending'){
       return(
         <div className='row'>
               <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
@@ -400,6 +399,23 @@ getinitialState(){
         </div>
       )
     }
+
+    if(this.props.newAccountMemberRequest.status === 'request denied'){
+      return(
+        <div className='row'>
+              <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
+              <h3 className='account-manager-request-pending'>
+                    Your Account Owner  has denied your request
+              </h3>
+              <p className='account-member-'>
+                  you can always submit another request you can always submit another request you can always
+                  submit another request you can always submit another request you can always submit another request
+            </p>
+
+        </div>
+      )
+    }
+
     return(
       <div className='row add-manager-cont'>
           <h4 tabIndex='0'>Request to Become an Account Manager</h4>
