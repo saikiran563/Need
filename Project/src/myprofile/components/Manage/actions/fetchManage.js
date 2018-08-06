@@ -7,11 +7,11 @@ const ACCOUNT_HOLDER_URL = 'http://api.myjson.com/bins/10l0qy' // Fake API for n
 const ACCOUNT_MEMBER_URL = 'https://api.myjson.com/bins/14iwuw' // also called as mobileSecure as role, Fake API for now
 var GET_MANAGERS_URL = ACCOUNT_MEMBER_URL //defaults to account member if mdnRole is not defined
 
-if(reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder") {
-  GET_MANAGERS_URL = ACCOUNT_HOLDER_URL
-} else if(reactGlobals.mdnRole.toLocaleLowerCase() == "mobilesecure"){
-  GET_MANAGERS_URL = ACCOUNT_MEMBER_URL
-}
+// if(reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder") {
+//   GET_MANAGERS_URL = ACCOUNT_HOLDER_URL
+// } else if(reactGlobals.mdnRole.toLocaleLowerCase() == "mobilesecure"){
+//   GET_MANAGERS_URL = ACCOUNT_MEMBER_URL
+// }
 
 const customHeaders = {
  "Accept": "application/json"

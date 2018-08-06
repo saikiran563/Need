@@ -1,0 +1,1 @@
+export const MAXIMUM_ACCOUNT_MANAGERS_ACTIVE = 3

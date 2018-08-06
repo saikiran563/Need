@@ -7,24 +7,12 @@ import './style.css'
 import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
 import RequestSent  from './Popup/RequestSent'
+import ManagersListToAccountManager from './components/ManagersListToAccountManager'
+import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
-const MAXIMUM_ACCOUNT_MANAGERS = 3
-
-const ManagerCard = ({managerInfo,isNewlyAdded}) => {
-  return(
-    <div className='row owner-info-second' key={managerInfo.phoneNumber}>
-       <div className='row col-xs-12 col-sm-11'>
-           <h4 className='manager-name'>{ managerInfo.firstName } { managerInfo.lastName }</h4>
-           <p>{managerInfo.phoneNumber}</p>
-           <p>{managerInfo.emailId}</p>
-       </div>
-         {
-           isNewlyAdded &&
-           <span className='text-success fa fa-check-circle'> Added </span>
-         }
-    </div>
-  )
-}
+const accountOwner =  reactGlobals.role.toLocaleLowerCase() == 'ao'
+const accountMember = reactGlobals.role.toLocaleLowerCase() == 'am'
+const accountManager = reactGlobals.role.toLocaleLowerCase() == "amgr"
 
 class AccountManagerBlock extends Component {
   constructor(props) {
@@ -160,6 +148,9 @@ getinitialState(){
 
   getManagersView(){
     const { managers } = this.props
+     if(accountManager){
+       return <ManagersListToAccountManager managers={managers} />
+     }
     return(
         <div>
           {
@@ -224,7 +215,7 @@ getinitialState(){
                              <p>{eachManager.emailId}</p>
                          </div>
                          {
-                           reactGlobals.role.toLocaleLowerCase()=='ao' &&
+                           accountOwner &&
                            <div className='row col-xs-12 col-sm-1'>
                                 <a className='btn btn-anchor'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
                            </div>
@@ -272,7 +263,7 @@ getinitialState(){
   }
 
   getAccountManagerRequestsView(){
-    if(reactGlobals.role.toLocaleLowerCase()=='am') return <div /> // Account Members do not see pending requests
+    if(accountMember) return <div /> // Account Members do not see pending requests
     const { accountManagerRequests, deniedAccountManagerRequests } = this.props
     if(accountManagerRequests.length || deniedAccountManagerRequests){
       return(
@@ -314,7 +305,7 @@ getinitialState(){
   }
 
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
-    if(reactGlobals.role.toLocaleLowerCase()=='ao'){
+    if(accountOwner){
     return(
       <div className='row add-manager-cont'>
           <h4 tabIndex='0'>Add Account Managers</h4>
@@ -505,7 +496,7 @@ getinitialState(){
                   </div>
               }
               {
-                  showManagerEdit &&
+                  showManagerEdit && ( accountOwner || accountMember ) &&
                   <div className='description_box__edit description_box__edit_section'>
                     <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('accountManagerblock')} role='button'>Edit</a>
                   </div>
