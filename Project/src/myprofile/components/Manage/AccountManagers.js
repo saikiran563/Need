@@ -22,7 +22,7 @@ class AccountManagerBlock extends Component {
 
   getAccountManagerRequestCard=(request)=>{
     const { managers } = this.props
-    const isMaxManagersReached = managers.length > MAXIMUM_ACCOUNT_MANAGERS
+    const isMaxManagersReached = managers.length > MAXIMUM_ACCOUNT_MANAGERS_ACTIVE
     if( isMaxManagersReached == false ){
       return(
         <div key={request.phoneNumber}>
