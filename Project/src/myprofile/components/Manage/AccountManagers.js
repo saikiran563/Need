@@ -195,7 +195,12 @@ getinitialState(){
                 return(
                   <div key={eachManager.phoneNumber}>
                     <div className='row'>
-                        <h1>Current Account Manager</h1>
+                        <div className='row col-xs-12 col-sm-1 col-md-11'>
+                            <h1>Current Account Manager</h1>
+                        </div>
+                      <div className='row col-xs-12 col-sm-1 col-md-1'>
+                           <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                      </div>
                     </div>
                      <div className='row owner-info'>
                          <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>

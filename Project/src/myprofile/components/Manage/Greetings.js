@@ -94,7 +94,6 @@ class GreetingBlock extends Component {
             <div className="body">
             <div className="col-xs-12 col-sm-4 description_box__header">
               <h4 tabIndex="0">Greeting Name</h4>
-              <p>Short Description</p>
             </div>
             <div className="col-xs-12 col-sm-8 description_box__large-container">
               {
@@ -106,17 +105,17 @@ class GreetingBlock extends Component {
               { !showGreetingEdit && greetingEditMode && (
                 <div>
                   <div className="greeting-fields col-md-5">
-                    <label>Change Greeting Name</label>
-                    <InputField
-                      type="text"
-                      handleOnChange={this.handleOnChange}
-                      placeholder="Name"
-                      name="greeting"
-                      value={this.state.greetingName}
-                      valid={requiredError}
-                    />
-                  </div>
-                  <div className="greeting-fields-req col-xs-12 col-sm-6">
+                      <label>Change Greeting Name</label>
+                      <InputField
+                        type="text"
+                        handleOnChange={this.handleOnChange}
+                        placeholder="Name"
+                        name="greeting"
+                        value={this.state.greetingName}
+                        valid={requiredError}
+                      />
+                    </div>
+                  <div className="greeting-fields-req col-xs-12 col-sm-6  col-md-5">
                     <h3>Greeting Name Requirements</h3>
                     <ul className="fieldErrors">
                       {useridInvalidMessages.map(message => {
@@ -143,6 +142,9 @@ class GreetingBlock extends Component {
                       })}
                     </ul>
                   </div>
+                    <div className="col-md-1">
+                        <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                    </div>
                 </div>
               )}
 
