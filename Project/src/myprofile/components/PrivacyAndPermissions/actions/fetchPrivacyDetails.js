@@ -11,7 +11,7 @@ export const fetchPrivacyAndPermissions = () => dispatch => {
   dispatch(fetchPrivacyAndPermissionsBegin())
 
   // mockProfileAPI.fetchPrivacyAndPermissions(response => {
-  //   dispatch(fetchPrivacyAndPermissionsSuccess(response.data))
+  //   dispatch(fetchPrivacyAndPermissionsSuccess(response))
   // })
 
    axios.get("https://vzwqa3.verizonwireless.com/ui/acct/secure/data/secure/profile/privacyPermissions")

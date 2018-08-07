@@ -9,9 +9,15 @@ const SetAPIUrl = "";
 export const setEnhancedAuth = (flag, email, mdn) => dispatch => {
 
   axios.post("http://www.mocky.io/v2/5b63264b3000005100650358", {
+    headers: {
+      'Content-Type': 'application/json',
+  },
+    "twoFactorAuth":
+    {
       twoFactorFlag: flag,
       EmailAdress: email,
       MobileNumber: mdn
+    }
     })
     .then((response) => {
       dispatch(setEnhancedAuthSuccess(response.data))

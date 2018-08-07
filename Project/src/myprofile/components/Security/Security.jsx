@@ -192,8 +192,8 @@ class Security extends Component {
     }
     return (
   <div>
-   {showSpinner? <Spinner/>:
-          (<div><h1 className="title title--lg">Security</h1>
+   {showSpinner? <Spinner/>: null }
+          <div><h1 className="title title--lg">Security</h1>
             {
               securities && metaData &&<div className="col-xs-12">
                 <UserBlock userInfo={securities.userIdInfo} metaBlock={metaData} userBlock={userState} handleEditCancel={(type) => this.handleEditCancel(type)} 
@@ -211,7 +211,7 @@ class Security extends Component {
                     { acctHolder &&   <EnhancedAuth handleEditCancel={(type) => this.handleEditCancel(type)}  handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/> }
               </div>
             }
-          </div>)}
+          </div>
        </div>
     )
   }

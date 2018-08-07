@@ -23,6 +23,24 @@ class BillingAddressBlock extends Component {
     }
   }
 
+ componentWillReceiveProps(newProps) {
+
+      if(newProps.userBillingInfo.addressLine1 !== this.props.userBillingInfo.addressLine1
+       || newProps.userBillingInfo.addressLine2 !== this.props.userBillingInfo.addressLine2
+       || newProps.userBillingInfo.state !== this.props.userBillingInfo.state
+       || newProps.userBillingInfo.city !== this.props.userBillingInfo.city
+       || newProps.userBillingInfo.zip !== this.props.userBillingInfo.zip){
+        this.setState(
+          {
+            address: newProps.userBillingInfo.addressLine1,
+            apartment: newProps.userBillingInfo.addressLine2,
+            USstate: newProps.userBillingInfo.state,
+            city: newProps.userBillingInfo.city,
+            zip: newProps.userBillingInfo.zip
+          }
+        );
+      }    
+  }
      handleAddressOnChange = (e) => {
       this.setState({ address: e.target.value }, () => this.onChangeInput('address'));
     }
@@ -189,7 +207,9 @@ class BillingAddressBlock extends Component {
      const isValid = !billingAddressInvalidMessages.find(address => address.error)
      const editableClassName = billingAddressEditMode ? "" : "description_box_disabled";
       const savedSectionStyle = {
-      "display": "inline"
+      "display": "inline",
+       "margin-top": "15px",
+      "padding-top": "10px"
     };
     return (
      <div className={`row description_box ${editableClassName}`}>
@@ -256,13 +276,10 @@ class BillingAddressBlock extends Component {
                                     </div>
                   </div>
                 }
-                 
-               {
-                 billingAddressSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
-                &nbsp;Saved
-                 </span>
-               } 
+                
               </div>
+               
+                
               {
                 showBillingEdit && <div className="description_box__edit description_box__edit_section">
                   <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button">Edit</a>
@@ -274,6 +291,12 @@ class BillingAddressBlock extends Component {
                   <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
                 </div>
               }
+
+              {
+                 billingAddressSaved && <span className="text-success fa fa-check-circle col-xs-2 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                &nbsp;Saved
+                 </span>
+               }
             </div>
           </div>
       

@@ -16,7 +16,7 @@ const EmailVerificationNeeded = props => {
     <button
       className="btn btn--round-invert"
       style={{ cursor: "pointer" }}
-      onClick={props.verifyModal}
+      onClick={props.reverifyModal}
     >
       Re-send verification
     </button>
@@ -27,7 +27,7 @@ const EmailVerificationNeeded = props => {
         <span className="text-warning">
           <i className="fa fa-times-circle" />
         </span>
-        You must have have a verified email address to use this feature. {refreshParagraphText}
+         You must have have a verified email address to use this feature. {refreshParagraphText}
       </p>
       <div className="row">
         <div className="col-xs-6 radio_table__header">Email</div>

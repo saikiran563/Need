@@ -90,6 +90,15 @@ class PrivacySettings extends Component {
         }
     }
 
+    saveNewPrivacySettings = () => {
+        axios.post("http://www.mocky.io/v2/5b6852e2330000661832dbe9", this.state.privacyDetailsState.privacySettings, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(res => console.log(res))
+    }
+
     render() {
         console.log(this.state)
         const { showPrivacyEdit, privacySettingsEditMode, userEditMode } = this.props;
@@ -192,7 +201,7 @@ class PrivacySettings extends Component {
                             {
                                 !showPrivacyEdit && userEditMode && <div className="row description_box__control-btn">
                                     <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</button>
-                                    <button className="btn btn--round" >Save Changes</button>
+                                    <button className="btn btn--round" onClick={this.saveNewPrivacySettings} >Save Changes</button>
                                 </div>
                             }
                         </div>

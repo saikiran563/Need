@@ -1,9 +1,9 @@
 {
     "twoFactorAuth":
     {
-        "twoFactorFlag": "1",
-        "mdn_is_capable": "1",
-        "email_is_verified": "1",
+        "twoFactorFlag": "0",
+        "mdn_is_capable": "0",
+        "email_is_verified": "0",
         "email":"ronaldocr7@gmail.com",
         "mdn": "7777777777"
     }

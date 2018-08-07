@@ -83,7 +83,7 @@ let leftnav = this.props.leftNavBar;
                             <NavLink exact to='/manage'>Manage account</NavLink>
                         </li>
                         <li className=" ">
-                            <NavLink exact to="/manage/accountmanagers">Account manager</NavLink>
+                            <NavLink exact to="/manage/accountmanager">Account manager</NavLink>
                         </li>
                         <li className=" ">
                             <NavLink exact to="/manage/greetingname">Greeting name</NavLink>

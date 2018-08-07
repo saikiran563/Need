@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getURL } from '../../../../utils/config';
 
 export const SET_BILLING_ADDRESS = 'contacts/SET_BILLING_ADDRESS'
 export const SET_BILLING_ADDRESS_SUCCESS = 'contacts/SET_BILLING_ADDRESS_SUCCESS'
@@ -61,7 +62,12 @@ export const setBillingAddressOnSuccess = (response) => ({
 export const updateBillingAddress = (address) => dispatch => {
     // API CAll WILL BE CALLED HERE
 
-   const resp = axios.post("https://vzwqa3.verizonwireless.com/ui/acct/secure/data/secure/profile/billingAddressInfo", address);
+   const resp = axios({
+        method: 'post',
+        url: getURL('SET_BILL_ADDR_INFO'),
+        timeout: 30000, // Let's say you want to wait at least 30 secs
+        data: address
+    });
     resp.then((response) => {
     console.log('Billing address post call success response');
         // console.log(response);

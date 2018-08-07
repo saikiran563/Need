@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getURL } from '../../../../utils/config';
 
 export const SET_PRIMARY_PHONE = 'contacts/PRIMARY_PHONE'
 export const SET_PRIMARY_PHONE_SUCCESS = 'contacts/SET_PRIMARY_PHONE_SUCCESS'
@@ -7,7 +8,13 @@ export const SET_PRIMARY_PHONE_ERROR = 'contacts/SET_PRIMARY_PHONE_ERROR'
 
 export const setPrimaryPhone = (data) => dispatch => {
     // API CAll WILL BE CALLED HERE
-    axios.post('https://vzwqa3.verizonwireless.com/ui/acct/secure/data/secure/profile/primaryPhone',data)
+    
+    axios({
+        method: 'post',
+        url: getURL('SET_PHONE_INFO'),
+        timeout: 30000, // Let's say you want to wait at least 30 secs
+        data: data
+    })
       .then((response) => {
         if(response.data.statusCode == "0"){
           dispatch(setPrimaryPhoneonSuccess(data));

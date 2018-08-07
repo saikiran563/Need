@@ -188,7 +188,7 @@ class PasswordBlock extends Component {
 						<div className="row">
 							<div className="col-xs-12 col-sm-5">
 								<div className="form-group">
-								  <label htmlFor="currentPassword">Current Password</label>
+								  <label htmlFor="currentPassword" >Current Password</label>
 								  <InputField
 								  type="password"
 								  handleOnChange={this.handleOnChangeCurrentPwd}
@@ -196,7 +196,8 @@ class PasswordBlock extends Component {
 								  name="currentPassword"
 								  valid={isCPValid}
 								  touched={istouched}
-								  value={currentPassword} />
+								  value={currentPassword} 
+                  analyticstrack="pwdblock-curpwdtxt"/>
                   <p className={errorDisplay}>{errorMsg}</p>
 								</div>
 								<div className="form-group">
@@ -207,7 +208,8 @@ class PasswordBlock extends Component {
 								  name="newPassword"
 								  valid={isValid}
 								  touched={istouched}
-								  value={newPassword} />
+								  value={newPassword} 
+                  analyticstrack="pwdblock-newpwdtxt"/>
                   { !isValid && 
                   <p className="errorDisplay">Please enter a valid password</p>
                   }
@@ -220,7 +222,8 @@ class PasswordBlock extends Component {
 								  name="confirmPassword"
 								  valid={isMismatch}
 								  touched={istouched}
-								  value={confirmPassword} />
+								  value={confirmPassword} 
+                  analyticstrack="pwdblock-confpwdtxt"/>
                  {  !isMismatch && confirmPassword.length>0 && 
                   <p className="errorDisplay">The passwords do not match</p>
                  }
@@ -258,13 +261,13 @@ class PasswordBlock extends Component {
       
       {
 			showPasswordEdit &&  
-			<div className="col-sm-2 description_box__edit description_box__edit_section">
+			<div className="col-sm-2 description_box__edit description_box__edit_section" analyticstrack="pwdblock-edit">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('passwordblock')} role="button">Edit</a>
 			</div>
 			}	
        {
 			!showPasswordEdit && passwordEditMode &&   
-			<div className="col-sm-2 description_box__edit description_box__edit_section cancel">
+			<div className="col-sm-2 description_box__edit description_box__edit_section cancel" analyticstrack="pwdblock-cancel">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 			</div>
 			}	
@@ -275,8 +278,9 @@ class PasswordBlock extends Component {
 			{
                !showPasswordEdit && passwordEditMode && 
 			   <div className="footer col-xs-12">
-                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid || !isMismatch}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}>Save Changes</button> 
+                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pwdblock-cancel">Cancel</a>
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}
+                  analyticstrack="pwdblock-save">Save Changes</button> 
                 </div>
              }
 		</div>

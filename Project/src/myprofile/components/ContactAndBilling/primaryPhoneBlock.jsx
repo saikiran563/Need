@@ -19,7 +19,18 @@ class PrimaryPhoneBlock extends Component {
     }
     
   }
+  componentWillReceiveProps(newProps) {
 
+      if(newProps.userPrimaryPhoneInfo.primaryPhone !== this.props.userPrimaryPhoneInfo.primaryPhone || newProps.userPrimaryPhoneInfo.alternatePhone !== this.props.userPrimaryPhoneInfo.alternatePhone){
+        this.setState(
+          {
+            userPrimaryPhone: this.convertPhoneToUSAFormat(newProps.userPrimaryPhoneInfo.primaryPhone),
+            userAlternatePhone: this.convertPhoneToUSAFormat(newProps.userPrimaryPhoneInfo.alternatePhone)
+            }
+            );
+      }
+      
+  }
    handleOnChange = (e) => {
      
     let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
@@ -53,8 +64,7 @@ class PrimaryPhoneBlock extends Component {
   this.setState({istouchedPrimary: true});
     const val = this.state.userPrimaryPhone;
     const phoneidInvalidMessages = JSON.parse(JSON.stringify(this.state.phoneidInvalidMessages));
-    if (/\d{3}[\.]\d{3}[\.]\d{4}/
-.test(val)){
+    if (/\d{3}[\.]\d{3}[\.]\d{4}/.test(val) && val !== this.convertPhoneToUSAFormat(this.props.userPrimaryPhoneInfo.primaryPhone)){
     let testAlternate = false;
     if(/\d{3}[\.]\d{3}[\.]\d{4}/.test(this.state.userAlternatePhone) || this.state.userAlternatePhone === ''){
         testAlternate = true
@@ -75,8 +85,7 @@ class PrimaryPhoneBlock extends Component {
     this.setState({istouchedAlternate: true});
     const val = this.state.userAlternatePhone;
     const phoneidInvalidMessages = JSON.parse(JSON.stringify(this.state.phoneidInvalidMessages));
-    if (/\d{3}[\.]\d{3}[\.]\d{4}/
-.test(val)  || val===''){
+    if ((/\d{3}[\.]\d{3}[\.]\d{4}/.test(val)  || val==='') && val !==  this.convertPhoneToUSAFormat(this.props.userPrimaryPhoneInfo.alternatePhone)){
    let testPrimary = false;
     if(/\d{3}[\.]\d{3}[\.]\d{4}/.test(this.state.userPrimaryPhone) || this.state.alternatePhone === ''){
         testPrimary = true
@@ -99,7 +108,9 @@ class PrimaryPhoneBlock extends Component {
     const isValidAlternate = this.state.isValidAlternate;
     const editableClassName = primaryPhoneEditMode ? "" : "description_box_disabled";
         const savedSectionStyle = {
-      "display": "inline"
+      "display": "inline",
+       "margin-top": "10px",
+      "padding-top": "10px"
     };
     return (
      <div className={`row description_box ${editableClassName}`}>
@@ -146,13 +157,12 @@ class PrimaryPhoneBlock extends Component {
                   </div>
                 }
 
-                {
+              </div>
+              {
                   phoneSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                   &nbsp;Saved
                   </span>
                 }
-                
-              </div>
               {
                 showPrimaryPhoneEdit && <div className="description_box__edit description_box__edit_section primary-phone-edit">
                   <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('primaryPhoneBlock')} role="button">Edit</a>

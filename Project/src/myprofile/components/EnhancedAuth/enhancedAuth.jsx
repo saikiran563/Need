@@ -42,6 +42,14 @@ class EnhancedAuth extends Component {
         }
     }
 
+    reverifyModal = () => {
+        this.setState({
+            modalStatus: true,
+        })
+        let enauth = this.props.enhancedAuthFlag.enhancedEdit;
+        this.props.actions.verifyEmail(enauth.email);  
+    }
+
     closeModal = () => {
         this.setState({
             modalStatus: false,
@@ -66,8 +74,8 @@ class EnhancedAuth extends Component {
             // this.setState({radioselected:document.querySelectorAll('.enhanced-auth .radio_table input:checked')[0].value});
         }
 
-
     }
+
     componentDidMount() {
         console.log(this.props);
         if (!this.props.showEnhancedAuthEdit && this.props.enAuthEditMode) {
@@ -111,7 +119,7 @@ class EnhancedAuth extends Component {
                                 {enauthview.twoFactorFlag == '1' ? <p>On</p> : <p>Off</p>}
                             </div>}
                             {!showEnhancedAuthEdit && enAuthEditMode &&
-                                <div className="description_box__edit description_box__edit_section">
+                                <div className="description_box__edit description_box__edit_section col-sm-2 description_box__edit description_box__edit_section cancel">
                                     <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
                                 </div>
                             }
@@ -173,7 +181,7 @@ class EnhancedAuth extends Component {
                                         (radioButtonselect && enauth.twoFactorFlag == '0' && enauth.mdn_is_capable == '0' && enauth.email_is_verified == '0')) &&
                                         (
                                             <div>
-                                                <EmailVerificationNeeded emailAddress={enauth.email} verifyEmailClicked={this.state.verifyEmailClicked} verifyModal={this.verifyModal} />
+                                                <EmailVerificationNeeded emailAddress={enauth.email} verifyEmailClicked={this.state.verifyEmailClicked} verifyModal={this.verifyModal} reverifyModal={this.reverifyModal} />
                                                 <div className="row"> <hr /> </div>
                                                 <PhoneVerificationNeeded mobileNumber={this.mobileNumberFormat(enauth.mdn)} handleEditCancel={this.props.handleEditCancel} />
                                                 <Modal
@@ -203,7 +211,7 @@ class EnhancedAuth extends Component {
                                         (radioButtonselect && this.props.enhancedAuthFlag.enhancedEdit.email_is_verified == '0' && this.props.enhancedAuthFlag.enhancedEdit.mdn_is_capable == '1')) &&
                                         (
                                             <div>
-                                                <EmailVerificationNeeded emailAddress={enauth.email} verifyEmailClicked={this.state.verifyEmailClicked} verifyModal={this.verifyModal} />
+                                                <EmailVerificationNeeded emailAddress={enauth.email} verifyEmailClicked={this.state.verifyEmailClicked} verifyModal={this.verifyModal} reverifyModal={this.reverifyModal} />
                                                 <Modal
                                                     modalStatus={this.state.modalStatus}
                                                     closeModal={this.closeModal}>

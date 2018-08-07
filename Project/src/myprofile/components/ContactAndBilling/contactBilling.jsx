@@ -6,6 +6,7 @@ import EmailBlock from './emailBlock';
 import PrimaryPhoneBlock from './primaryPhoneBlock';
 import BillingAddressBlock from './billingAddressBlock';
 import ServiceAddressBlock from './serviceAddressBlock';
+import Spinner from '../Spinner/Spinner.js';
 import VerifyModal from './verifyModal';
 
 import * as actions from './actions';
@@ -187,7 +188,7 @@ class ContactAndBilling extends Component {
   }
 
   render() {
-       const { contactDetails } = this.props;
+       const { contactDetails, showSpinner } = this.props;
        const { emailSaved, phoneSaved, billingAddressSaved, serviceAddressSaved } = this.state;
 
        let acctHolder = reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder";
@@ -198,19 +199,20 @@ class ContactAndBilling extends Component {
      return (
        
         <div>
+        {showSpinner ? <Spinner /> : null}
        <h1 className="title title--lg">Contact & Billing</h1>
        {
         contactDetails && <div className="col-xs-12">
        
            <EmailBlock userEmailInfo={contactDetails} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} emailSaved={emailSaved} {...this.state} />
-         { (acctHolder || acctManger) &&  <PrimaryPhoneBlock userPrimaryPhoneInfo={contactDetails} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} phoneSaved={phoneSaved} {...this.state}/> }
-          { (acctHolder || acctManger) && <BillingAddressBlock userBillingInfo={contactDetails} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} billingAddressSaved={billingAddressSaved} {...this.state}/> }
+         { true &&  (acctHolder || acctManger) && <PrimaryPhoneBlock userPrimaryPhoneInfo={contactDetails} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} phoneSaved={phoneSaved} {...this.state}/> }
+          { true &&  (acctHolder || acctManger) && <BillingAddressBlock userBillingInfo={contactDetails} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} billingAddressSaved={billingAddressSaved} {...this.state}/> }
         {/* { (acctHolder || acctManger) && <ServiceAddressBlock userServiceAddressInfo={contactDetails.userServiceAddressInfo} handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} serviceAddressSaved={serviceAddressSaved} {...this.state}/  > } */}
 
             </div>
        }
   
-        <VerifyModal showPopup={this.state.showVerifyModal} hideVerifyModal={() => this.hideVerifyModal()} details={contactDetails} onSave={() => this.handleVerifyModalSave()}/>
+        {this.state.showVerifyModal ? <VerifyModal showPopup={this.state.showVerifyModal} hideVerifyModal={() => this.hideVerifyModal()} details={contactDetails} onSave={() => this.handleVerifyModalSave()}/> : null}
     </div>
    
       
@@ -221,7 +223,8 @@ class ContactAndBilling extends Component {
 const mapStateToProps = state => {
   console.log('mapStateToProps; ', state);
   return {
-    contactDetails : state.contactDetails.list
+    contactDetails: state.contactDetails.list,
+    showSpinner: state.contactDetails.isFetching
   }
 }
 

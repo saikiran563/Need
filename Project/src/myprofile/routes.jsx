@@ -32,7 +32,7 @@ class ReactRouter extends Component {
           <Route exact strict path="/contactbilling/primaryPhone" component={ContactAndBilling} />
           <Route exact strict path="/contactbilling/billingAddress" component={ContactAndBilling} />
           <Route exact strict path="/manage" component={Manage} />
-          <Route exact strict path="/manage/accountmanagers" component={Manage} />
+          <Route exact strict path="/manage/accountmanager" component={Manage} />
           <Route exact strict path="/manage/greetingname" component={Manage} />
           <Route exact strict path="/manage/transferofservice" component={Manage} />
           <Route exact strict path="/privacypermissions" component={PrivacyAndPermissions} /> 

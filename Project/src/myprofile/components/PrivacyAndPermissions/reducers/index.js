@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   // privacyDetails: null,
-  // isFetching: false,
+  isFetching: false,
   // show: false,
   verizonSelectsInfo: {},
   privacySettingsInfo: {},

@@ -16,6 +16,13 @@ class EmailAddress extends Component {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    if(this.props.userEmailInfo.emailID !== newProps.userEmailInfo.emailID){
+      this.setState({userEmail:newProps.userEmailInfo.emailID});
+
+    }
+ }
+
    handleOnChange = (e) => {
      this.setState({ userEmail: e.target.value }, () => this.onChangeInput());
    }
@@ -50,7 +57,9 @@ class EmailAddress extends Component {
     const isValid = this.state.isValid;
     const editableClassName = userEditMode ? "" : "description_box_disabled";
     const savedSectionStyle = {
-      "display": "inline"
+      "display": "inline",
+      "margin-top": "10px",
+      "padding-top": "10px"
     };
     return (
      <div className={`row description_box ${editableClassName}`}>
@@ -83,12 +92,12 @@ class EmailAddress extends Component {
                   </div>
                 }
                 
-               {
+              </div>
+              {
                  emailSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                 &nbsp;Saved
                  </span>
                } 
-              </div>
               {
                 showEmailEdit && <div className="description_box__edit description_box__edit_section">
                   <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('emailBlock')} role="button">Edit</a>

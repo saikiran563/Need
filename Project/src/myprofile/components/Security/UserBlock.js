@@ -75,6 +75,15 @@ class UserBlock extends Component {
     }
   }
 
+ /*shouldComponentUpdate(nextProps, nextState) {
+  console.log(nextProps,"-",nextState);
+  return (nextProps.userSaved != this.state.showSaved)
+  
+}*/
+componentWillReceiveProps(nextProps) {
+   if(nextProps.userSaved != this.state.showSaved )
+      this.setState({showSaved: nextProps.userSaved})
+}
   render() {
     const {  useridInvalidMessages, requiredError, userId ,showSaved } = this.state;
     const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock, metaBlock} = this.props;
@@ -106,7 +115,7 @@ class UserBlock extends Component {
 								<div className="form-group">
 									<label htmlFor="userId">User ID</label>
 									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User ID" name="userid" valid={isValid} touched={this.state.istouched} 
-											value={userId}/>
+											value={userId} analyticstrack="userblock-usertxt"/>
 									<p className="help-block">If available, you may use Email Address as your User ID.</p>
                    { /*!isValid && 
                   <p className="errorDisplay">InValid Entry</p>*/
@@ -141,25 +150,25 @@ class UserBlock extends Component {
 			
             {
             showUserEdit && 
-				<div className="description_box__edit description_box__edit_section">
-					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('useridblock')} role="button">Edit</a>
+				<div className="description_box__edit description_box__edit_section" analyticstrack="userblock-edit">
+					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('useridblock')} role="button" >Edit</a>
 				</div>   
             }
             {
             !showUserEdit && userEditMode &&
-          <div className="col-sm-2 description_box__edit description_box__edit_section cancel ">
+          <div className="col-sm-2 description_box__edit description_box__edit_section cancel" analyticstrack="userblock-cancel">
 					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 				</div>
         }
           {
-               userSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
+               showSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
             }
 			
 			{
 			!showUserEdit && userEditMode && 
 				<div className="footer col-xs-12">
-					<a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-					<button className="btn btn--round"  disabled={!isValid} onClick={() => this.props.handleSave('userForm', userId, event)}>Save Changes</button>
+					<a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="userblock-cancel">Cancel</a>
+					<button className="btn btn--round"  disabled={!isValid} onClick={() => this.props.handleSave('userForm', userId, event)} analyticstrack="userblock-save">Save Changes</button>
 				</div>
 			}
 		</div>

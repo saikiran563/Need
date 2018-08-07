@@ -27,7 +27,8 @@ class SecurityQuestionBlock extends Component {
       authorizationCodeModal: false,
       finalAuthorizationModal: false,
       authorizationCode: "",
-      afterGetRequest: []
+      afterGetRequest: [],
+      wrongCodeErrorMessage: ""
     }
   }
 
@@ -98,10 +99,10 @@ class SecurityQuestionBlock extends Component {
 
   getQuestions = (selectedVal) => {
     return (
-      <select className="state-select" name="USA State" onChange={this.onQuestionChange} defaultValue={selectedVal}>
+      <select className="state-select" name="USA State" onChange={this.onQuestionChange} defaultValue={selectedVal} analyticstrack="secqueblock-selList">
         {
           this.props.questionBlock.map((que) => {
-            return (<option key={que.Id} value={que.Id}>{que.Question}</option>)
+            return (<option key={que.Id} value={que.Id} analyticstrack={`secqueblock-option${que.Id}`}>{que.Question}</option>)
           })
         }
       </select>
@@ -127,21 +128,36 @@ class SecurityQuestionBlock extends Component {
   }
 
   sendCodeToPhoneHandler = () => {
-    this.setState({
-      listOfAccountNumbersModal: false,
-      authorizationCodeModal: true
-    })
+    axios.post("http://www.mocky.io/v2/5b6354f93000005a006503c7", {phoneNumber: this.state.selectedPhone.mtn, authCode: "11223344"})
+      .then(res => {
+        const data = JSON.parse(res.config.data)
+        this.setState({
+          listOfAccountNumbersModal: false,
+          authorizationCodeModal: true,
+          authCode: data.authCode
+        })
+      })
   }
 
   authorizationCodeConformation = event => {
-    console.log(this.state.newQId)
-    console.log(this.state.newAnswer)
-    this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId,challengeAnswer: this.state.newAnswer}, event)
-    this.setState({
-      authorizationCodeModal: false,      
-      listOfAccountNumbersModal: false,
-      finalAuthorizationModal: true,
-    })
+    const { newQId, newAnswer } = this.state;
+    if(this.state.authorizationCode === this.state.authCode){
+      this.props.handleSave('questionForm', {challengeQuestionID: newQId, challengeAnswer: newAnswer}, event)
+      this.setState({
+        authorizationCodeModal: false,      
+        listOfAccountNumbersModal: false,
+        finalAuthorizationModal: true,
+      })
+    } else {
+      this.setState({
+        wrongCodeErrorMessage: "Invalid code."        
+      })
+      setTimeout(() => {
+        this.setState({
+          wrongCodeErrorMessage: ""        
+        })
+      }, 2000)
+    }
   }
 
   handleAuthCodeChange = event => {
@@ -218,7 +234,11 @@ class SecurityQuestionBlock extends Component {
             value={this.state.authorizationCode}
             name="authorizationCode"
             onChange={this.handleAuthCodeChange}
+            style={{marginBottom: this.state.wrongCodeErrorMessage ? "0" : ""}}
           />
+          <p style={{color: "red"}} >
+          {this.state.wrongCodeErrorMessage}
+          </p>
           <button
             className="btn btn--round"
             disabled={!this.state.authorizationCode || isNaN(parseInt(this.state.authorizationCode)) || this.state.authorizationCode.length < 6 }
@@ -318,7 +338,8 @@ class SecurityQuestionBlock extends Component {
                           name="newAnswer"
                           valid={isValid}
                           touched={istouched}
-                          value={newAnswer} />
+                          value={newAnswer} 
+                          nalyticstrack="secqueblock-anstxt"/>
                         <p className={errorDisplay}>{errorMsg}</p>
                       </div>
                     </div>
@@ -347,13 +368,13 @@ class SecurityQuestionBlock extends Component {
             {
               !showQuestionEdit && questionEditMode &&
               <div className="col-sm-2 description_box__edit description_box__edit_section cancel ">
-                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="secqueblock-cancel">Cancel</a>
               </div>
             }
             {
               showQuestionEdit &&
               <div className="col-sm-2 description_box__edit description_box__edit_section">
-                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('questionblock')} role="button">Edit</a>
+                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('questionblock')} role="button" analyticstrack="secqueblock-edit">Edit</a>
               </div>
             }
             {
@@ -362,8 +383,8 @@ class SecurityQuestionBlock extends Component {
             {
               !showQuestionEdit && questionEditMode &&
               <div className="footer col-xs-12">
-                <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                <button className="btn btn--round" disabled={!isValid} onClick={this.saveChangesClickedHandler} >Save Changes</button>
+                <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="secqueblock-cancel">Cancel</a>
+                <button className="btn btn--round" disabled={!isValid} onClick={this.saveChangesClickedHandler} analyticstrack="secqueblock-save">Save Changes</button>
               </div>
             }
             <Modal

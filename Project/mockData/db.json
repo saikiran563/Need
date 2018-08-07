@@ -8,71 +8,71 @@
     "city": "Somerset",
     "state": "NJ",
     "zip": "68474",
-  "userServiceAddressInfo": {
-    "serviceAddresses": [
-      {
-        "billingAddress": true,
-        "address": {
-          "address": "Same as billing address"
-        },
-        "serviceLines": [
-          {
-            "line": "0000-000"
+    "userServiceAddressInfo": {
+      "serviceAddresses": [
+        {
+          "billingAddress": true,
+          "address": {
+            "address": "Same as billing address"
           },
-          {
-            "line": "0000-001"
-          }
-        ]
-      },
-      {
-        "billingAddress": false,
-        "address": {
-          "address": "0000 Street Name DR",
-          "apartment": "House No 42",
-          "city": "New York",
-          "state": "NY",
-          "zip": "00000-0000"
+          "serviceLines": [
+            {
+              "line": "0000-000"
+            },
+            {
+              "line": "0000-001"
+            }
+          ]
         },
-        "serviceLines": [
-          {
-            "line": "0000-000"
+        {
+          "billingAddress": false,
+          "address": {
+            "address": "0000 Street Name DR",
+            "apartment": "House No 42",
+            "city": "New York",
+            "state": "NY",
+            "zip": "00000-0000"
           },
-          {
-            "line": "000-001"
-          }
-        ]
-      },
-      {
-        "billingAddress": false,
-        "address": {
-          "address": "0000 Street Name R",
-          "apartment": "House No 42",
-          "city": "New York",
-          "state": "NY",
-          "zip": "00000-0000"
+          "serviceLines": [
+            {
+              "line": "0000-000"
+            },
+            {
+              "line": "000-001"
+            }
+          ]
         },
-        "serviceLines": [
-          {
-            "line": "0000-002"
+        {
+          "billingAddress": false,
+          "address": {
+            "address": "0000 Street Name R",
+            "apartment": "House No 42",
+            "city": "New York",
+            "state": "NY",
+            "zip": "00000-0000"
           },
-          {
-            "line": "000-004"
-          }
-        ]
-      }
-    ]
-  }
+          "serviceLines": [
+            {
+              "line": "0000-002"
+            },
+            {
+              "line": "000-004"
+            }
+          ]
+        }
+      ]
+    }
   },
   "email": {
-    "newEmailId": "new@jhsxn.com"
+    "emailID": "email@jhsjkxn.com"
   },
   "primaryphone": {
-    "primaryPhone": "1234567890",
-    "alternatePhone": "4567896567"
+    "primaryPhone": "3148823216",
+    "alternatePhone": "3148823212"
   },
   "billingaddress": {
     "addressLine1": "RR 297 297 RURAL ROUTE 1 RT",
-    "addressLine2": "123",
+    "addressLine2": "bchgjh",
     "city": "Somerset",
     "zip": "68474",
     "state": "NJ"

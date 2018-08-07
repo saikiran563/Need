@@ -145,9 +145,9 @@ class AccountBlock extends Component {
 						<div className="row">
 							<div className="col-xs-12 col-sm-5">
 								<div className="form-group">
-								  <label htmlFor="accountpinInfo">Set an account PIN</label>
+								  <label htmlFor="accountpinInfo">Change your account PIN</label>
 								  <p id="accountpinInfo">
-                     Create your PIN by setting a customer number below. Be sure not to use your SSN.
+                     Change your current PIN by setting a custom number below. Be sure not to use your SSN.
 								  </p>
 								</div>
                 <div className="form-group">
@@ -158,7 +158,8 @@ class AccountBlock extends Component {
 								  name="newAccountPin"
 								  valid={isValid}
 								  touched={istouched}
-								  value={newAccountPin} />
+								  value={newAccountPin} 
+                  analyticstrack="pinblock-newpintxt"/>
                    {/* !isValid && 
                   <p className="errorDisplay">InValid Entry</p> */
                   }
@@ -171,7 +172,8 @@ class AccountBlock extends Component {
 								  name="confirmAccountPin"
 								  valid={isMismatch}
 								  touched={istouched}
-								  value={confirmAccountPin} />
+								  value={confirmAccountPin} 
+                  analyticstrack="pinblock-confpintxt"/>
                   { /* !isMismatch && confirmAccountPin.length>0 && 
                   <p className="errorDisplay">Mismatch</p> */
                  }
@@ -205,13 +207,13 @@ class AccountBlock extends Component {
 			{ 
         !showAccountPinEdit && accountPinEditMode && 
              <div className="col-sm-2 description_box__edit description_box__edit_section cancel">
-				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="pinblock-cancel">Cancel</a>
 			</div>
             }
 			
             {
 			showAccountPinEdit &&  
-			<div className="col-sm-2 description_box__edit description_box__edit_section">
+			<div className="col-sm-2 description_box__edit description_box__edit_section" analyticstrack="pinblock-edit">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('accountPinblock')} role="button">Edit</a>
 			</div>
 			}
@@ -221,8 +223,10 @@ class AccountBlock extends Component {
 			{
                !showAccountPinEdit && accountPinEditMode && 
 			   <div className="footer col-xs-12">
-                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid || !isMismatch} onClick={() => this.props.handleSave('pinForm', {enteredPin: newAccountPin,reEnteredPin: confirmAccountPin}, event)}>Save Changes</button>
+                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pinblock-cancel">Cancel</a>
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch} 
+                  onClick={() => this.props.handleSave('pinForm', {enteredPin: newAccountPin,reEnteredPin: confirmAccountPin}, event)} 
+                  analyticstrack="pinblock-save">Save Changes</button>
                 </div>
              }
 		</div>

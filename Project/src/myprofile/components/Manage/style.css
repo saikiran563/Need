@@ -43,10 +43,6 @@
  .owner-info-second {
      padding-top: 5%;
 }
-.manager-name {
-    padding-bottom: 10px; 
-}
-
  .text-success {
      color: green;
 }
@@ -124,33 +120,4 @@ select {
 
 .request-sent-close-cont{
   float: right;
-}
-
-.flex {
-  display: flex;
-}
-.cancel-cont {
-  padding-right: 5%;
-}
-
-.revoke-popup-heading {
-  font-size: 40px;
-}
-
-.revoke-popup-seperator {
-  height: 2px;
-  background: #b6b6b6;
-  margin: 5% 0 3% 0;
-}
-
-.revoke-popup-body {
-  padding-bottom: 5%;
-}
-
-.account-manager-request-heading{
-  padding: 5% 0 5% 0;
-}
-
-.account-manager-request-pending{
-  padding: 5% 0 5% 0;
 }

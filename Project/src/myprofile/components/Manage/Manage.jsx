@@ -29,15 +29,13 @@ class Manage extends Component {
       revokedManager: {},
       accountManagerRequests: [],
       deniedAccountManagerRequests: null,
-      showRequestSuccessPopup: false,
-      newAccountMemberRequest:  {
-          status: 'request denied' // request pending , request denied
-      }
+      showRequestSuccessPopup: false
     }
   }
 
   componentDidMount(){
     this.props.actions.fetchManage();
+    //this.props.actions.getUserInfo();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
@@ -50,15 +48,9 @@ class Manage extends Component {
   handleSendRequestForAccountManager(newManagerInfo){
         //Api call to Save new Manager Info
         this.toggleRequestSuccessPopup()
-        this.setState({
-          newAccountMemberRequest: {
-            status: 'request pending',
-            firstName: newManagerInfo.firstName,
-            lastName: newManagerInfo.lastName,
-            phoneNumber: newManagerInfo.phoneNumber,
-            emailId: newManagerInfo.emailId
-          }
-        })
+        // this.setState({
+        //   showRequestSuccessPopup: true
+        // })
   }
 
   toggleRequestSuccessPopup(){
@@ -128,12 +120,12 @@ class Manage extends Component {
 
 handleEditCancel = (type) =>  {
     switch(type) {
-      case 'accountmanagersblock':
+      case 'accountmanagerblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
         });
-        this.props.history.push('/manage/accountmanagers');
+        this.props.history.push('/manage/accountmanager');
       break;
 
       case 'greetingnameblock':
@@ -147,7 +139,7 @@ handleEditCancel = (type) =>  {
       case 'transferofserviceblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
-          managerEditMode: false,greetingEditMode: false, transferOfServiceEditMode:true
+          managerEditMode: false,greetingEditMode: false,transferOfServiceEditMode:true
          });
           this.props.history.push('/manage/transferofservice');
       break;
@@ -165,7 +157,8 @@ handleEditCancel = (type) =>  {
    // through an API call.
      event.preventDefault();
       switch(formId) {
-       case 'accountmanagersBlock':
+       case 'accountmanagerBlock':
+
        const { managers } = this.state
        let newManagers = []
        // Remove existing isLastlyAdded key if multiple managers are added
@@ -196,7 +189,7 @@ handleEditCancel = (type) =>  {
        case 'greetingnameblock':
        //
        break
-       case 'transferOfserviceblock':
+       case 'transferofserviceblock':
        //
        break;
        default:
@@ -298,23 +291,14 @@ const mapStateToProps = state => {
   manage: state.manage,
   accountManagerRequests: [
     {
-       "role": "accountmanager",
-       "firstName": "JEFFREY",
-       "lastName": "LEBOWSKI",
+       "role": "accountManager",
+       "firstName": "JOHN",
+       "lastName": "DOE",
        "phoneNumber": "3144128530",
-       "emailId": "ASHLEY@JACOBY.COM",
+       "emailId": "JOHN@DOE.COM",
        "alreadyRegistered": true,
        "newlyRegistered": true
-     },
-     {
-        "role": "accountmanager",
-        "firstName": "sapien",
-        "lastName": "Razor",
-        "phoneNumber": "54544",
-        "emailId": "ASHLEY@JACOBY.COM",
-        "alreadyRegistered": true,
-        "newlyRegistered": true
-      }
+     }
   ],
   state:state,
   /*  manage: {

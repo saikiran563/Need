@@ -1,13 +1,13 @@
 import axios from 'axios'
 import mockAPI from '../api'
 
-export const FETCH_ENHANCED_AUTH_EDIT = 'FETCH_ENHANCED_AUTH_EDIT';
+export const FETCH_ENHANCED_AUTH_EDIT_BEGIN = 'FETCH_ENHANCED_AUTH_EDIT_BEGIN';
 
-// export const API_ENHANCED_AUTH_URL = "#";
+export const FETCH_ENHANCED_AUTH_EDIT_SUCCESS = 'FETCH_ENHANCED_AUTH_EDIT_SUCCESS';
 
-// http://www.mocky.io/v2/5b612eb1300000dc046a4007
 
 export const fetchEnhAuthEdit = () => dispatch => {
+dispatch(fetchEnhAuthEditBegin())
 
   mockAPI.fetchEnhAuthEdit(response => {
     dispatch(fetchEnhancedAuthEdit(response))
@@ -26,9 +26,12 @@ export const fetchEnhAuthEdit = () => dispatch => {
 
 // }
 
+export const fetchEnhAuthEditBegin = () => ({
+  type: FETCH_ENHANCED_AUTH_EDIT_BEGIN,
+})
 
 export const fetchEnhancedAuthEdit = (enhancedAuth) => ({
-  type: FETCH_ENHANCED_AUTH_EDIT,
+  type: FETCH_ENHANCED_AUTH_EDIT_SUCCESS,
   enhancedAuth
 })
 
