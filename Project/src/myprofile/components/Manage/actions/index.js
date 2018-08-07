@@ -1,4 +1,4 @@
-export { fetchManage,fetchManageBegin } from './fetchManage'
+export { fetchManage,fetchManageBegin } from './manage'
 export const SHOWPOPUP ="SHOWPOPUP";
 export const CLOSEPOPUP ="CLOSEPOPUP";
 export { show_popup } from './popup';

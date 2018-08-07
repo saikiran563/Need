@@ -1,7 +1,7 @@
 import {
   FETCH_MANAGE_BEGIN,
   FETCH_MANAGE_SUCCESS,
-} from '../actions/fetchManage'
+} from '../actions/manage'
 
 import {
   createReducer,

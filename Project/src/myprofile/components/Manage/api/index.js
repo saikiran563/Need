@@ -1,11 +1,9 @@
-/**
- * Mocking client-server processing
- */
-import _profile from './profile.json'
+const BASE_URL = 'https://'
 
-const TIMEOUT = 500
-
-export default {
-  fetchSecurity: (cb, timeout) =>
-    setTimeout(() => cb(_profile), timeout || TIMEOUT),
-}
+export const GET_ACCOUNT_MANAGE_URL =  BASE_URL
+export const GET_ACCOUNT_MEMBER_DETAILS =  BASE_URL
+export const GET_ALL_MNTS = BASE_URL + '/ao/profile/mtns'
+export const ADD_MANAGER_URL = BASE_URL + '/ahonly/profile/modifyacctmgr'
+export const REMOVE_MANAGER_URL = BASE_URL + '/ahonly/profile/downgradeacctmgr'
+export const APPROVE_MANAGER_URL = BASE_URL
+export const DENY_MANAGER_URL = BASE_URL
