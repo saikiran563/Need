@@ -1,0 +1,134 @@
+{
+  "contact": {
+    "emailID": "email@jhsxn.com",
+    "primaryPhone": "3148823211",
+    "alternatePhone": "3148823212",
+    "addressLine1": "RR 297 297 RURAL ROUTE 1 RT",
+    "addressLine2": "",
+    "city": "Somerset",
+    "state": "NJ",
+    "zip": "68474",
+  "userServiceAddressInfo": {
+    "serviceAddresses": [
+      {
+        "billingAddress": true,
+        "address": {
+          "address": "Same as billing address"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-000"
+          },
+          {
+            "line": "0000-001"
+          }
+        ]
+      },
+      {
+        "billingAddress": false,
+        "address": {
+          "address": "0000 Street Name DR",
+          "apartment": "House No 42",
+          "city": "New York",
+          "state": "NY",
+          "zip": "00000-0000"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-000"
+          },
+          {
+            "line": "000-001"
+          }
+        ]
+      },
+      {
+        "billingAddress": false,
+        "address": {
+          "address": "0000 Street Name R",
+          "apartment": "House No 42",
+          "city": "New York",
+          "state": "NY",
+          "zip": "00000-0000"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-002"
+          },
+          {
+            "line": "000-004"
+          }
+        ]
+      }
+    ]
+  }
+  },
+  "email": {
+    "newEmailId": "new@jhsxn.com"
+  },
+  "primaryphone": {
+    "primaryPhone": "1234567890",
+    "alternatePhone": "4567896567"
+  },
+  "billingaddress": {
+    "addressLine1": "RR 297 297 RURAL ROUTE 1 RT",
+    "addressLine2": "123",
+    "city": "Somerset",
+    "zip": "68474",
+    "state": "NJ"
+  },
+  "userServiceAddressInfo": {
+    "serviceAddresses": [
+      {
+        "billingAddress": true,
+        "address": {
+          "address": "Same as billing address"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-000"
+          },
+          {
+            "line": "0000-001"
+          }
+        ]
+      },
+      {
+        "billingAddress": false,
+        "address": {
+          "address": "0000 Street Name DR",
+          "apartment": "House No 42",
+          "city": "New York",
+          "state": "NY",
+          "zip": "00000-0000"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-000"
+          },
+          {
+            "line": "000-001"
+          }
+        ]
+      },
+      {
+        "billingAddress": false,
+        "address": {
+          "address": "0000 Street Name R",
+          "apartment": "House No 42",
+          "city": "New York",
+          "state": "NY",
+          "zip": "00000-0000"
+        },
+        "serviceLines": [
+          {
+            "line": "0000-002"
+          },
+          {
+            "line": "000-004"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+
+.aMyProfile .description_box__control-btn {
+    margin: auto 0;
+    width: 100%;
+    display: block;   
+}
+.selectAll{
+    cursor: pointer;
+}
+
+
+

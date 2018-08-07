@@ -1,0 +1,49 @@
+{
+  "privacySettingItems": [
+      {
+          "settingType": "cpniOptOutInd",
+          "mtnSettingsMap": {
+              "3143060179": "N",
+              "3144125593": "N",
+              "3144128530": "N",
+              "3149100987": "N",
+              "3149207610": "N",
+              "3149209317": "Y"
+          }
+      },
+      {
+          "settingType": "businessMarketingReportsOptOutInd",
+          "mtnSettingsMap": {
+              "3143060179": "N",
+              "3144125593": "Y",
+              "3144128530": "Y",
+              "3149100987": "N",
+              "3149207610": "Y",
+              "3149209317": "N"
+          }
+      },
+      {
+          "settingType": "relevantMobileAdvertisingOptOutInd",
+          "mtnSettingsMap": {
+              "3143060179": "Y",
+              "3144125593": "Y",
+              "3144128530": "Y",
+              "3149100987": "N",
+              "3149207610": "Y",
+              "3149209317": "N"
+          }
+      },
+      {
+          "settingType": "socialMediaAddressIndicator",
+          "mtnSettingsMap": {
+              "3143060179": "N",
+              "3144125593": "N",
+              "3144128530": "N",
+              "3149100987": "N",
+              "3149207610": "N",
+              "3149209317": "N"
+          }
+      }
+  ],
+  "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605"
+}

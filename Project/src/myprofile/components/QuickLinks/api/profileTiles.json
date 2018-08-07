@@ -1,0 +1,18 @@
+{
+    "cq": {
+        "changeEmailAddressTitle": "Change email address",
+        "changeEmailAddressInfo": "Choose the email address that we should use to contact you.",
+        "changePasswordTitle": "Change password",
+        "changePasswordInfo": "Pick a password to use with your Verizon login.",
+        "managePrivacyTitle": "Manage privacy settings",
+        "managePrivacyInfo": "Specify the kind of information Verizon can collect from you.",
+        "assignAccountManagersTitle": "Assign account managers",
+        "assignAccountManagersInfo": "Assign Account Managers to let others access and make changes",
+        "changeAccountPinTitle": "Change account PIN",
+        "changeAccountPinInfo": "Set a PIN number to verify your identity when calling customer care.",
+        "changeBillingAddressTitle": "Change billing address",
+        "changeBillingAddressInfo": "Let us know where to send your bill."
+    },
+    "errorcode": "00",
+    "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605"
+}
