@@ -31,7 +31,7 @@ export const FETCH_ACCOUNT_MANAGE_BEGIN = 'FETCH_ACCOUNT_MANAGE_BEGIN'
 export const FETCH_ACCOUNT_MANAGE_SUCCESS = 'FETCH_ACCOUNT_MANAGE_SUCCESS'
 export const FETCH_ACCOUNT_MANAGE_FAIL = 'FETCH_ACCOUNT_MANAGE_FAIL'
 /*Triggered when new manager is added by firstName, lastName and email or phone*/
-export const ADD_NEW_MANAGER_FAIL_BEGIN = 'ADD_NEW_MANAGER_FAIL_BEGIN'
+export const ADD_NEW_MANAGER_BEGIN = 'ADD_NEW_MANAGER_BEGIN'
 export const ADD_NEW_MANAGER_SUCCESS = 'ADD_NEW_MANAGER_SUCCESS'
 export const ADD_NEW_MANAGER_FAIL = 'ADD_NEW_MANAGER_FAIL'
 /*Triggered when a active manager is removed*/
@@ -141,5 +141,31 @@ const fetchManagerRequestsSuccess = response => ({
 
 const fetchManagerRequestsMtnsFailed = error => ({
   type: FETCH_MANAGER_REQUESTS_FAIL,
+  error
+})
+
+// Add account Manager by Account Holder directly
+export const postAddManagerByAccountHolder = (payload) => dispatch => {
+  dispatch(postAddManagerByAccountHolderBegin())
+  axios.post(ADD_MANAGER_URL,payload)
+  .then(response => {
+    dispatch(postAddManagerByAccountHolderSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(postAddManagerByAccountHolderFailed(error))
+  })
+}
+
+const postAddManagerByAccountHolderBegin = () => ({
+   type: ADD_NEW_MANAGER_BEGIN,
+})
+
+const postAddManagerByAccountHolderSuccess = response => ({
+   type: ADD_NEW_MANAGER_SUCCESS,
+   response
+})
+
+const postAddManagerByAccountHolderFailed = error => ({
+  type: ADD_NEW_MANAGER_FAIL,
   error
 })

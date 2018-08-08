@@ -300,8 +300,15 @@ getinitialState(){
     return <div/>
   }
 
-  handleSave = (e)=>{
+  handleSave = (e) =>{
     this.props.handleSave('accountManagerBlock', this.state, e)
+    this.props.actions.postAddManagerByAccountHolder({
+        "firstName": this.state.firstName,
+        "lastName": this.state.firstName,
+        "selectedMtn": this.state.phoneNumber === 'noLineAssigned' ? '' : this.state.phoneNumber ,
+        "emailId": this.state.emailId,
+        "acctTypeCode": ''
+    })
     this.setState(this.getinitialState())
   }
 
@@ -359,7 +366,7 @@ getinitialState(){
                    </div>
                    <div className='footer col-xs-12'>
                      <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                       <button className='btn btn--round'  onClick={() =>this.handleSave() }>Add Manager</button>
+                       <button className='btn btn--round'  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
                    </div>
                  </div>
               </div>

@@ -1,4 +1,8 @@
-export { fetchLandingManageData, fetchMtns, fetchManagerRequests } from './manage'
+export {
+    fetchLandingManageData,
+    fetchMtns,
+    fetchManagerRequests,
+    postAddManagerByAccountHolder } from './manage'
 export const SHOWPOPUP ="SHOWPOPUP";
 export const CLOSEPOPUP ="CLOSEPOPUP";
 export { show_popup } from './popup';
