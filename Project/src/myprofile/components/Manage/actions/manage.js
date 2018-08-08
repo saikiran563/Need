@@ -7,7 +7,8 @@ import {
     APPROVE_MANAGER_URL,
     DENY_MANAGER_URL,
     GET_MANAGE_LANDING_URL,
-    GET_MTNS_URL
+    GET_MTNS_URL,
+    GET_MANAGER_REQUESTS_URL
   } from '../api'
 
   /*Get the data related to Manage Account Block */
@@ -19,6 +20,11 @@ export const FETCH_MANAGE_LANDING_FAIL = 'FETCH_MANAGE_LANDING_FAIL'
 export const FETCH_MTNS_BEGIN = 'FETCH_MTNS_BEGIN'
 export const FETCH_MTNS_SUCCESS = 'FETCH_MTNS_SUCCESS'
 export const FETCH_MTNS_FAIL = 'FETCH_MTNS_FAIL'
+
+/*Get the list of mobile numbers on Manage*/
+export const FETCH_MANAGER_REQUESTS_BEGIN = 'FETCH_MANAGER_REQUESTS_BEGIN'
+export const FETCH_MANAGER_REQUESTS_SUCCESS = 'FETCH_MANAGER_REQUESTS_SUCCESS'
+export const FETCH_MANAGER_REQUESTS_FAIL = 'FETCH_MANAGER_REQUESTS_FAIL'
 
 /*Get the data related to Manage Account Block */
 export const FETCH_ACCOUNT_MANAGE_BEGIN = 'FETCH_ACCOUNT_MANAGE_BEGIN'
@@ -108,5 +114,32 @@ const fetchMtnsSuccess = response => ({
 
 const fetchMtnsFailed = error => ({
   type: FETCH_MTNS_FAIL,
+  error
+})
+
+
+// Fetch Manager Requests
+export const fetchManagerRequests = () => dispatch => {
+  dispatch(fetchManagerRequestsBegin())
+  axios.get(GET_MANAGER_REQUESTS_URL,{hearders: customHeaders})
+  .then(response => {
+    dispatch(fetchManagerRequestsSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(fetchManagerRequestsMtnsFailed(error))
+  })
+}
+
+const fetchManagerRequestsBegin = () => ({
+   type: FETCH_MANAGER_REQUESTS_BEGIN,
+})
+
+const fetchManagerRequestsSuccess = response => ({
+   type: FETCH_MANAGER_REQUESTS_SUCCESS,
+   response
+})
+
+const fetchManagerRequestsMtnsFailed = error => ({
+  type: FETCH_MANAGER_REQUESTS_FAIL,
   error
 })

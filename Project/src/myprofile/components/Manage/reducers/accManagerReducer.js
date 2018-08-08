@@ -28,6 +28,16 @@ const accManagerReducer = (state = initialState, action) => {
       return updateObject(state, {
         mtns: action.response.mtnList
       })
+    case 'FETCH_MANAGER_REQUESTS_SUCCESS':
+      let accountManagerRequests = []
+      action.response.customerInfo.forEach(eachManager => {
+        if( !('role' in eachManager) ){ // Managers who does not have role key are considered as waiting for approval
+          accountManagerRequests.push(eachManager)
+        }
+      })
+      return updateObject(state, {
+        accountManagerRequests
+      })
     default:
       return state
   }

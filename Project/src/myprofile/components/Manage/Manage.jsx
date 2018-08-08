@@ -235,7 +235,6 @@ handleEditCancel = (type) =>  {
                   {...this.state}
                   handleAppproveAccountManagerRequest={(newRequest)=>this.handleAppproveAccountManagerRequest(newRequest)}
                   handleDenyAccountManagerRequest={(newRequest)=>this.handleDenyAccountManagerRequest(newRequest)}
-                  accountManagerRequests={accountManagerRequests}
                   deniedAccountManagerRequests={deniedAccountManagerRequests}
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
                   handleUndoDenyAccountManagerRequest={(deniedRequest)=>this.handleUndoDenyAccountManagerRequest(deniedRequest)}
@@ -254,107 +253,8 @@ handleEditCancel = (type) =>  {
 
 const mapStateToProps = state => {
   return {
-  // "statusCode": "0",
-  // "greetingName": "testUser",
-  // "customerInfo": [
-  //   {
-  //     "role": "accountHolder",
-  //     "phoneNumber": "3143060179",
-  //     "emailId": "ASHLEYJACOBY@CHARTER.NET",
-  //     "alreadyRegistered": true,
-  //     "newlyRegistered": true
-  //   },
-  //   {
-  //     "role": "accountManager",
-  //     "firstName": "JEFFREY",
-  //     "lastName": "LEBOWSKI",
-  //     "phoneNumber": "3144125593",
-  //     "emailId": "ASHLEY@JACOBY.COM",
-  //     "alreadyRegistered": true,
-  //     "newlyRegistered": true
-  //   },
-  //   {
-  //     "role": "accountManager",
-  //     "firstName": "JEFFREY",
-  //     "lastName": "LEBOWSKI",
-  //     "phoneNumber": "3144128530",
-  //     "emailId": "ASHLEY@JACOBY.COM",
-  //     "alreadyRegistered": true,
-  //     "newlyRegistered": true
-  //   }
-  // ],
-  // "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
-  managers: state.accManagerReducer.managers,
-  accountManagerRequests: [
-    {
-       "role": "accountManager",
-       "firstName": "JEFFREY",
-       "lastName": "LEBOWSKI",
-       "phoneNumber": "3144128530",
-       "emailId": "ASHLEY@JACOBY.COM",
-       "alreadyRegistered": true,
-       "newlyRegistered": true
-     },
-     {
-        "role": "accountManager",
-        "firstName": "sapien",
-        "lastName": "Razor",
-        "phoneNumber": "54544",
-        "emailId": "ASHLEY@JACOBY.COM",
-        "alreadyRegistered": true,
-        "newlyRegistered": true
-      }
-  ],
-  state:state,
-  /*  manage: {
-      manage: null,
-      isFetching: false,
-      show: false,
-      accountManagerRequests: [
-        {
-          id: 10,
-          firstName: "Samurai",
-          lastName:"Jack",
-          phoneNumber: "(909)-505-603",
-          emailId: "samuraijack@verizon..com",
-          type:"accountManager",
-        },
-        {
-          id: 12,
-          firstName: "Bruce",
-          lastName:"Lee",
-          phoneNumber: "(909)-505-603",
-          emailId: "Brucelee@verizon..com",
-          type:"accountManager",
-        },
-        {
-          id: 11,
-          firstName: "Jackie",
-          lastName:"Chan",
-          phoneNumber: "(909)-505-603",
-          emailId: "jackieChan@verizon..com",
-          type:"accountManager",
-        }
-      ],
-      list: [
-        {
-          type:"accountOwner",
-          id: 1,
-          firstName: "Isacc",
-          lastName:"Newton",
-          phoneNumber: "(909)-505-603",
-          emailId: "Isacc@Newton.com"
-        },
-        {
-          type: "none",
-          id:2,
-          firstName: "Benjamin",
-          lastName:"Franklin",
-          phoneNumber: "(909)-505-603",
-          emailId: "name@domain.com"
-        }
-      ]
-    } */
+    managers: state.accManagerReducer.managers,
+    state:state,
   }
 }
 

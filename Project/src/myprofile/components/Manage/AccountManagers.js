@@ -538,6 +538,7 @@ getinitialState(){
   handleEditCancel = () => {
     this.props.handleEditCancel('accountManagerblock')
     this.props.actions.fetchMtns()
+    this.props.actions.fetchManagerRequests()
   }
 
   render() {
@@ -585,7 +586,8 @@ getinitialState(){
 
 const mapStateToProps = state => {
   return {
-    mtns: state.accManagerReducer.mtns
+    mtns: state.accManagerReducer.mtns,
+    accountManagerRequests: state.accManagerReducer.accountManagerRequests
   }
 }
 
