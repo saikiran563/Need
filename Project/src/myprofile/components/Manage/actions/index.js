@@ -2,7 +2,9 @@ export {
     fetchLandingManageData,
     fetchMtns,
     fetchManagerRequests,
-    postAddManagerByAccountHolder } from './manage'
+    postAddManagerByAccountHolder,
+    postRemoveManagerByAccountHolder
+  } from './manage'
 export const SHOWPOPUP ="SHOWPOPUP";
 export const CLOSEPOPUP ="CLOSEPOPUP";
 export { show_popup } from './popup';

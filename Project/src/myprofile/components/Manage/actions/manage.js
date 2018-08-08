@@ -169,3 +169,30 @@ const postAddManagerByAccountHolderFailed = error => ({
   type: ADD_NEW_MANAGER_FAIL,
   error
 })
+
+
+// Remove account Manager by Account Holder
+export const postRemoveManagerByAccountHolder = (payload) => dispatch => {
+  dispatch(postRemoveManagerByAccountHolderBegin())
+  axios.post(REMOVE_MANAGER_URL,payload)
+  .then(response => {
+    dispatch(postRemoveManagerByAccountHolderSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(postRemoveManagerByAccountHolderFailed(error))
+  })
+}
+
+const postRemoveManagerByAccountHolderBegin = () => ({
+   type: REMOVE_MANAGER_BEGIN,
+})
+
+const postRemoveManagerByAccountHolderSuccess = response => ({
+   type: REMOVE_MANAGER_SUCCESS,
+   response
+})
+
+const postRemoveManagerByAccountHolderFailed = error => ({
+  type: REMOVE_MANAGER_FAIL,
+  error
+})

@@ -100,7 +100,16 @@ getinitialState(){
 
   handleRevokeAccess(){
     this.handleClosePopup()
-   this.props.handleRemoveManager(this.state.managerToRemove)
+    const { managerToRemove } = this.state
+    const postPayload = {
+        "firstName": managerToRemove.firstName,
+        "lastName": managerToRemove.lastName,
+        "selectedMtn": managerToRemove.phoneNumber,
+        "emailId": managerToRemove.emailId,
+        "acctTypeCode":''
+      }
+    this.props.actions.postRemoveManagerByAccountHolder(postPayload)
+    this.props.handleRemoveManager(this.state.managerToRemove)
   }
 
   onChangeInput = () => {
