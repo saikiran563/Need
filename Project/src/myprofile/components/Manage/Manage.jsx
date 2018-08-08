@@ -37,7 +37,7 @@ class Manage extends Component {
   }
 
   componentDidMount(){
-    this.props.actions.fetchManage();
+    this.props.actions.fetchLandingManageData();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
@@ -68,9 +68,9 @@ class Manage extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps.manage.manageResponse){
+    if(JSON.stringify(this.props.managers) != JSON.stringify(newProps.managers)){
         this.setState({
-          managers: newProps.manage.manageResponse.customerInfo
+          managers: newProps.managers
         })
     }
   }
@@ -106,14 +106,6 @@ class Manage extends Component {
 
   handleDenyAccountManagerRequest(newRequest){
       let { accountManagerRequests , deniedAccountManagerRequests}  = this.state
-      // managers.push({
-      //   id: newRequest.id,
-      //   firstName: newRequest.firstName,
-      //   lastName:newRequest.lastName,
-      //   phoneNumber: newRequest.phoneNumber,
-      //   emailId: newRequest.emailId
-      // })
-
       let pendingAccountManagerRequests = []
       accountManagerRequests.forEach(eachRequest=>{
         eachRequest.phoneNumber !== newRequest.phoneNumber ?
@@ -161,8 +153,6 @@ handleEditCancel = (type) =>  {
   }
 
   handleSave = (formId, formData, event) => {
-   // Action Dispatch will take place here to save the new userid to database
-   // through an API call.
      event.preventDefault();
       switch(formId) {
        case 'accountManagerBlock':
@@ -201,7 +191,6 @@ handleEditCancel = (type) =>  {
        break;
        default:
      }
-
     this.setState({ showManagerEdit: true, showGreetingEdit : true, showTransferOfServiceEdit: true})
   }
 
@@ -295,7 +284,7 @@ const mapStateToProps = state => {
   //   }
   // ],
   // "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605",
-  manage: state.manage,
+  managers: state.accManagerReducer.managers,
   accountManagerRequests: [
     {
        "role": "accountManager",

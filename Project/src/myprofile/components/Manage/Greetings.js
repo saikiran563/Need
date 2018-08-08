@@ -99,7 +99,7 @@ class GreetingBlock extends Component {
               {
                 showGreetingEdit  &&  (
                 <div>
-                  <p>Name</p>
+                  <p>{this.props.greetingName}</p>
                 </div>
               )}
               { !showGreetingEdit && greetingEditMode && (
@@ -181,4 +181,14 @@ class GreetingBlock extends Component {
   }
 }
 
-export default GreetingBlock;
+const mapStateToProps = state => {
+  return {
+    greetingName: state.greetingReducer.greeting
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(actions, dispatch),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GreetingBlock)

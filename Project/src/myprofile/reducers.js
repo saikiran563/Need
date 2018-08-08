@@ -4,7 +4,8 @@ import myprofileReducer from './components/QuickLinks/reducers'
 import SecurityReducer from './components/Security/reducers'
 
 import contactDetailsReducer from './components/ContactAndBilling/reducers'
-import ManageReducer from './components/Manage/reducers'
+import accManagerReducer from './components/Manage/reducers/accManagerReducer'
+import greetingReducer from './components/Manage/reducers/greetingReducer'
 
 import privacyDetailsReducer from './components/PrivacyAndPermissions/reducers'
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   myprofile: myprofileReducer,
   security: SecurityReducer,
   contactDetails : contactDetailsReducer,
-  manage: ManageReducer,
+  accManagerReducer: accManagerReducer,
+  greetingReducer:greetingReducer,
   privacyDetails : privacyDetailsReducer,
   leftNav: leftNavReducer,
   enhancedAuth: enhancedAuthReducer,

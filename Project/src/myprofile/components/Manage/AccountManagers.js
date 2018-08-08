@@ -103,17 +103,6 @@ getinitialState(){
    this.props.handleRemoveManager(this.state.managerToRemove)
   }
 
-  handleOnChange = (inputType,inputValue) => {
-    if(inputType == 'firstName' || inputType == 'lastName'){
-      const validateName = /^[a-zA-Z]*$/// Avoid Special Characters and numbers as part of first name and last name
-      if(validateName.test(inputValue)){
-          this.setState({ [inputType]: inputValue })
-      }
-    }else{
-          this.setState({ [inputType]: inputValue }, () => this.onChangeInput());
-    }
-  }
-
   onChangeInput = () => {
     // All  the validations goes here
   /*  const val = this.state.user;
@@ -145,6 +134,17 @@ getinitialState(){
             this.setState({ useridInvalidMessages });
         }
     } */
+  }
+
+  handleOnChange = (inputType,inputValue) => {
+    if(inputType == 'firstName' || inputType == 'lastName'){
+      const validateName = /^[a-zA-Z]*$/// Avoid Special Characters and numbers as part of first name and last name
+      if(validateName.test(inputValue)){
+          this.setState({ [inputType]: inputValue })
+      }
+    }else{
+          this.setState({ [inputType]: inputValue }, () => this.onChangeInput());
+    }
   }
 
   getManagersView(){
@@ -306,7 +306,7 @@ getinitialState(){
   }
 
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
-    const { newAccountMemberRequest } = this.props
+    const { newAccountMemberRequest, mtns } = this.props
     if( newAccountMemberRequest.status === 'not requested' ){
       if( accountOwner && managers.length < MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
@@ -342,6 +342,11 @@ getinitialState(){
                          <select value={this.state.phoneNumber} onChange={(e)=>this.handleOnChange('phoneNumber',e.target.value)}>
                              <option value='' >Select</option>
                              <option value='noLineAssigned' >No Line Assigned</option>
+                             {
+                               mtns.map(eachMtns=>{
+                                 return <option value={eachMtns}>{eachMtns}</option>
+                               })
+                             }
                          </select>
                        </div>
                        {
@@ -530,6 +535,11 @@ getinitialState(){
         )
   }
 
+  handleEditCancel = () => {
+    this.props.handleEditCancel('accountManagerblock')
+    this.props.actions.fetchMtns()
+  }
+
   render() {
     const { firstName, lastName, phoneNumber, emailId } = this.state;
     const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
@@ -563,7 +573,7 @@ getinitialState(){
               {
                   showManagerEdit && ( accountOwner || accountMember ) &&
                   <div className='description_box__edit description_box__edit_section'>
-                    <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('accountManagerblock')} role='button'>Edit</a>
+                    <a className='btn btn-anchor'  onClick={() => this.handleEditCancel()} role='button'>Edit</a>
                   </div>
               }
             </div>
@@ -573,4 +583,14 @@ getinitialState(){
   }
 }
 
-export default AccountManagerBlock;
+const mapStateToProps = state => {
+  return {
+    mtns: state.accManagerReducer.mtns
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(actions, dispatch),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountManagerBlock)
