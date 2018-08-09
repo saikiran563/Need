@@ -8,7 +8,8 @@ import {
     DENY_MANAGER_URL,
     GET_MANAGE_LANDING_URL,
     GET_MTNS_URL,
-    GET_MANAGER_REQUESTS_URL
+    GET_MANAGER_REQUESTS_URL,
+    SEND_ACCOUNT_MANGER_REQUEST_URL
   } from '../api'
 
   /*Get the data related to Manage Account Block */
@@ -54,11 +55,10 @@ export const DENY_MANAGER_FAIL = 'DENY_MANAGER_FAIL'
 export const UNDO_DENY_MANAGER_BEGIN= 'UNDO_REMOVE_MANAGER_BEGIN'
 export const UNDO_DENY_MANAGER_SUCCESS = 'UNDO_REMOVE_MANAGER_SUCCESS'
 export const UNDO_DENY_MANAGER_FAIL = 'UNDO_DENY_MANAGER_FAIL'
-
-
-const ACCOUNT_HOLDER_URL = 'http://api.myjson.com/bins/10l0qy' // Fake API for now
-const ACCOUNT_MEMBER_URL = 'https://api.myjson.com/bins/14iwuw' // also called as mobileSecure as role, Fake API for now
-var GET_MANAGERS_URL = ACCOUNT_MEMBER_URL //defaults to account member if mdnRole is not defined
+/*Triggered when account holder unintentionally denies a request and undo the action to set back to pending state */
+export const SEND_ACCOUNT_MANGER_REQUEST_BEGIN= 'SEND_ACCOUNT_MANGER_REQUEST_BEGIN'
+export const SEND_ACCOUNT_MANGER_REQUEST_SUCCESS = 'SEND_ACCOUNT_MANGER_REQUEST_SUCCESS'
+export const SEND_ACCOUNT_MANGER_REQUEST_FAIL = 'SEND_ACCOUNT_MANGER_REQUEST_FAIL'
 
 const customHeaders = {
  "Accept": "application/json"
@@ -194,5 +194,83 @@ const postRemoveManagerByAccountHolderSuccess = response => ({
 
 const postRemoveManagerByAccountHolderFailed = error => ({
   type: REMOVE_MANAGER_FAIL,
+  error
+})
+
+/* Approve Request of account Manager by Account Holder */
+export const postApproveManagerByAccountHolder = (payload) => dispatch => {
+  dispatch(postApproveManagerByAccountHolderBegin())
+  axios.post(APPROVE_MANAGER_URL,payload)
+  .then(response => {
+    dispatch(postApproveManagerByAccountHolderSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(postApproveManagerByAccountHolderFailed(error))
+  })
+}
+
+const postApproveManagerByAccountHolderBegin = () => ({
+   type: APPROVE_MANAGER_BEGIN,
+})
+
+const postApproveManagerByAccountHolderSuccess = response => ({
+   type: APPROVE_MANAGER_SUCCESS,
+   response
+})
+
+const postApproveManagerByAccountHolderFailed = error => ({
+  type: APPROVE_MANAGER_FAIL,
+  error
+})
+
+/* Deny Request of account Manager by Account Holder */
+export const postDenyManagerByAccountHolder = (payload) => dispatch => {
+  dispatch(postDenyManagerByAccountHolderBegin())
+  axios.post(APPROVE_MANAGER_URL,payload)
+  .then(response => {
+    dispatch(postDenyManagerByAccountHolderSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(postDenyManagerByAccountHolderFailed(error))
+  })
+}
+
+const postDenyManagerByAccountHolderBegin = () => ({
+   type: DENY_MANAGER_BEGIN,
+})
+
+const postDenyManagerByAccountHolderSuccess = response => ({
+   type: DENY_MANAGER_SUCCESS,
+   response
+})
+
+const postDenyManagerByAccountHolderFailed = error => ({
+  type: DENY_MANAGER_FAIL,
+  error
+})
+
+/* Send Request to Account holder to become account manager*/
+export const postSendRequestForAccountManager = (payload) => dispatch => {
+  dispatch(postSendRequestForAccountManagerBegin())
+  axios.post(SEND_ACCOUNT_MANGER_REQUEST_URL,payload)
+  .then(response => {
+    dispatch(postSendRequestForAccountManagerSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(postSendRequestForAccountManagerFailed(error))
+  })
+}
+
+const postSendRequestForAccountManagerBegin = () => ({
+   type: SEND_ACCOUNT_MANGER_REQUEST_BEGIN,
+})
+
+const postSendRequestForAccountManagerSuccess = response => ({
+   type: SEND_ACCOUNT_MANGER_REQUEST_SUCCESS,
+   response
+})
+
+const postSendRequestForAccountManagerFailed = error => ({
+  type: SEND_ACCOUNT_MANGER_REQUEST_FAIL,
   error
 })

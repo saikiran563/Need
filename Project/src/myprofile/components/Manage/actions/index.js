@@ -3,7 +3,10 @@ export {
     fetchMtns,
     fetchManagerRequests,
     postAddManagerByAccountHolder,
-    postRemoveManagerByAccountHolder
+    postRemoveManagerByAccountHolder,
+    postApproveManagerByAccountHolder,
+    postDenyManagerByAccountHolder,
+    postSendRequestForAccountManager
   } from './manage'
 export const SHOWPOPUP ="SHOWPOPUP";
 export const CLOSEPOPUP ="CLOSEPOPUP";

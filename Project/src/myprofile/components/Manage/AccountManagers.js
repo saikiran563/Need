@@ -11,8 +11,8 @@ import ManagersListToAccountManager from './components/ManagersListToAccountMana
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
-const accountOwner =  reactGlobals.role.toLocaleLowerCase() == 'ao'
-const accountMember = reactGlobals.mdnRole == 'mobileSecure'
+const accountOwner =  false//reactGlobals.role.toLocaleLowerCase() == 'ao'
+const accountMember = true//reactGlobals.mdnRole == 'mobileSecure'
 const accountManager = reactGlobals.role.toLocaleLowerCase() == "amgr"
 
 class AccountManagerBlock extends Component {
@@ -26,7 +26,7 @@ class AccountManagerBlock extends Component {
     const isMaxManagersReached = managers.length > MAXIMUM_ACCOUNT_MANAGERS_ACTIVE
     if( isMaxManagersReached == false ){
       return(
-        <div key={request.phoneNumber}>
+        <div key={ request.phoneNumber + request.emailId }>
           <div className='row request-cont'>
               <p>Requested by { request.phoneNumber } </p>
           </div>
@@ -265,11 +265,39 @@ getinitialState(){
   }
 
   handleDenyAccountManagerRequest(newRequest){
+    const payload = {
+        "firstName": newRequest.firstName,
+        "lastName": newRequest.lastName,
+        "selectedMtn": newRequest.phoneNumber,
+        "emailId": newRequest.emailId,
+        "status":"DENIED"
+ }
+    this.props.actions.postDenyManagerByAccountHolder(payload)
     this.props.handleDenyAccountManagerRequest(newRequest)
   }
 
   handleAppproveAccountManagerRequest(newRequest){
+    const payload = {
+        "firstName": newRequest.firstName,
+        "lastName": newRequest.lastName,
+        "selectedMtn": newRequest.phoneNumber,
+        "emailId": newRequest.emailId,
+        "status":"APPROVED"
+ }
+    this.props.actions.postApproveManagerByAccountHolder(payload)
     this.props.handleAppproveAccountManagerRequest(newRequest)
+  }
+
+  handleSendRequestForAccountManager(newRequest){
+    const payload = {
+        "firstName": newRequest.firstName,
+        "lastName": newRequest.lastName,
+        "selectedMtn": newRequest.phoneNumber,
+        "emailId": newRequest.emailId,
+        "status":"PENDING"
+ }
+    this.props.actions.postSendRequestForAccountManager(payload)
+    this.props.handleSendRequestForAccountManager(newRequest)
   }
 
   getAccountManagerRequestsView(){
@@ -441,7 +469,7 @@ getinitialState(){
                      </div>
                      <div className='footer col-xs-12'>
                        <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                         <button className='btn btn--round'  onClick={() =>this.props.handleSendRequestForAccountManager(this.state) }>Send Request</button> :
+                         <button className='btn btn--round'  onClick={() =>this.handleSendRequestForAccountManager(this.state) }>Send Request</button> :
                      </div>
                    </div>
                 </div>
@@ -538,7 +566,7 @@ getinitialState(){
                     </div>
                     <div className='footer col-xs-12'>
                           <a className='btn' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                          <button className='btn btn--round'  onClick={(e) =>{this.props.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
+                          <button className='btn btn--round'  onClick={(e) =>{this.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
                     </div>
                 </div>
                </div> :
