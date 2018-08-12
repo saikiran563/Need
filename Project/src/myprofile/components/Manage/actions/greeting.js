@@ -1,39 +1,37 @@
 import mockProfileAPI from '../api'
 import axios from 'axios'
-export const FETCH_MANAGE_BEGIN = 'manage/FETCH_MANAGE_BEGIN'
-export const FETCH_MANAGE_SUCCESS = 'manage/FETCH_MANAGE_SUCCESS'
 
-const ACCOUNT_HOLDER_URL = 'http://api.myjson.com/bins/10l0qy' // Fake API for now
-const ACCOUNT_MEMBER_URL = 'https://api.myjson.com/bins/14iwuw' // also called as mobileSecure as role, Fake API for now
-var GET_MANAGERS_URL = ACCOUNT_MEMBER_URL //defaults to account member if mdnRole is not defined
+import {
+    POST_GREETING_NAME_URL
+  } from '../api'
 
-// if(reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder") {
-//   GET_MANAGERS_URL = ACCOUNT_HOLDER_URL
-// } else if(reactGlobals.mdnRole.toLocaleLowerCase() == "mobilesecure"){
-//   GET_MANAGERS_URL = ACCOUNT_MEMBER_URL
-// }
+  /*Post the greeting name*/
+export const POST_GREETING_NAME_BEGIN = 'POST_GREETING_NAME_BEGIN'
+export const POST_GREETING_NAME_SUCCESS = 'POST_GREETING_NAME_SUCCESS'
+export const POST_GREETING_NAME_FAIL = 'POST_GREETING_NAME_FAIL'
 
-const customHeaders = {
- "Accept": "application/json"
- //"Authorization": "'client_ip':10.191.198.160,'channel':'web'",
-}
-
-export const fetchManage= () => dispatch => {
-  dispatch(fetchManageBegin())
-  axios.get(GET_MANAGERS_URL,{hearders: customHeaders})
+//Post greeting name
+export const postGreetingName = (payload) => dispatch => {
+  dispatch(postGreetingNameBegin())
+  axios.post(POST_GREETING_NAME_URL,payload)
   .then(response => {
-    dispatch(fetchManageSuccess(response.data))
+    dispatch(postGreetingNameSuccess())
   })
- .catch((err) => {
-    console.log("Fetch Manage Failed: ", err)
+ .catch((error) => {
+    dispatch(postGreetingNameFailed(error))
   })
 }
 
-export const fetchManageBegin = () => ({
-  type: FETCH_MANAGE_BEGIN,
+const postGreetingNameBegin = () => ({
+   type: POST_GREETING_NAME_BEGIN,
 })
 
-export const fetchManageSuccess = manage => ({
-  type: FETCH_MANAGE_SUCCESS,
-  manage,
+const postGreetingNameSuccess = response => ({
+   type: POST_GREETING_NAME_SUCCESS,
+   response
+})
+
+const postGreetingNameFailed = error => ({
+  type: POST_GREETING_NAME_FAIL,
+  error
 })

@@ -6,8 +6,13 @@ export {
     postRemoveManagerByAccountHolder,
     postApproveManagerByAccountHolder,
     postDenyManagerByAccountHolder,
-    postSendRequestForAccountManager
+    postSendRequestForAccountManager,
   } from './manage'
+
+  export {
+    postGreetingName
+  } from './greeting'
+  
 export const SHOWPOPUP ="SHOWPOPUP";
 export const CLOSEPOPUP ="CLOSEPOPUP";
 export { show_popup } from './popup';

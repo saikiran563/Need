@@ -18,7 +18,8 @@ class GreetingBlock extends Component {
           error: false,
           type: "special"
         }
-      ]
+      ],
+      greetingName: this.props.greetingName
     };
   }
 
@@ -79,12 +80,17 @@ class GreetingBlock extends Component {
     }
   };
 
+  handleSaveGreetingName(){
+    this.props.actions.postGreetingName(this.state.greetingName)
+  }
+
   render() {
     const {
       controlButtons,
       useridInvalidMessages,
       useridValid,
-      requiredError
+      requiredError,
+      greetingName
     } = this.state;
     const { showGreetingEdit, greetingEditMode } = this.props;
     const editableClassName = greetingEditMode ? "description_box--edit-view" : "description_box_disabled";
@@ -171,7 +177,7 @@ class GreetingBlock extends Component {
               >
                 Cancel
               </a>
-              <button className="btn btn--round" disabled={requiredError}>
+              <button className="btn btn--round" disabled={requiredError} onClick={()=>{this.handleSaveGreetingName()}}>
                 Save Changes
               </button>
             </div>
@@ -183,7 +189,7 @@ class GreetingBlock extends Component {
 
 const mapStateToProps = state => {
   return {
-    greetingName: state.greetingReducer.greeting
+    greetingName: state.greetingReducer.greetingName
   }
 }
 

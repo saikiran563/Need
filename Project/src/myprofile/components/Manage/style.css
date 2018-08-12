@@ -44,7 +44,7 @@
      padding-top: 5%;
 }
 .manager-name {
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 }
 
  .text-success {
@@ -90,6 +90,7 @@
 .transferofService-cont {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 
 .request-cont {

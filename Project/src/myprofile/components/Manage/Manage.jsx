@@ -37,6 +37,7 @@ class Manage extends Component {
   }
 
   componentDidMount(){
+
     this.props.actions.fetchLandingManageData();
     const URL_MAP = this.props.match.url.split("/");
     const type = URL_MAP[URL_MAP.length-1];
@@ -68,11 +69,9 @@ class Manage extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(JSON.stringify(this.props.managers) != JSON.stringify(newProps.managers)){
-        this.setState({
-          managers: newProps.managers
-        })
-    }
+      this.setState({
+        managers: newProps.managers
+      })
   }
 
   handleAppproveAccountManagerRequest(newRequest){
@@ -125,6 +124,8 @@ handleEditCancel = (type) =>  {
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
         });
+        this.props.actions.fetchMtns()
+        this.props.actions.fetchManagerRequests()
         this.props.history.push('/manage/accountManager');
       break;
 
@@ -133,7 +134,7 @@ handleEditCancel = (type) =>  {
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: false,greetingEditMode: true,transferOfServiceEditMode:false
          });
-        this.props.history.push('/manage/greeting');
+        this.props.history.push('/manage/greetingname');
       break;
 
       case 'transferofServiceblock':

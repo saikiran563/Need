@@ -9,7 +9,8 @@ import {
     GET_MANAGE_LANDING_URL,
     GET_MTNS_URL,
     GET_MANAGER_REQUESTS_URL,
-    SEND_ACCOUNT_MANGER_REQUEST_URL
+    SEND_ACCOUNT_MANGER_REQUEST_URL,
+    POST_GREETING_NAME_URL
   } from '../api'
 
   /*Get the data related to Manage Account Block */
