@@ -176,7 +176,7 @@ handleEditCancel = (type) =>  {
          type: "none",
          firstName: formData.firstName,
          lastName: formData.lastName,
-         phoneNumber: formData.phoneNumber,
+         phoneNumber: formData.phoneNumber=== 'noLineAssigned' ? '' :eachManager.phoneNumber,
          emailId: formData.emailId,
          id: id
      }

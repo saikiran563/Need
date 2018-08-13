@@ -12,8 +12,8 @@ import ManagersListToAccountManager from './components/ManagersListToAccountMana
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
-const accountOwner =  false//reactGlobals.role.toLocaleLowerCase() == 'ao'
-const accountMember = true//reactGlobals.mdnRole == 'mobileSecure'
+const accountOwner =  true//reactGlobals.role.toLocaleLowerCase() == 'ao'
+const accountMember = false//reactGlobals.mdnRole == 'mobileSecure'
 const accountManager =  false//reactGlobals.role.toLocaleLowerCase() == "amgr"
 
 class AccountManagerBlock extends Component {
@@ -95,8 +95,8 @@ getinitialState(){
   return {
       firstName: '',
       lastName: '',
-      phoneNumber: '',
-      emailId: '',
+      phoneNumber: this.props.memberPhoneNumber,
+      emailId: this.props.memberEmailId,
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false,
@@ -353,7 +353,7 @@ getinitialState(){
     this.props.handleSave('accountManagerBlock', this.state, e)
     this.props.actions.postAddManagerByAccountHolder({
         "firstName": this.state.firstName,
-        "lastName": this.state.firstName,
+        "lastName": this.state.lastName,
         "selectedMtn": this.state.phoneNumber === 'noLineAssigned' ? '' : this.state.phoneNumber ,
         "emailId": this.state.emailId,
         "acctTypeCode": ''
@@ -364,7 +364,7 @@ getinitialState(){
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
     const { newAccountMemberRequest, mtns } = this.props
     if( newAccountMemberRequest.status === 'not requested' ){
-      if( accountOwner && managers.length < MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
+      if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
         <div className='row add-manager-cont'>
             <h4 tabIndex='0'>Add Account Managers</h4>
@@ -422,6 +422,7 @@ getinitialState(){
             </div>
           )
         }
+        debugger
         if(accountMember){
           return(
             <div className='row add-manager-cont'>

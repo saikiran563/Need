@@ -9,7 +9,7 @@ class GreetingBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requiredError: true,
+      isValid: true,
       touched: false,
       errorMessages: [
         { name: "1-10 characters", error: false, type: "characterCount"},
@@ -29,56 +29,76 @@ class GreetingBlock extends Component {
   onChangeInput = () => {
     const val = this.state.updatedGreetingName;
     const errorMessages = JSON.parse(JSON.stringify(this.state.errorMessages));
-    if (val.length === 0) {
+    if( val.length === 0 ){
       this.setState({
-        requiredError: false,
-        errorMessages: [
-          {
-            name: "1-10 characters",
-            error: false,
-            type: "characterCount"
-          },
-          {
-            name: "Does not contain certain special characters",
-            error: false,
-            type: "special"
-          }
-        ]
-      });
-    } else {
-      this.setState({ requiredError: false });
-
-      if (val.length > 10) {
-        let inavlidMessage = errorMessages.find(
-          message => message.type === "characterCount"
-        );
-        inavlidMessage.error = true;
-        this.setState({
-          errorMessages,
-           requiredError: true
-         });
-      } else {
-        let inavlidMessage = errorMessages.find(
-          message => message.type === "characterCount"
-        );
-        inavlidMessage.error = false;
-        this.setState({ errorMessages });
-      }
-
-      if (val.match(/[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-        let inavlidMessage = errorMessages.find(
-          message => message.type === "special"
-        );
-        inavlidMessage.error = true;
-        this.setState({ errorMessages });
-      } else {
-        let inavlidMessage = errorMessages.find(
-          message => message.type === "special"
-        );
-        inavlidMessage.error = false;
-        this.setState({ errorMessages });
-      }
+        isValid: false,
+      })
     }
+
+    if(val.length > 10) {
+      let invalidMessages = errorMessages.map(eachCheck =>{
+          if(eachCheck.type == characterCount) {
+              eachCheck.error = true
+          }
+          return eachCheck
+      })
+      this.setState({
+        isValid: false,
+        errorMessages: invalidMessages
+      })
+    }
+
+
+    // if (val.length === 0) {
+    //   this.setState({
+    //     isValid: false,
+    //     errorMessages: [
+    //       {
+    //         name: "1-10 characters",
+    //         error: false,
+    //         type: "characterCount"
+    //       },
+    //       {
+    //         name: "Does not contain certain special characters",
+    //         error: false,
+    //         type: "special"
+    //       }
+    //     ]
+    //   });
+    // } else {
+    //   this.setState({ isValid: false });
+    //
+    //   if (val.length > 10) {
+    //     let inavlidMessage = errorMessages.find(
+    //       message => message.type === "characterCount"
+    //     );
+    //     inavlidMessage.error = true;
+    //     this.setState({
+    //       errorMessages,
+    //        isValid: true
+    //      });
+    //   } else {
+    //     let inavlidMessage = errorMessages.find(
+    //       message => message.type === "characterCount"
+    //     );
+    //     inavlidMessage.error = false;
+    //     this.setState({ errorMessages });
+    //   }
+    //
+    //   if (val.match(/[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
+    //     let inavlidMessage = errorMessages.find(
+    //       message => message.type === "special"
+    //     );
+    //     inavlidMessage.error = true;
+    //     this.setState({ errorMessages });
+    //   } else {
+    //     let inavlidMessage = errorMessages.find(
+    //       message => message.type === "special"
+    //     );
+    //     inavlidMessage.error = false;
+    //     this.setState({ errorMessages });
+    //   }
+    // }
   };
 
   handleSaveGreetingName(){
@@ -90,7 +110,7 @@ class GreetingBlock extends Component {
       controlButtons,
       errorMessages,
       useridValid,
-      requiredError,
+      isValid,
       greetingName
     } = this.state;
     const { showGreetingEdit, greetingEditMode } = this.props;
@@ -119,7 +139,7 @@ class GreetingBlock extends Component {
                         placeholder="Name"
                         name="greeting"
                         value={this.state.updatedGreetingName}
-                        valid={requiredError}
+                        valid={isValid}
                       />
                     </div>
                   <div className="greeting-fields-req col-xs-12 col-sm-6  col-md-5">
@@ -128,7 +148,7 @@ class GreetingBlock extends Component {
                       {errorMessages.map(message => {
                         return (
                           <li key={message.name}>
-                            {!requiredError &&
+                            {!isValid &&
                               (message.error ? (
                                 <span className="text-danger">
                                   <i className="fa fa-times-circle" />
@@ -138,7 +158,7 @@ class GreetingBlock extends Component {
                                   <i className="fa fa-check-circle" />
                                 </span>
                               ))}
-                            {requiredError && (
+                            {isValid && (
                               <span>
                                 <i className="fa fa-check-circle" />
                               </span>
@@ -178,7 +198,7 @@ class GreetingBlock extends Component {
               >
                 Cancel
               </a>
-              <button className="btn btn--round" disabled={requiredError} onClick={()=>{this.handleSaveGreetingName()}}>
+              <button className="btn btn--round" disabled={isValid} onClick={()=>{this.handleSaveGreetingName()}}>
                 Save Changes
               </button>
             </div>
