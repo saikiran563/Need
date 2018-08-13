@@ -5,7 +5,7 @@ class Popup extends Component {
     return (
       <div id="overlayContainer" className={this.props.showPopup ? "visible" : "hidden"}>
         <div id="overlayBackground">
-          <div id="overlayFrame" style={{marginTop:'15%'}} className="animated fadeIn a-fast">
+          <div id="overlayFrame" className="animated fadeIn a-fast">
               {
                 this.props.showCrossWires &&
                 <span className="close-wrapper">

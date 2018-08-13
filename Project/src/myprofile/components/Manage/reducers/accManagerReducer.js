@@ -3,7 +3,8 @@ import {
   FETCH_MANAGE_LANDING_SUCCESS,
   FETCH_MANAGE_LANDING_FAIL,
   FETCH_MTNS_SUCCESS,
-  FETCH_MANAGER_REQUESTS_SUCCESS
+  FETCH_MANAGER_REQUESTS_SUCCESS,
+  GET_ACCOUNT_MEMBER_DETAILS_SUCCESS
 } from '../actions/manage'
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
   revokedManager: {},
   accountManagerRequests: [],
   mtns: [],
+  emailId: '',
+  phoneNumber:'',
   deniedAccountManagerRequests: null,
   showRequestSuccessPopup: false,
   newAccountMemberRequest:  {
@@ -46,6 +49,11 @@ const accManagerReducer = (state = initialState, action) => {
       return updateObject(state, {
         accountManagerRequests
       })
+    case GET_ACCOUNT_MEMBER_DETAILS_SUCCESS :
+    return updateObject(state, {
+      emailId: action.response.emailID,
+      phoneNumber: action.response.primaryPhone,
+    })
     default:
       return state
   }

@@ -11,35 +11,33 @@ class GreetingBlock extends Component {
     this.state = {
       requiredError: true,
       touched: false,
-      useridInvalidMessages: [
-        { name: "1-10 characters", error: false, type: "characterCount" },
-        {
-          name: "Does not contain certain special characters",
-          error: false,
-          type: "special"
-        }
+      errorMessages: [
+        { name: "1-10 characters", error: false, type: "characterCount"},
+        { name: "Does not contain certain special characters", error: false, type: "special" }
       ],
-      greetingName: this.props.greetingName
+      greetingName: this.props.greetingName,
+      updatedGreetingName: ''
     };
   }
 
   handleOnChange = e => {
     if(e.target.value.length <= 10){
-          this.setState({ greetingName: e.target.value }, () => this.onChangeInput());
+          this.setState({ updatedGreetingName: e.target.value }, () => this.onChangeInput());
     }
   };
 
   onChangeInput = () => {
-    const val = this.state.greetingName;
-    const useridInvalidMessages = JSON.parse(
-      JSON.stringify(this.state.useridInvalidMessages)
-    );
+    const val = this.state.updatedGreetingName;
+    const errorMessages = JSON.parse(JSON.stringify(this.state.errorMessages));
     if (val.length === 0) {
       this.setState({
-        requiredError: true,
-        useridInvalidMessages: [
-          { name: "1-10 characters", error: false, type: "characterCount" },
-
+        requiredError: false,
+        errorMessages: [
+          {
+            name: "1-10 characters",
+            error: false,
+            type: "characterCount"
+          },
           {
             name: "Does not contain certain special characters",
             error: false,
@@ -51,31 +49,34 @@ class GreetingBlock extends Component {
       this.setState({ requiredError: false });
 
       if (val.length > 10) {
-        let inavlidMessage = useridInvalidMessages.find(
+        let inavlidMessage = errorMessages.find(
           message => message.type === "characterCount"
         );
         inavlidMessage.error = true;
-        this.setState({ useridInvalidMessages });
+        this.setState({
+          errorMessages,
+           requiredError: true
+         });
       } else {
-        let inavlidMessage = useridInvalidMessages.find(
+        let inavlidMessage = errorMessages.find(
           message => message.type === "characterCount"
         );
         inavlidMessage.error = false;
-        this.setState({ useridInvalidMessages });
+        this.setState({ errorMessages });
       }
 
       if (val.match(/[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/)) {
-        let inavlidMessage = useridInvalidMessages.find(
+        let inavlidMessage = errorMessages.find(
           message => message.type === "special"
         );
         inavlidMessage.error = true;
-        this.setState({ useridInvalidMessages });
+        this.setState({ errorMessages });
       } else {
-        let inavlidMessage = useridInvalidMessages.find(
+        let inavlidMessage = errorMessages.find(
           message => message.type === "special"
         );
         inavlidMessage.error = false;
-        this.setState({ useridInvalidMessages });
+        this.setState({ errorMessages });
       }
     }
   };
@@ -87,7 +88,7 @@ class GreetingBlock extends Component {
   render() {
     const {
       controlButtons,
-      useridInvalidMessages,
+      errorMessages,
       useridValid,
       requiredError,
       greetingName
@@ -117,14 +118,14 @@ class GreetingBlock extends Component {
                         handleOnChange={this.handleOnChange}
                         placeholder="Name"
                         name="greeting"
-                        value={this.state.greetingName}
+                        value={this.state.updatedGreetingName}
                         valid={requiredError}
                       />
                     </div>
                   <div className="greeting-fields-req col-xs-12 col-sm-6  col-md-5">
                     <h3>Greeting Name Requirements</h3>
                     <ul className="fieldErrors">
-                      {useridInvalidMessages.map(message => {
+                      {errorMessages.map(message => {
                         return (
                           <li key={message.name}>
                             {!requiredError &&

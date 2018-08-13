@@ -7,18 +7,29 @@ import './style.css'
 import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
 import RequestSent  from './Popup/RequestSent'
+import AccessRoles  from './Popup/AccessRoles'
 import ManagersListToAccountManager from './components/ManagersListToAccountManager'
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
 const accountOwner =  false//reactGlobals.role.toLocaleLowerCase() == 'ao'
 const accountMember = true//reactGlobals.mdnRole == 'mobileSecure'
-const accountManager = reactGlobals.role.toLocaleLowerCase() == "amgr"
+const accountManager =  false//reactGlobals.role.toLocaleLowerCase() == "amgr"
 
 class AccountManagerBlock extends Component {
   constructor(props) {
     super(props)
     this.state = this.getinitialState()
+  }
+
+  componentWillReceiveProps(nextProps){
+    const { memberPhoneNumber, memberEmailId } = nextProps
+    if(this.props.memberEmailId !== nextProps.memberEmailId) {
+      this.setState({
+        phoneNumber: nextProps.memberPhoneNumber,
+        emailId: nextProps.memberEmailId
+      })
+    }
   }
 
   getAccountManagerRequestCard=(request)=>{
@@ -88,7 +99,8 @@ getinitialState(){
       emailId: '',
       showPopup: false,
       managerToRemove: {},
-      isEditEmailOnAccountMemberSelected: false
+      isEditEmailOnAccountMemberSelected: false,
+      showLearnMorePopUp: false
     }
 }
 
@@ -159,7 +171,7 @@ getinitialState(){
   getManagersView(){
     const { managers } = this.props
      if(accountManager){
-       return <ManagersListToAccountManager managers={managers} />
+       return <ManagersListToAccountManager managers={managers} toggleLearnMorePopup={()=>this.toggleLearnMorePopup()}/>
      }
     return(
         <div>
@@ -290,10 +302,10 @@ getinitialState(){
 
   handleSendRequestForAccountManager(newRequest){
     const payload = {
-        "firstName": newRequest.firstName,
-        "lastName": newRequest.lastName,
-        "selectedMtn": newRequest.phoneNumber,
-        "emailId": newRequest.emailId,
+        "firstName": this.state.firstName,
+        "lastName": this.state.lastName,
+        "selectedMtn": this.state.phoneNumber,
+        "emailId": this.state.emailId,
         "status":"PENDING"
  }
     this.props.actions.postSendRequestForAccountManager(payload)
@@ -444,7 +456,7 @@ getinitialState(){
                                  <label>Phone Number</label>
                              </div>
                              <div className='p-t-7 col-sm-3'>
-                                 <p>989.235.3666</p>
+                                 <p>{phoneNumber}</p>
                              </div>
                          </div>
                          <div className='row'>
@@ -455,7 +467,7 @@ getinitialState(){
                                {
                                  this.state.isEditEmailOnAccountMemberSelected  ?
                                  <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
-                                 <p>samurai.jack@verizon.com</p>
+                                 <p>{emailId}</p>
                                }
                              </div>
                              <div className='col-sm-1'>
@@ -585,6 +597,12 @@ getinitialState(){
     this.props.actions.fetchManagerRequests()
   }
 
+  toggleLearnMorePopup = () =>{
+    this.setState({
+      showLearnMorePopUp: ! this.state.showLearnMorePopUp
+    })
+  }
+
   render() {
     const { firstName, lastName, phoneNumber, emailId } = this.state;
     const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
@@ -596,6 +614,9 @@ getinitialState(){
           </Popup>
           <Popup showPopup={this.props.showRequestSuccessPopup}>
               <RequestSent onClosePopup ={()=>{this.props.toggleRequestSuccessPopup()}}/>
+          </Popup>
+          <Popup showPopup={this.state.showLearnMorePopUp}>
+              <AccessRoles onClosePopup ={()=>{this.toggleLearnMorePopup()}}/>
           </Popup>
           <div className='clearfix'></div>
           <div className='body'>
@@ -631,7 +652,9 @@ getinitialState(){
 const mapStateToProps = state => {
   return {
     mtns: state.accManagerReducer.mtns,
-    accountManagerRequests: state.accManagerReducer.accountManagerRequests
+    accountManagerRequests: state.accManagerReducer.accountManagerRequests,
+    memberEmailId: state.accManagerReducer.emailId,
+    memberPhoneNumber: state.accManagerReducer.phoneNumber,
   }
 }
 

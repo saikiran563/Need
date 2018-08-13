@@ -10,7 +10,8 @@ import {
     GET_MTNS_URL,
     GET_MANAGER_REQUESTS_URL,
     SEND_ACCOUNT_MANGER_REQUEST_URL,
-    POST_GREETING_NAME_URL
+    POST_GREETING_NAME_URL,
+    GET_ACCOUNT_MEMBER_DETAILS_URL
   } from '../api'
 
   /*Get the data related to Manage Account Block */
@@ -32,34 +33,46 @@ export const FETCH_MANAGER_REQUESTS_FAIL = 'FETCH_MANAGER_REQUESTS_FAIL'
 export const FETCH_ACCOUNT_MANAGE_BEGIN = 'FETCH_ACCOUNT_MANAGE_BEGIN'
 export const FETCH_ACCOUNT_MANAGE_SUCCESS = 'FETCH_ACCOUNT_MANAGE_SUCCESS'
 export const FETCH_ACCOUNT_MANAGE_FAIL = 'FETCH_ACCOUNT_MANAGE_FAIL'
+
 /*Triggered when new manager is added by firstName, lastName and email or phone*/
 export const ADD_NEW_MANAGER_BEGIN = 'ADD_NEW_MANAGER_BEGIN'
 export const ADD_NEW_MANAGER_SUCCESS = 'ADD_NEW_MANAGER_SUCCESS'
 export const ADD_NEW_MANAGER_FAIL = 'ADD_NEW_MANAGER_FAIL'
+
 /*Triggered when a active manager is removed*/
 export const REMOVE_MANAGER_BEGIN = 'REMOVE_MANAGER_BEGIN'
 export const REMOVE_MANAGER_SUCCESS = 'REMOVE_MANAGER_SUCCESS'
 export const REMOVE_MANAGER_FAIL = 'REMOVE_MANAGER_FAIL'
+
 /*Triggered to put back the removed active manager */
 export const UNDO_REMOVE_MANAGER_BEGIN= 'REMOVE_MANAGER_BEGIN'
 export const UNDO_REMOVE_MANAGER_SUCCESS = 'REMOVE_MANAGER_SUCCESS'
 export const UNDO_REMOVE_MANAGER_FAIL = 'REMOVE_MANAGER_FAIL'
+
 /*Triggered when account holder approves a pending request to become account manager*/
 export const APPROVE_MANAGER_BEGIN=  'APPROVE_MANAGER_BEGIN'
 export const APPROVE_MANAGER_SUCCESS =  'APPROVE_MANAGER_SUCCESS'
 export const APPROVE_MANAGER_FAIL =  'APPROVE_MANAGER_FAIL'
+
 /*Triggered when account holder denies a pending request to become account manager*/
 export const DENY_MANAGER_BEGIN = 'DENY_MANAGER_BEGIN'
 export const DENY_MANAGER_SUCCESS = 'DENY_MANAGER_SUCCESS'
 export const DENY_MANAGER_FAIL = 'DENY_MANAGER_FAIL'
+
 /*Triggered when account holder unintentionally denies a request and undo the action to set back to pending state */
 export const UNDO_DENY_MANAGER_BEGIN= 'UNDO_REMOVE_MANAGER_BEGIN'
 export const UNDO_DENY_MANAGER_SUCCESS = 'UNDO_REMOVE_MANAGER_SUCCESS'
 export const UNDO_DENY_MANAGER_FAIL = 'UNDO_DENY_MANAGER_FAIL'
+
 /*Triggered when account holder unintentionally denies a request and undo the action to set back to pending state */
 export const SEND_ACCOUNT_MANGER_REQUEST_BEGIN= 'SEND_ACCOUNT_MANGER_REQUEST_BEGIN'
 export const SEND_ACCOUNT_MANGER_REQUEST_SUCCESS = 'SEND_ACCOUNT_MANGER_REQUEST_SUCCESS'
 export const SEND_ACCOUNT_MANGER_REQUEST_FAIL = 'SEND_ACCOUNT_MANGER_REQUEST_FAIL'
+
+/*Get account member details to send request to account holder */
+export const GET_ACCOUNT_MEMBER_DETAILS_BEGIN= 'GET_ACCOUNT_MEMBER_DETAILS_BEGIN'
+export const GET_ACCOUNT_MEMBER_DETAILS_SUCCESS = 'GET_ACCOUNT_MEMBER_DETAILS_SUCCESS'
+export const GET_ACCOUNT_MEMBER_DETAILS_FAIL = 'GET_ACCOUNT_MEMBER_DETAILS_FAIL'
 
 const customHeaders = {
  "Accept": "application/json"
@@ -273,5 +286,32 @@ const postSendRequestForAccountManagerSuccess = response => ({
 
 const postSendRequestForAccountManagerFailed = error => ({
   type: SEND_ACCOUNT_MANGER_REQUEST_FAIL,
+  error
+})
+
+
+/* Send Request to Account holder to become account manager*/
+export const getAccountMemberDetailsToSendRequest= () => dispatch => {
+  dispatch(getAccountMemberDetailsToSendRequestBegin())
+  axios.get(GET_ACCOUNT_MEMBER_DETAILS_URL)
+  .then(response => {
+    dispatch(getAccountMemberDetailsToSendRequestSuccess(response.data))
+  })
+ .catch((error) => {
+    dispatch(getAccountMemberDetailsToSendRequestFailed(error))
+  })
+}
+
+const getAccountMemberDetailsToSendRequestBegin = () => ({
+   type: GET_ACCOUNT_MEMBER_DETAILS_BEGIN,
+})
+
+const getAccountMemberDetailsToSendRequestSuccess = response => ({
+   type: GET_ACCOUNT_MEMBER_DETAILS_SUCCESS,
+   response
+})
+
+const getAccountMemberDetailsToSendRequestFailed = error => ({
+  type: GET_ACCOUNT_MEMBER_DETAILS_FAIL,
   error
 })

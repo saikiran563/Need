@@ -126,6 +126,7 @@ handleEditCancel = (type) =>  {
         });
         this.props.actions.fetchMtns()
         this.props.actions.fetchManagerRequests()
+        this.props.actions.getAccountMemberDetailsToSendRequest()
         this.props.history.push('/manage/accountManager');
       break;
 

@@ -57,7 +57,7 @@ class ManagersListToAccountManager extends Component {
         <div className='row'>
             <div className='col-md-8'/>
             <div className='col-md-4'>
-                <button className='btn btn--round' onClick={()=>this.toggleLearnMore()}>Learn More</button>
+                <button className='btn btn--round' onClick={()=>this.props.toggleLearnMorePopup()}>Learn More</button>
             </div>
         </div>
       </div>

@@ -10,7 +10,6 @@ import {
   FETCH_MANAGE_LANDING_FAIL
 } from '../actions/manage'
 
-
 const initialState = {
   greetingName: '',
   getStatus: '',
