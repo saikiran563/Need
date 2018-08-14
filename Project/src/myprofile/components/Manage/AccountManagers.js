@@ -100,7 +100,8 @@ getinitialState(){
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false,
-      showLearnMorePopUp: false
+      showLearnMorePopUp: false,
+      accountManagerRequests: this.props.accountManagerRequests
     }
 }
 
@@ -118,7 +119,7 @@ getinitialState(){
         "lastName": managerToRemove.lastName,
         "selectedMtn": managerToRemove.phoneNumber,
         "emailId": managerToRemove.emailId,
-        "acctTypeCode":''
+        "acctTypeCode": managerToRemove.phoneNumber === 'Not Applicable' ? 'FAC' : ''
       }
     this.props.actions.postRemoveManagerByAccountHolder(postPayload)
     this.props.handleRemoveManager(this.state.managerToRemove)
@@ -306,7 +307,8 @@ getinitialState(){
         "lastName": this.state.lastName,
         "selectedMtn": this.state.phoneNumber,
         "emailId": this.state.emailId,
-        "status":"PENDING"
+        "status":"PENDING",
+        "role": ""
  }
     this.props.actions.postSendRequestForAccountManager(payload)
     this.props.handleSendRequestForAccountManager(newRequest)
@@ -422,7 +424,6 @@ getinitialState(){
             </div>
           )
         }
-        debugger
         if(accountMember){
           return(
             <div className='row add-manager-cont'>

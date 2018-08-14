@@ -27,7 +27,7 @@ class Manage extends Component {
       managers: [],
       addedManager: [],
       revokedManager: {},
-      accountManagerRequests: [],
+      accountManagerRequests: this.props.accountManagerRequests,
       deniedAccountManagerRequests: null,
       showRequestSuccessPopup: false,
       newAccountMemberRequest:  {
@@ -257,6 +257,7 @@ const mapStateToProps = state => {
   return {
     managers: state.accManagerReducer.managers,
     state:state,
+    accountManagerRequests: state.accManagerReducer.accountManagerRequests
   }
 }
 
