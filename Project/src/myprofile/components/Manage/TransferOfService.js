@@ -14,16 +14,16 @@ class TransferofService extends Component {
         <div className="clearfix"></div>
         <div className="body row">
           <div className="col-xs-12 col-sm-4 description_box__header">
-            <h4 tabIndex="0">Transfer of service </h4>
-            <p>[Short Description of what it is and how it's used.] </p>
+            <h4 tabIndex="1">Transfer of service </h4>
+            <p>Transfer control of a line to another account, or take responsibility of a line from another account. </p>
           </div>
           {
             showTransferOfServiceEdit && (
               <div>
                   <div className="col-xs-12 col-sm-4">
-                    <p>Transfer of Service Lorem Ipsum</p>
+                    <p>Transfer of Service</p>
                   </div>
-                  <div className="col-xs-12 col-sm-4 transferofService-cont">
+                  <div className="col-xs-12 col-sm-4 transferofservice-cont">
                     <a
                       className="btn btn--round-invert"
                       role="button"
@@ -39,11 +39,11 @@ class TransferofService extends Component {
             !showTransferOfServiceEdit && transferOfServiceEditMode && (
             <div>
                 <div className="col-xs-12 col-sm-4">
-                  <p>Transfer of Service Lorem Ipsum</p>
+                  <p>Transfer of Service</p>
                 </div>
                 {
-                  reactGlobals.role.toLocaleLowerCase() !="am" &&
-                  <div className="col-xs-12 col-sm-4 transferofService-cont">
+                  reactGlobals.role.toLocaleLowerCase() !="mobilesecure" &&
+                  <div className="col-xs-12 col-sm-4 transferofservice-cont">
                     <a
                       className="btn btn--round-invert"
                       role="button"

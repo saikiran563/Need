@@ -203,7 +203,7 @@ class BillingAddressBlock extends Component {
 
   render() {
     const {  billingAddressInvalidMessages, requiredError, address, apartment, USstate, city, zip } = this.state;
-     const { userBillingInfo, showBillingEdit, billingAddressEditMode, billingAddressSaved } = this.props;
+     const { userBillingInfo, showBillingEdit, billingAddressEditMode, billingAddressStatus } = this.props;
      const isValid = !billingAddressInvalidMessages.find(address => address.error)
      const editableClassName = billingAddressEditMode ? "" : "description_box_disabled";
       const savedSectionStyle = {
@@ -240,18 +240,18 @@ class BillingAddressBlock extends Component {
                                                 <label htmlFor="address_23">Address*</label>
                                             </div>
                                             <div className="col-xs-12">
-                                                <InputField handleOnChange={this.handleAddressOnChange} placeholder="" touched={this.state.istouched} value={address} name="address_23" type="text"/>
+                                                <InputField handleOnChange={this.handleAddressOnChange} placeholder="" touched={this.state.istouched} value={address} name="address_23" type="text" analyticstrack="billingAddress-addressline1input" />
                                             </div>
                                             <div className="col-xs-12">
                                                 <label htmlFor="apt_23">Apt/Suite/Other</label>
                                             </div>
                                             <div className="col-xs-12">
-                                                <InputField handleOnChange={this.handleApartmentOnChange} placeholder="" touched={this.state.istouched} value={apartment} name="apt_23" type="text" className="" />
+                                                <InputField handleOnChange={this.handleApartmentOnChange} placeholder="" touched={this.state.istouched} value={apartment} name="apt_23" type="text" className="" analyticstrack="billingAddress-aptinput" />
                                             </div>
                                             <div className="col-xs-12 col-sm-5">
                                                 <label htmlFor="city_23">City*</label>
                                             <br aria-hidden="true" />
-                                                <InputField handleOnChange={this.handleCityOnChange} placeholder="" touched={this.state.istouched} value={city} type="text" name="city_23" className="" />
+                                                <InputField handleOnChange={this.handleCityOnChange} placeholder="" touched={this.state.istouched} value={city} type="text" name="city_23" className="" analyticstrack="billingAddress-cityinput"/>
                                             </div>
                                             <div className="col-xs-12 col-sm-3">
                                                 <label htmlFor="state">State*</label>
@@ -263,12 +263,12 @@ class BillingAddressBlock extends Component {
                                             <div className="col-xs-12 col-md-4">
                                                 <label htmlFor="zipcode_23">Zip code*</label>
                                             <br aria-hidden="true" />
-                                                <InputField handleOnChange={this.handleZipOnChange} placeholder="" touched={this.state.istouched} value={zip}  name="zipcode_23" type="text" className="" />
+                                                <InputField handleOnChange={this.handleZipOnChange} placeholder="" touched={this.state.istouched} value={zip}  name="zipcode_23" type="text" className="" analyticstrack="billingAddress-zipinput"/>
                                             </div>
                                              {
           !showBillingEdit && billingAddressEditMode && <div className="footer description_box__control-btn col-xs-12 btn--billing-addr">
-            <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</button>
-            <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('billingAddressBlock', {addressLine1:address,addressLine2:apartment,city,zip,state: USstate}, event)}>Save Changes</button>
+            <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')} analyticstrack="billingAddress-cancel">Cancel</button>
+            <button className="btn btn--round" disabled={requiredError|| reactGlobals.isCsr} onClick={() => this.props.handleSave('billingAddressBlock', {addressLine1:address,addressLine2:apartment,city,zip,state: USstate}, event)} analyticstrack="billingAddress-savechanges">Save Changes</button>
           </div>
         }
                                         </div>
@@ -282,18 +282,18 @@ class BillingAddressBlock extends Component {
                 
               {
                 showBillingEdit && <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button">Edit</a>
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button" analyticstrack="billingAddress-Edit">Edit</a>
                 </div>
               }
               {
                 !showBillingEdit && billingAddressEditMode &&
                   <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="billingAddress-cancel">Cancel</a>
                 </div>
               }
 
               {
-                 billingAddressSaved && <span className="text-success fa fa-check-circle col-xs-2 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                 billingAddressStatus == '0' && <span className="text-success fa fa-check-circle col-xs-2 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                 &nbsp;Saved
                  </span>
                }

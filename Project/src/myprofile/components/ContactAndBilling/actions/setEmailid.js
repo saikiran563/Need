@@ -22,6 +22,9 @@ export const setEmailId = (data) => dispatch => {
         }else{
           dispatch(getEmailIdError(err))
         }
+
+        //  dispatch(setEmailIdonSuccess(data));
+        //   dispatch(getEmailIdSuccess(response.status))
         
       })
       .catch((err) => {
@@ -30,8 +33,15 @@ export const setEmailId = (data) => dispatch => {
 }
 export const getEmailIdSuccess = (response) => ({
   type: SET_EMAILID_SUCCESS,
-  response,
+  status : response,
 });
+
+export const resetEmailStatus = (response) => dispatch => {
+  dispatch({
+    type: SET_EMAILID_SUCCESS,
+  status : response,
+  } )
+}
 
 export const setEmailIdonSuccess = (response) => ({
   type: SET_EMAILID,

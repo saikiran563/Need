@@ -1,6 +1,8 @@
 import React from "react";
+import {getUid} from "../../../utils/config"
 
 const Modal = props => {
+  const tagId = props.tagId ? props.tagId : getUid("modal");
   return (
     <div id="overlayContainer" className={props.modalStatus ? 'visible' : 'hidden'}>
       <div id="overlayBackground"></div>
@@ -16,7 +18,7 @@ const Modal = props => {
           </a>
         </span>
         <div>
-          <div id="security-modal" className="aMyProfile aMyProfile__modal overlay-content">
+          <div id={`overlayFrame ${tagId}`} className="aMyProfile aMyProfile__modal overlay-content">
             {props.children}
           </div>
         </div>

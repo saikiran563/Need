@@ -6,7 +6,7 @@ const AccessRoles = () => {
         return (
 
             <div className="modal_content">
-                <h1 className="title title--lg">Get to know your role.</h1>
+                <h1 className="title title--lg">Get to know the role.</h1>
 
 
                 <p>
@@ -488,12 +488,12 @@ const AccessRoles = () => {
 
                         {reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder" || reactGlobals.mdnRole.toLocaleLowerCase() == "accountmanager" ? <div className="rol-permissions__buttons">
                             <div className="col-xs-12 ">
-                                <a href="#">Learn more</a>
-                            <a href="#/manage/accountmanager" className="btn btn--round" role="button">Edit Account roles</a>
+                                <a href="https://www.verizonwireless.com/support/assign-account-manager-roles-faqs/">Learn more</a>
+                            <a href="#/manage/accountmanager" className="btn btn--round" role="button">Edit Account Managers</a>
                             </div>
                         </div> : <div className="rol-permissions__buttons">
                                 <div className="col-xs-12 ">
-                                    <a href="#">Learn more</a>
+                                    <a href="https://www.verizonwireless.com/support/assign-account-manager-roles-faqs/">Learn more</a>
                                     <a href="#/manage/accountmanager" className="btn btn--round" role="button">Request Access</a>
                                 </div>
                             </div>}

@@ -1,1 +1,1 @@
-export { fetchPrivacyAndPermissions, fetchPrivacyAndPermissionsBegin } from './fetchPrivacyDetails';
+export { fetchPrivacyAndPermissions, fetchPrivacyAndPermissionsBegin, postPrivacyPermissions } from './fetchPrivacyDetails';

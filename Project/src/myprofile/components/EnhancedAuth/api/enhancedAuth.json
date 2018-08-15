@@ -1,10 +1,14 @@
 {
-    "twoFactorAuth":
-    {
-        "twoFactorFlag": "0",
-        "mdn_is_capable": "0",
-        "email_is_verified": "0",
-        "email":"ronaldocr7@gmail.com",
-        "mdn": "7777777777"
-    }
+    "cust_id": "0313216114",
+    "acct_num": "00001",
+    "mdn": "3183710025",
+    "two_factor_flag": "0",
+    "user_id": "Test123467",
+    "role": "accountManager",
+    "statusCode": 0,
+    "email_is_verified": "Y",
+    "mdn_is_capable": "Y",
+    "email": "VZW@VZW.COM",
+    "errorCode": "00",
+    "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605"
 }

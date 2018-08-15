@@ -95,6 +95,7 @@ closepop(){
               <div className="footer address-modal-footer col-xs-12">
                 <button className="btn btn--round" 
                 onClick={() => this.handleSave()}
+                disabled={reactGlobals.isCsr}
                 >Save</button>
               </div>
 

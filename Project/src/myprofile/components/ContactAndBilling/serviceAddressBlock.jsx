@@ -17,7 +17,9 @@ class ServiceAddressBlock extends Component {
     }
   }
 
-    
+   handleServiceLineEditMode = () => {
+     console.log('Inside handle edit mode');
+   } 
    handleOnEditCancel = (type) => {
       //this.setState({
        // address: this.props.userServiceAddressInfo.address
@@ -100,24 +102,27 @@ class ServiceAddressBlock extends Component {
      const editableClassName = serviceAddressEditMode ? "" : "description_box_disabled";
 
      const renderServiceLines = (serviceLine) => {
+       console.log("renderServiceLines")
         return(
-             <div className="description_box__read description_box__read_service_line" key={serviceLine.line}>
+             <div className="description_box__read description_box__read_service_line" key={serviceLine}>
                       
-                <ServiceLine serviceLine={serviceLine.line} serviceAddress={null} editMode="true" />
+                <ServiceLine serviceLine={serviceLine} serviceAddress={null} handleSave={this.props.handleSave} addressListOnAccount={this.props.addressListOnAccount} handleEditMode={this.handleServiceLineEditMode} editMode="true" />
 
              </div>
         )
      };
      const serviceAddressWithEdit = (addr) => {
+       console.log("serviceAddressWithEdit")
        return (
               <div className="description_box__read description_box__read_service_line">
                       
-                <ServiceLine serviceLine={null} serviceAddress={addr} />
+                <ServiceLine serviceLine={null} serviceAddress={addr} addressListOnAccount={this.props.addressListOnAccount} />
 
              </div>   
        );
      }
      const renderEachAddressBlock = (addr) => {
+       console.log("renderEachAddressBlock")
        return (
                  <div className="description_box__read service-address-sub-block" key={addr}>
                       <div className="description_box__details">
@@ -127,7 +132,7 @@ class ServiceAddressBlock extends Component {
                      </div>
                      <div className="service-lines">
 
-                           {addr.serviceLines.map(renderServiceLines)}
+                           {addr.serviceLines.line.map(renderServiceLines)}
 
                     </div>
 
@@ -149,9 +154,10 @@ class ServiceAddressBlock extends Component {
                         <div className="service-address-list">
 
                 <div className="description_box__details">
-                  {
-                      !(!showServiceAddress && serviceAddressEditMode) &&  userServiceAddressInfo.serviceAddresses.map(renderEachAddressBlock)
-                   }
+                  {/* {
+                      !(!showServiceAddress && serviceAddressEditMode) &&  userServiceAddressInfo.serviceAddresses.sort((x, y) => (x.billingAddress === y.billingAddress)? 0 : x? 1 : -1).map(renderEachAddressBlock)
+                   } */}
+                   {showServiceAddress && serviceAddressEditMode ? userServiceAddressInfo.serviceAddresses.map(renderEachAddressBlock) : ""}
                
               </div>
              

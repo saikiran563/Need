@@ -5,7 +5,9 @@ import * as actions from './actions'
 import InputField from '../FormElements/InputComponent';
 import Modal from "../Modal/modal";
 import axios from "axios";
-import './style.css'
+import './style.css';
+import { getSecretPinStatus, getListOfUserNumbers, sendSecurePinToPhone, confirmSecurePinCode } from "./actions/fetchSecurities";
+import SecurePin from "../SecurePin/SecurePin"
 
 class SecurityQuestionBlock extends Component {
   constructor(props) {
@@ -26,6 +28,8 @@ class SecurityQuestionBlock extends Component {
       listOfAccountNumbersModal: false,
       authorizationCodeModal: false,
       finalAuthorizationModal: false,
+      errorModal: false,
+      showSaved: false,
       authorizationCode: "",
       afterGetRequest: [],
       wrongCodeErrorMessage: ""
@@ -35,6 +39,45 @@ class SecurityQuestionBlock extends Component {
   componentDidMount(){
     this.setState({
       newQId: this.props.metaBlock.qId
+    })
+  }
+
+  componentWillUpdate(prevProps){
+    if(prevProps.isSecurePinValidated != this.props.isSecurePinValidated){
+       return this.setState({
+        showSaved: true
+      })
+    } 
+  }
+  
+  saveChangesClickedHandler = () => {
+    this.props.getSecretPinStatus().then(() =>{
+      const { securePin } = this.props;
+      console.log(securePin)
+      if(typeof securePin !== "string"){
+        if(!securePin.securePinEnabled){
+          console.log("secure pin not enabled")
+          return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        } 
+        if (!securePin.securePinVerified) {
+          console.log("secure pin not verified, go through secure pin flow")
+          this.props.getListOfUserNumbers().then(() => {
+              this.setState({
+                  modalStatus: true,
+                  listOfAccountNumbersModal: true,
+                  afterGetRequest: this.props.listOfUserNumbers
+              })
+          })
+        } else {
+          console.log("secure pin already verified")
+          return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        }
+      } else {
+        this.setState({
+          errorModal: true,
+          afterGetRequest: this.props.securePin
+        })
+      }
     })
   }
 
@@ -97,6 +140,14 @@ class SecurityQuestionBlock extends Component {
     });
   }
 
+  handleMouseClick = event => {
+    if(this.state.showSaved && !this.state.modalStatus){
+     this.setState({
+       showSaved: false
+     })
+    }
+  }
+
   getQuestions = (selectedVal) => {
     return (
       <select className="state-select" name="USA State" onChange={this.onQuestionChange} defaultValue={selectedVal} analyticstrack="secqueblock-selList">
@@ -111,172 +162,18 @@ class SecurityQuestionBlock extends Component {
 
   closeModal = () => {
     this.setState({
+      errorModal: false,
       modalStatus: false,
       selectedPhone: null,
       authorizationCode: ""
     })
   }
 
-  saveChangesClickedHandler = () => {
-    axios.get("http://www.mocky.io/v2/5b6354f93000005a006503c7").then(res => {
-      this.setState({
-        modalStatus: true,
-        listOfAccountNumbersModal: true,
-        afterGetRequest: res.data.data.deviceList
-      })
-    })
-  }
-
-  sendCodeToPhoneHandler = () => {
-    axios.post("http://www.mocky.io/v2/5b6354f93000005a006503c7", {phoneNumber: this.state.selectedPhone.mtn, authCode: "11223344"})
-      .then(res => {
-        const data = JSON.parse(res.config.data)
-        this.setState({
-          listOfAccountNumbersModal: false,
-          authorizationCodeModal: true,
-          authCode: data.authCode
-        })
-      })
-  }
-
-  authorizationCodeConformation = event => {
-    const { newQId, newAnswer } = this.state;
-    if(this.state.authorizationCode === this.state.authCode){
-      this.props.handleSave('questionForm', {challengeQuestionID: newQId, challengeAnswer: newAnswer}, event)
-      this.setState({
-        authorizationCodeModal: false,      
-        listOfAccountNumbersModal: false,
-        finalAuthorizationModal: true,
-      })
-    } else {
-      this.setState({
-        wrongCodeErrorMessage: "Invalid code."        
-      })
-      setTimeout(() => {
-        this.setState({
-          wrongCodeErrorMessage: ""        
-        })
-      }, 2000)
+  handleErrors = error => {
+    if(error == "1"){
+        return "Something went wronggggg"
     }
-  }
-
-  handleAuthCodeChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    })
-  }
-
-  handleRadioInputChange = event => {
-    const afterGetRequest = this.state.afterGetRequest.map(el => {
-      if (el.formattedMtn == event.target.name) {
-        this.setState({ selectedPhone: el })
-        return Object.assign({}, el, { picked: true })
-      } else {
-        return Object.assign({}, el, { picked: false })
-      }
-    })
-    this.setState({ afterGetRequest })
-  }
-
-  renderModalContent(){
-    if(this.state.listOfAccountNumbersModal){
-      return (
-        <div>
-        <h1 className="title title--lg">Which device should we send the code to?</h1>
-        <p>For the security of your account, we ask that you complete an online authorization step before you continue with your request.</p>
-        <p>Select the device where we can send you the online authorization code.</p>
-        {this.state.afterGetRequest.map(item => {
-          if(item.securePinEligible){
-            return (
-              <p key={item.formattedMtn}>
-                <input
-                  type="radio"
-                  value={item.picked || false}
-                  onChange={this.handleRadioInputChange}
-                  name={item.formattedMtn}
-                  id={`phoneLine-${item.formattedMtn}`}
-                  checked={item.picked || false}
-                />
-                <label htmlFor={`phoneLine-${item.formattedMtn}`}>
-                  {/* <span className="a-block">{item.name}</span> */}
-                  <span className="a-block">{item.formattedMtn}</span>
-                </label>
-              </p>
-            )
-          }
-        }
-        )}
-        <button
-          className="btn btn--round"
-          disabled={!this.state.selectedPhone}
-          style={{ marginRight: "10px" }}
-          onClick={this.sendCodeToPhoneHandler}
-        >
-          Send Code
-          </button>
-        <button
-          className="btn btn--round-invert"
-          onClick={this.closeModal}
-        >
-          Cancel
-        </button>
-      </div>
-      )
-    } else if (this.state.authorizationCodeModal){
-      return (
-        <div>
-          <h1 className="title title--lg">Now enter your authorization code below.</h1>
-          <p>We just texted you a new code. You should receive your code in less than a minute.</p>
-          <p><strong>Authorization Code (all numeric):</strong></p>
-          <input
-            type="text"
-            value={this.state.authorizationCode}
-            name="authorizationCode"
-            onChange={this.handleAuthCodeChange}
-            style={{marginBottom: this.state.wrongCodeErrorMessage ? "0" : ""}}
-          />
-          <p style={{color: "red"}} >
-          {this.state.wrongCodeErrorMessage}
-          </p>
-          <button
-            className="btn btn--round"
-            disabled={!this.state.authorizationCode || isNaN(parseInt(this.state.authorizationCode)) || this.state.authorizationCode.length < 6 }
-            style={{ marginRight: "10px" }}
-            onClick={this.authorizationCodeConformation}
-          >
-            Confirm
-            </button>
-          <button
-            className="btn btn--round-invert"
-            onClick={this.closeModal}
-          >
-            Cancel
-            </button>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <p>Your Account Managers have been updated.</p>
-          <p>Account Manager(s) added.</p>
-          {this.state.selectedPhone ? (
-            <div>
-              {/* <p>{this.state.selectedPhone.name}</p>  */}
-              <p>{this.state.selectedPhone.formattedMtn}</p> 
-            </div>
-          ): ""}
-
-
-          <button
-            className="btn btn--round"
-          >
-            Confirm
-            </button>
-        </div>
-      )
-    }
-  }
+}
 
   render() {
     const { controlButtons, errorMessages, userId, requiredError, istouched,
@@ -298,7 +195,7 @@ class SecurityQuestionBlock extends Component {
     }
     const editableClassName = questionEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
-      <div className={`row description_box ${editableClassName}`}>
+      <div ref={node => this.node = node} onClick={this.handleMouseClick} className={`row description_box ${editableClassName}`}>
 
         <div className="col-xs-12 col-sm-4 description_box__header">
           <h4 tabIndex="0">{questionInfo.title}</h4>
@@ -339,7 +236,7 @@ class SecurityQuestionBlock extends Component {
                           valid={isValid}
                           touched={istouched}
                           value={newAnswer} 
-                          nalyticstrack="secqueblock-anstxt"/>
+                          anlyticstrack="secqueblock-anstxt"/>
                         <p className={errorDisplay}>{errorMsg}</p>
                       </div>
                     </div>
@@ -367,31 +264,39 @@ class SecurityQuestionBlock extends Component {
             </div>
             {
               !showQuestionEdit && questionEditMode &&
-              <div className="col-sm-2 description_box__edit description_box__edit_section cancel ">
+              <div className="description_box__edit description_box__edit_section cancel ">
                 <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="secqueblock-cancel">Cancel</a>
               </div>
             }
             {
               showQuestionEdit &&
-              <div className="col-sm-2 description_box__edit description_box__edit_section">
+              <div className="description_box__edit description_box__edit_section">
                 <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('questionblock')} role="button" analyticstrack="secqueblock-edit">Edit</a>
               </div>
             }
-            {
-              showQuestionEdit && questionEditMode && questionSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
-            }
+            {this.state.showSaved ? <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span> : ""}
             {
               !showQuestionEdit && questionEditMode &&
               <div className="footer col-xs-12">
                 <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="secqueblock-cancel">Cancel</a>
-                <button className="btn btn--round" disabled={!isValid} onClick={this.saveChangesClickedHandler} analyticstrack="secqueblock-save">Save Changes</button>
+                <button className="btn btn--round" disabled={!isValid || reactGlobals.isCsr} onClick={this.saveChangesClickedHandler} analyticstrack="secqueblock-save">Save Changes</button>
               </div>
             }
+            <Modal
+              modalStatus={this.state.errorModal}
+              closeModal={this.closeModal}
+            >
+              <div>{this.handleErrors(this.state.afterGetRequest)}</div>
+            </Modal>
             <Modal
               modalStatus={this.state.modalStatus}
               closeModal={this.closeModal}
             >
-            {this.renderModalContent()}
+              <SecurePin
+                newQId={this.state.newQId}
+                newAnswer={this.state.newAnswer}
+                handleSave={this.props.handleSave}
+              />
            </Modal>
           </div>
         </div>
@@ -399,5 +304,12 @@ class SecurityQuestionBlock extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  // console.log("STATEEEE",state)
+  return {
+    securePin: state.security.secretPin,
+    isSecurePinValidated: state.security.isSecurePinValidated    
+  }
+}
 
-export default SecurityQuestionBlock;
+export default connect(mapStateToProps, {getSecretPinStatus, getListOfUserNumbers})(SecurityQuestionBlock);

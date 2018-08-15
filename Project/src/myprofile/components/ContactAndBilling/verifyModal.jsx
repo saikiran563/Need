@@ -40,7 +40,7 @@ class VerifyModal extends Component {
                     <strong>{modalDetails ? modalDetails.emailID : ''}</strong><br/>
                     <br aria-hidden="true"/>
                     
-                    We've sent you an email.When you receive it, open it and click the "verify" button to confirm your email address.
+                    We've sent you an email. When you receive it, open it and click the "verify" button to confirm your email address.
                     <br aria-hidden="true"/><br aria-hidden="true"/><br aria-hidden="true"/>It's important to complete this step in order to protect the privacy of your account to make sure we're sending information to the right place.
                 </p>
                 <br aria-hidden="true"/>

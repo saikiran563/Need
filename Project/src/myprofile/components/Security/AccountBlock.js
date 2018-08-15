@@ -206,25 +206,25 @@ class AccountBlock extends Component {
 		    
 			{ 
         !showAccountPinEdit && accountPinEditMode && 
-             <div className="col-sm-2 description_box__edit description_box__edit_section cancel">
+             <div className="description_box__edit description_box__edit_section cancel">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="pinblock-cancel">Cancel</a>
 			</div>
             }
 			
             {
 			showAccountPinEdit &&  
-			<div className="col-sm-2 description_box__edit description_box__edit_section" analyticstrack="pinblock-edit">
+			<div className="description_box__edit description_box__edit_section" analyticstrack="pinblock-edit">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('accountPinblock')} role="button">Edit</a>
 			</div>
 			}
 				{
-              showAccountPinEdit && accountPinEditMode && pinSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
+              pinSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
             }
 			{
                !showAccountPinEdit && accountPinEditMode && 
 			   <div className="footer col-xs-12">
                   <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pinblock-cancel">Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid || !isMismatch} 
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch || reactGlobals.isCsr} 
                   onClick={() => this.props.handleSave('pinForm', {enteredPin: newAccountPin,reEnteredPin: confirmAccountPin}, event)} 
                   analyticstrack="pinblock-save">Save Changes</button>
                 </div>

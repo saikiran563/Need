@@ -47,11 +47,11 @@ export const showVerifyAddressModal = () => ({
 
 export const setBillingAddressSuccess = (response) => ({
   type: SET_BILLING_ADDRESS_SUCCESS,
-  response,
+  status: response,
 })
-export const setBillingAddressError = (error) => ({
+export const setBillingAddressError = (response) => ({
   type: SET_BILLING_ADDRESS_ERROR,
-  error,
+  status: response,
 })
 
 export const setBillingAddressOnSuccess = (response) => ({
@@ -69,21 +69,30 @@ export const updateBillingAddress = (address) => dispatch => {
         data: address
     });
     resp.then((response) => {
-    console.log('Billing address post call success response');
-        // console.log(response);
-      //  response.data.userId = id;
+   
+      
       if(response.data.statusCode == "0"){
         dispatch(setBillingAddressOnSuccess(address))
         dispatch(setBillingAddressSuccess(response.data.statusCode))   
       }else{
       dispatch(setBillingAddressError(err))
-      }
+       }
+
+      //  dispatch(setBillingAddressOnSuccess(address))
+      // dispatch(setBillingAddressSuccess(response.status)) 
         
     })
      .catch((err) => {
         dispatch(setBillingAddressError(err))
       })
  
+}
+
+export const resetBillingAddressStatus = (response) => dispatch => {
+  dispatch({
+    type: SET_BILLING_ADDRESS_SUCCESS,
+             status: response
+  } )
 }
 
 

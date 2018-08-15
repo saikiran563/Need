@@ -6,8 +6,7 @@ const PhoneVerificationNeeded = props => {
       <p>
         <span className="text-warning">
           <i className="fa fa-times-circle" />
-        </span>
-        The Account Owner's device must be to receive text messages in order to
+        </span> The Account Owner's device must be to receive text messages in order to
         use this feature.
       </p>
       <div className="row">
@@ -23,7 +22,7 @@ const PhoneVerificationNeeded = props => {
           >
             Cancel
           </a>
-          <button className="btn btn--round">Change Device</button>
+          <a href="/vzw/browse/devicechange/home.jsp"><button className="btn btn--round">Change Device</button></a>
         </div>
       </div>
     </div>

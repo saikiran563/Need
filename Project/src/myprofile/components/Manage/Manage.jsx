@@ -27,7 +27,7 @@ class Manage extends Component {
       managers: [],
       addedManager: [],
       revokedManager: {},
-      accountManagerRequests: this.props.accountManagerRequests,
+      accountManagerRequests: [],
       deniedAccountManagerRequests: null,
       showRequestSuccessPopup: false,
       newAccountMemberRequest:  {
@@ -119,7 +119,7 @@ class Manage extends Component {
 
 handleEditCancel = (type) =>  {
     switch(type) {
-      case 'accountManagerblock':
+      case 'accountmanagerblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
@@ -127,10 +127,10 @@ handleEditCancel = (type) =>  {
         this.props.actions.fetchMtns()
         this.props.actions.fetchManagerRequests()
         this.props.actions.getAccountMemberDetailsToSendRequest()
-        this.props.history.push('/manage/accountManager');
+        this.props.history.push('/manage/accountmanager');
       break;
 
-      case 'greetingblock':
+      case 'greetingnameblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: false,greetingEditMode: true,transferOfServiceEditMode:false
@@ -138,7 +138,7 @@ handleEditCancel = (type) =>  {
         this.props.history.push('/manage/greetingname');
       break;
 
-      case 'transferofServiceblock':
+      case 'transferofserviceblock':
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: false,greetingEditMode: false, transferOfServiceEditMode:true
@@ -157,7 +157,7 @@ handleEditCancel = (type) =>  {
   handleSave = (formId, formData, event) => {
      event.preventDefault();
       switch(formId) {
-       case 'accountManagerBlock':
+       case 'accountmanagerBlock':
        const { managers } = this.state
        let newManagers = []
        // Remove existing isLastlyAdded key if multiple managers are added
@@ -176,7 +176,7 @@ handleEditCancel = (type) =>  {
          type: "none",
          firstName: formData.firstName,
          lastName: formData.lastName,
-         phoneNumber: formData.phoneNumber=== 'noLineAssigned' ? '' :eachManager.phoneNumber,
+         phoneNumber: formData.phoneNumber ? formData.phoneNumber : "noLineAssigned", // formData.phoneNumber==='noLineAssigned'?'': "", //eachManager.phoneNumber,
          emailId: formData.emailId,
          id: id
      }
@@ -185,10 +185,10 @@ handleEditCancel = (type) =>  {
        addedManager
      })
        break;
-       case 'greetingblock':
+       case 'greetingnameblock':
        //
        break
-       case 'transferOfServiceblock':
+       case 'transferofserviceblock':
        //
        break;
        default:
@@ -257,7 +257,6 @@ const mapStateToProps = state => {
   return {
     managers: state.accManagerReducer.managers,
     state:state,
-    accountManagerRequests: state.accManagerReducer.accountManagerRequests
   }
 }
 

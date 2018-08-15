@@ -25,7 +25,10 @@ closeModal =() => {
         return (
          <div className="headercontent__wrapper">
                     <h1 className="title title--lg hidden-xs hidden-sm">My Profile</h1>
-                  {reactGlobals.mdnRole.toLocaleLowerCase()=="accountholder" || reactGlobals.mdnRole.toLocaleLowerCase()=="accountmanager" ? (<p>You are the {amRole}.<br className="visible-xs" /> <a href="#" className="dlink" onClick={this.openPopup}>What does this mean?</a></p>) : (<p>You are the Account Member.<br className="visible-xs" /> <a href="#" className="dlink" onClick={this.openPopup}>What does this mean?</a></p>) }
+                  { reactGlobals.mdnRole.toLocaleLowerCase()=="accountholder" || reactGlobals.mdnRole.toLocaleLowerCase()=="accountmanager" ? 
+                  (<p>You are the {amRole}. <br className="visible-xs" /> <a href="#" className="dlink"
+                   onClick={this.openPopup}>What does this mean?</a></p>) : (<p>You are the Account Member. <br className="visible-xs" />
+                        <a href="#" className="dlink" onClick={this.openPopup}>What does this mean?</a></p>) }
                   <p>Account Number: [{acctNumber}]</p>
                     <h2 className="title title--sm top-divider">Quick Links</h2>
                     <p>A few common settings to get you started.</p>
@@ -34,7 +37,7 @@ closeModal =() => {
            <Modal 
               modalStatus={this.state.modalStatus}
               closeModal={this.closeModal}
-              > <AccessRoles/> </Modal>
+              tagId="quicklinks-accessroles"> <AccessRoles/> </Modal>
 </div>
                  )
             

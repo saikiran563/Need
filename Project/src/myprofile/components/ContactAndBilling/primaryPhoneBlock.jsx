@@ -102,8 +102,8 @@ class PrimaryPhoneBlock extends Component {
   }
 
   render() {
-    const {  phoneidInvalidMessages, requiredPrimaryError, requiredAlternateError, userPrimaryPhone, userAlternatePhone } = this.state;
-    const { userPrimaryPhoneInfo, showPrimaryPhoneEdit, primaryPhoneEditMode, phoneSaved } = this.props;
+    const { phoneidInvalidMessages, requiredPrimaryError, requiredAlternateError, userPrimaryPhone, userAlternatePhone } = this.state;
+    const { userPrimaryPhoneInfo, showPrimaryPhoneEdit, primaryPhoneEditMode, primaryPhoneStatus } = this.props;
     const isValidPrimary = this.state.isValidPrimary;
     const isValidAlternate = this.state.isValidAlternate;
     const editableClassName = primaryPhoneEditMode ? "" : "description_box_disabled";
@@ -117,7 +117,7 @@ class PrimaryPhoneBlock extends Component {
      <div className="clearfix"></div>
      <div className="body">
                     <div className="col-xs-12 col-sm-4 description_box__header">
-                        <h4 tabIndex="0">Primary Phone</h4>
+                        <h4 tabIndex="0">Contact Numbers</h4>
                         <p>Provide the phone numbers where we can best reach you.</p>
                     </div>
                     <div className="col-xs-12 col-sm-8 description_box__large-container">
@@ -136,20 +136,20 @@ class PrimaryPhoneBlock extends Component {
                     <div className="row">
                       <div className="col-xs-12">
                         <div className="form-group phone-block-input">
-                          <label htmlFor="primary phone number">Change Primary Phone</label>
-                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="555.555.5555" name="primaryphone" pattern="^\d{3}.\d{3}.\d{4}$" touched={this.state.istouchedPrimary} value={userPrimaryPhone} />
+                          <label htmlFor="primary phone number">Primary Phone</label>
+                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="000.000.0000" name="primaryphone" pattern="^\d{3}.\d{3}.\d{4}$" touched={this.state.istouchedPrimary} value={userPrimaryPhone} analyticstrack="primaryPhone-inputfield"/>
                         </div>
 
                         <div className="form-group phone-block-input">
-                          <label htmlFor="alternate phone number">Change Alternate Phone</label>
-                          <InputField type="text" handleOnChange={this.handleOnAlternatePhoneChange} placeholder="000.000.0000" name="alternatephone"  touched={this.state.istouchedAlternate} value={userAlternatePhone} />
+                          <label htmlFor="alternate phone number">Alternate Phone</label>
+                          <InputField type="text" handleOnChange={this.handleOnAlternatePhoneChange} placeholder="000.000.0000" name="alternatephone"  touched={this.state.istouchedAlternate} value={userAlternatePhone} analyticstrack="alternativePhone-inputfield"/>
                         </div>
 
                       </div>
                        {
           !showPrimaryPhoneEdit && primaryPhoneEditMode && <div className="footer description_box__control-btn col-xs-12">
-            <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</button>
-            <button className="btn btn--round" disabled={ !(isValidPrimary && isValidAlternate)} onClick={() => this.props.handleSave('primaryPhoneBlock', {primaryPhone:userPrimaryPhone.split('.').join(''),alternatePhone:userAlternatePhone.split('.').join('')}, event)}>Save Changes</button>
+            <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')} analyticstrack="primaryPhone-cancel">Cancel</button>
+            <button className="btn btn--round" disabled={ !(isValidPrimary && isValidAlternate) || reactGlobals.isCsr} onClick={() => this.props.handleSave('primaryPhoneBlock', {primaryPhone:userPrimaryPhone.split('.').join(''),alternatePhone:userAlternatePhone.split('.').join('')}, event)} analyticstrack="primaryPhone-savechanges">Save Changes</button>
           </div>
         }
                     </div>
@@ -159,19 +159,19 @@ class PrimaryPhoneBlock extends Component {
 
               </div>
               {
-                  phoneSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                  primaryPhoneStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                   &nbsp;Saved
                   </span>
                 }
               {
                 showPrimaryPhoneEdit && <div className="description_box__edit description_box__edit_section primary-phone-edit">
-                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('primaryPhoneBlock')} role="button">Edit</a>
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('primaryPhoneBlock')} role="button" analyticstrack="primaryPhone-edit">Edit</a>
                 </div>
               }
               {
                 !showPrimaryPhoneEdit && primaryPhoneEditMode &&
                   <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="primaryPhone-cancel">Cancel</a>
                 </div>
               }
              

@@ -4,6 +4,7 @@ import {
   GET_META_INFO,
   GET_META_FAIL,
   SET_USER_INFO,
+  SET_USER_FAIL,
   SET_PIN_INFO,
   GET_QUES_INFO,
   SET_QUES_INFO,
@@ -13,7 +14,10 @@ import {
   SET_PIN_FAIL,
   SET_PASSWORD_FAIL,
   SET_PASSWORD_INFO,
-  
+  GET_SECRET_PIN_STATUS,
+  GET_LIST_OF_USER_NUMBERS,
+  SEND_SECURE_PIN_TO_PHONE,
+  CONFIRM_SECURE_PIN_CODE
 } from '../actions/fetchSecurities'
 
 import {
@@ -30,7 +34,10 @@ const initialState = {
   userstatus:null,
   pinstatus:null,
   questionStatus:null,
-  metaData:null
+  metaData:null,
+  secretPin: null,
+  listOfUserNumbers: [],
+  smartPinMtn: ""
 }
 
 const fetchSecurityBegin = (state, action) => {
@@ -48,7 +55,7 @@ const fetchSecuritySuccess = (state, action) => {
 
 const getMetaDataSuccess = (state , action) => {
   return updateObject(state, {
-    isFetching :false,
+    isFetching :true,
     metaData:action.response
 
   })
@@ -70,31 +77,31 @@ const getQuestionSuccess = (state , action) => {
 }
 const getBannedListSuccess  = (state , action) => {
   return updateObject(state, {
-    isFetching :false,
+    isFetching :true,
     passwordList:action.response
   })
 }
 
 const setUserIdSuccess = (state , action) => {
- var response = action.response;
- if(response && response.statusCode == "0") {
-  response.status = true;
-  return updateObject(state, {
-    isFetching :false,
-    userstatus:response
-  }) 
- }
-  if(response) {
-  console.log( ' err response',response);
-    respose.status = false;
-    return updateObject(state, {
-    isFetching :false,
-    userstatus:response
-  }) 
+  var response = action.response;
+  if(response && response.statusCode == "0") {
+   response.status = true;
+   return updateObject(state, {
+     isFetching :true,
+     userstatus:response
+   }) 
   }
-}
+  else if(response && response.statusCode == "1") {
+   console.log( ' err response',response);
+     response.status = false;
+     return updateObject(state, {
+     isFetching :true,
+     userstatus:response
+   }) 
+   }
+ }
 
-const setPinSuccess = (state , action) => {
+ const setPinSuccess = (state , action) => {
   var response = action.response;
  if(response && response.statusCode == "0") {
   response.status = true;
@@ -104,7 +111,8 @@ const setPinSuccess = (state , action) => {
 
   })
  }
- if(response) {
+ else if(response && response.statusCode == "1") {
+    response.status = false;
      return updateObject(state, {
     isFetching :false,
     pinstatus:action.response
@@ -112,12 +120,15 @@ const setPinSuccess = (state , action) => {
   }
 }
 const setPinError = (state , action) => {
-  action.response.status = false;
+  var response = action.response;
+  if(response && response.statusCode == "1") { 
+    response.status = false;
   return updateObject(state, {
     isFetching :false,
     pinstatus:action.response
 
   })
+  }
 }
 
 const setQuestionSuccess = (state , action) => {
@@ -127,10 +138,10 @@ const setQuestionSuccess = (state , action) => {
   return updateObject(state, {
     isFetching :false,
     questionStatus:action.response
-
   })
  }
- if(response) {
+ else if(response && response.statusCode == "1") {
+   response.status = false;
      return updateObject(state, {
     isFetching :false,
     userstatus:response
@@ -146,7 +157,7 @@ const setPasswordSuccess = (state, action) => {
     isFetching :false,
     passwordStatus: response
   })
- } else {
+ } else if(response && response.statusCode == "1") {
    response.status = false;
    return updateObject(state, {
     isFetching :false,
@@ -157,16 +168,46 @@ const setPasswordSuccess = (state, action) => {
 
 
 const setPasswordFail = (state, action) => {
-  action.response.status = false;
+  var response = action.response;
+  
+  if(response && response.statusCode == "1") { 
+    response.status = false;
    return updateObject(state, {
     isFetching :false,
      passwordStatus: action.response
-  })
+   })
+  }
 }
 const securityReducer = (state = initialState, action) => {
   //console.log("--",action)
   const { type } = action
+  // console.log("TYPE", type)
+  
   switch (type) {
+    case GET_SECRET_PIN_STATUS:
+    console.log("GET_SECRET_PIN_STATUS",action.payload)    
+    return {
+      ...state,
+      secretPin: action.payload
+    }
+    case GET_LIST_OF_USER_NUMBERS: 
+    console.log("GET_LIST_OF_USER_NUMBERS",action.payload)    
+      return {
+        ...state,
+        listOfUserNumbers: action.payload
+      }
+    case SEND_SECURE_PIN_TO_PHONE:
+    console.log("SEND_SECURE_PIN_TO_PHONE",action.payload)    
+      return {
+        ...state,
+        smartPinMtn: action.payload
+      }
+    case CONFIRM_SECURE_PIN_CODE:
+    console.log("CONFIRM_SECURE_PIN_CODE",action.payload)
+      return {
+        ...state,
+        isSecurePinValidated: action.payload
+      }
     case FETCH_SECURITY_BEGIN:
       return fetchSecurityBegin(state, action)
     case FETCH_SECURITY_SUCCESS:
@@ -177,6 +218,8 @@ const securityReducer = (state = initialState, action) => {
       return getMetaDataError(state,action);
     case SET_USER_INFO:
       return  setUserIdSuccess(state,action);
+    case SET_USER_FAIL:
+      return setUserIdError(state, action)
     case SET_PIN_INFO:
       return  setPinSuccess(state,action);
       case SET_PIN_FAIL:
@@ -189,7 +232,6 @@ const securityReducer = (state = initialState, action) => {
       return setPasswordSuccess(state,action);
       case SET_PASSWORD_FAIL:
       return setPasswordFail(state, action);
-
     default:
       return state
   }

@@ -34,7 +34,7 @@ const fetchSetEnhancedAuth = (state, action) => {
 const fetchEnhancedAuthEdit = (state, action) => {
 
   return updateObject(state, {
-    enhancedEdit: action.enhancedAuth.twoFactorAuth,
+    enhancedEdit: action.enhancedAuth,
     isFetching: false
   })
 }

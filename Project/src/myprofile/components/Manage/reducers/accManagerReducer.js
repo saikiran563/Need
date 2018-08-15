@@ -4,7 +4,8 @@ import {
   FETCH_MANAGE_LANDING_FAIL,
   FETCH_MTNS_SUCCESS,
   FETCH_MANAGER_REQUESTS_SUCCESS,
-  GET_ACCOUNT_MEMBER_DETAILS_SUCCESS
+  GET_ACCOUNT_MEMBER_DETAILS_SUCCESS,
+  ADD_NEW_MANAGER_SUCCESS
 } from '../actions/manage'
 
 const initialState = {
@@ -31,6 +32,13 @@ import {
 const accManagerReducer = (state = initialState, action) => {
   const { type } = action
   switch (type) {
+    case ADD_NEW_MANAGER_SUCCESS:
+      console.log("Add account manager reducer",action)
+      return {
+        ...state,
+        managers: [...state.managers, action.response.data]
+      }
+    
     case FETCH_MANAGE_LANDING_SUCCESS:
       return updateObject(state, {
         managers: action.response.customerInfo

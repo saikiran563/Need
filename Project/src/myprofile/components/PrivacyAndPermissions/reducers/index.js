@@ -1,5 +1,6 @@
 const FETCH_PRIVACY_AND_PERMISSIONS_BEGIN = 'privacies/FETCH_PRIVACY_AND_PERMISSIONS_BEGIN'
 const FETCH_PRIVACY_AND_PERMISSIONS_SUCCESS = 'privacies/FETCH_PRIVACY_AND_PERMISSIONS_SUCCESS'
+import { POST_PRIVACY_PERMISSIONS } from "../actions/fetchPrivacyDetails"
 
 import {
   createReducer,
@@ -15,7 +16,8 @@ const initialState = {
   verizonSelectsInfo: {},
   privacySettingsInfo: {},
   businessAndMarketingInfo: {},
-  mobileAdvertisingInfo: {}
+  mobileAdvertisingInfo: {},
+  privacySettings: null
 }
 
 
@@ -25,10 +27,10 @@ const fetchPrivacyAndPermissionsBegin = (state, action) => {
 
 
 const fetchPrivacyAndPermissionsSuccess = (state, action) => {
-  console.log("ACTION PRIVACIES", action.privacies)
+  console.log("ACTION PRIVACIES", action.payload)
   return updateObject(state, {
     isFetching: false,
-    privacySettings: action.privacies
+    privacySettings: action.payload
     // privacySettingsInfo: action.privacies.privacySettingsInfo,
     // verizonSelectsInfo: action.privacies.verizonSelectsInfo,
     // businessAndMarketingInfo: action.privacies.businessAndMarketing,
@@ -43,6 +45,12 @@ const privacyDetailsReducer = (state = initialState, action) => {
       return fetchPrivacyAndPermissionsBegin(state, action)
     case FETCH_PRIVACY_AND_PERMISSIONS_SUCCESS:
       return fetchPrivacyAndPermissionsSuccess(state, action)
+    case POST_PRIVACY_PERMISSIONS: 
+      console.log(action.payload)
+      return {
+        ...state,
+        privacySettings: action.payload
+      }
     default:
       return state
   }

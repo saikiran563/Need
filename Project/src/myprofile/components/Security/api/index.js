@@ -3,7 +3,7 @@
  */
 import _profile from './profile.json'
 
-const TIMEOUT = 500
+const TIMEOUT = 0
 
 export default {
   fetchSecurity: (cb, timeout) =>

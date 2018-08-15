@@ -13,6 +13,7 @@ class UserBlock extends Component {
       showSaved: false,
       isValid: '',
       istouched: false,
+      hasError:false,
       useridInvalidMessages: [
         { name: '6-60 characters, all letters or a combination of letters and numbers', error: false, type: 'character' },
         { name: 'Not all numbers', error: false, type: 'number' },
@@ -63,13 +64,13 @@ class UserBlock extends Component {
         inavlidMessage.error = false;
         this.setState({ useridInvalidMessages });
       }
-      if (val.match(/^\d*[a-zA-Z]{1,}\d*/)) {
+      if (val.match(/^\d+$/)) {
         let inavlidMessage = useridInvalidMessages.find(message => message.type === 'number');
-        inavlidMessage.error = false;
+        inavlidMessage.error = true;
         this.setState({ useridInvalidMessages });
       } else {
         let inavlidMessage = useridInvalidMessages.find(message => message.type === 'number');
-        inavlidMessage.error = true;
+        inavlidMessage.error = false;
         this.setState({ useridInvalidMessages });
       }
     }
@@ -83,14 +84,22 @@ class UserBlock extends Component {
 componentWillReceiveProps(nextProps) {
    if(nextProps.userSaved != this.state.showSaved )
       this.setState({showSaved: nextProps.userSaved})
+
 }
-  render() {
-    const {  useridInvalidMessages, requiredError, userId ,showSaved } = this.state;
-    const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock, metaBlock} = this.props;
+
+componentDidCatch(error,info) {
+   console.log("CDC-UB",error,"-",info)
+   this.setState({hasError:true});
+}
+render() {
+   const {  useridInvalidMessages, requiredError, userId ,showSaved,hasError } = this.state;
+   const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock, metaBlock} = this.props;
    const isValid = !useridInvalidMessages.find(user => user.error)
    const editableClassName = userEditMode ? "description_box--edit-view" : "description_box_disabled";
+   const hasServerError = userBlock ? (!userBlock.status ? true: false) : false;
     return (
-      <div className={`row description_box ${editableClassName}`}>
+  
+  <div className={`row description_box ${editableClassName}`}>
 	
 	<div className="col-xs-12 col-sm-4 description_box__header">
 		<h4 tabIndex="0">{userInfo.title}</h4>
@@ -117,8 +126,8 @@ componentWillReceiveProps(nextProps) {
 									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User ID" name="userid" valid={isValid} touched={this.state.istouched} 
 											value={userId} analyticstrack="userblock-usertxt"/>
 									<p className="help-block">If available, you may use Email Address as your User ID.</p>
-                   { /*!isValid && 
-                  <p className="errorDisplay">InValid Entry</p>*/
+                   { hasServerError && 
+                  <p className="errorDisplay">{userBlock.errorCode}</p>
                   }
 								</div>
 							</div>
@@ -168,7 +177,7 @@ componentWillReceiveProps(nextProps) {
 			!showUserEdit && userEditMode && 
 				<div className="footer col-xs-12">
 					<a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="userblock-cancel">Cancel</a>
-					<button className="btn btn--round"  disabled={!isValid} onClick={() => this.props.handleSave('userForm', userId, event)} analyticstrack="userblock-save">Save Changes</button>
+					<button className="btn btn--round"  disabled={!isValid || reactGlobals.isCsr} onClick={() => this.props.handleSave('userForm', userId, event)} analyticstrack="userblock-save">Save Changes</button>
 				</div>
 			}
 		</div>

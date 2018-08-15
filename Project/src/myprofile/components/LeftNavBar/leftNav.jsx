@@ -6,25 +6,25 @@ import * as actions from './actions'
 
 class LeftNav extends Component {
 
-constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+    }
 
-componentDidMount() {
+    componentDidMount() {
 
-     this.props.actions.fetchLeftNav();
-// this.props.actions.fetchLeftNav();
-//  this.props.actions.showDeviceTiles();
-}
+        this.props.actions.fetchLeftNav();
+        // this.props.actions.fetchLeftNav();
+        //  this.props.actions.showDeviceTiles();
+    }
 
     render() {
-let acctHolder = reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder";
+        let acctHolder = reactGlobals.mdnRole.toLocaleLowerCase() == "accountholder";
 
-let acctManager =  reactGlobals.mdnRole.toLocaleLowerCase() == "accountmanager";
+        let acctManager = reactGlobals.mdnRole.toLocaleLowerCase() == "accountmanager";
 
-let acctMember = reactGlobals.mdnRole.toLocaleLowerCase() == "mobilesecure";
+        let acctMember = reactGlobals.mdnRole.toLocaleLowerCase() == "mobilesecure";
 
-let leftnav = this.props.leftNavBar;
+        let leftnav = this.props.leftNavBar;
         return (
 
 
@@ -34,73 +34,73 @@ let leftnav = this.props.leftNavBar;
                 <div className="hidden-scrollbar">
 
                     <ul className="menu-myprofile" role="menu">
-                        <li className="page page__title">
-                            <NavLink exact to='/'>{leftnav.quickLinks}</NavLink>
+                        <li className="page page__title" analyticstrack="leftnavqs">
+                            <NavLink exact to='/'>Quick links</NavLink>
                         </li>
-                        <li className={`page page__title ${this.props.location.pathname.indexOf("security")>-1?"main-active":''}`}>
+                        <li className={`page page__title ${this.props.location.pathname.indexOf("security") > -1 ? "main-active" : ''}`} analyticstrack="leftnavsecurity">
                             <NavLink exact to='/security'>Security</NavLink>
                         </li>
-                        <li className="">
+                        <li className="" analyticstrack="leftnavuserid">
                             <NavLink exact to='/security/userid'>User ID</NavLink>
                         </li>
-                        <li className=" ">
+                        <li className=" " analyticstrack="leftnavpassword">
                             <NavLink exact to='/security/password'>Password</NavLink>
                         </li>
-                        <li className=" ">
-                           <NavLink exact to='/security/accountPin'>Account PIN</NavLink>
-                        </li>                        
-                        <li className=" ">
+                        {(acctHolder || acctManager) && <li className=" " analyticstrack="leftnavacctpin">
+                            <NavLink exact to='/security/accountPin'>Account PIN</NavLink>
+                        </li>}
+                        <li className=" " analyticstrack="leftnavsecretque">
                             <NavLink exact to='/security/question'>Secret question</NavLink>
                         </li>
                         <li className=" ">
                             <a href="/my-profile-desktop-security.html?section=securityImgS&page=ss">Security image</a>
                         </li>
-                        { acctHolder && <li className=" ">
+                        {acctHolder && <li className=" ">
                             <NavLink exact to='/security/enhancedauth'>Enhanced authentication</NavLink>
-        </li> }
+                        </li>}
 
 
-                        <li className={`page page__title ${this.props.location.pathname.indexOf("contactbilling")>-1?"main-active":''}`}>
+                        <li className={`page page__title ${this.props.location.pathname.indexOf("contactbilling") > -1 ? "main-active" : ''}`} analyticstrack="leftnavcontactbilling">
                             <NavLink exact to='/contactbilling'>Contact & Billing</NavLink>
                         </li>
-                        <li className=" ">
-                        <NavLink exact to='/contactbilling/email'>Email address</NavLink>
+                        <li className=" " analyticstrack="leftnavemail">
+                            <NavLink exact to='/contactbilling/email'>Email address</NavLink>
                         </li>
-                  
-                
-                        { (acctHolder || acctManager) && <li >
-                            <NavLink exact to='/contactbilling/primaryPhone'>Primary phone</NavLink>
-                        </li>}
-                        { (acctHolder || acctManager) && <li >
+
+
+                        <li analyticstrack="leftnavprimaryphone">
+                            <NavLink exact to='/contactbilling/primaryPhone'>Contact numbers</NavLink>
+                        </li>
+                        {(acctHolder || acctManager) && <li analyticstrack="leftnavbillingaddress">
                             <NavLink exact to='/contactbilling/billingAddress'>Billing address</NavLink>
                         </li>}
-                        { (acctHolder || acctManager) && <li>
-                            <a href="/my-profile-desktop-contact.html?section=serviceAddressCB&page=cb">Service addresses</a>
-                        </li>     }
+                        {(acctHolder || acctManager) && <li analyticstrack="leftnavserviceaddress">
+                             <NavLink exact to='/contactbilling/serviceAddress'>Service addresses</NavLink>
+                        </li>}
 
 
-                       <li className={`page page__title ${this.props.location.pathname.indexOf("manage")>-1?"main-active":''}`}>
-                            <NavLink exact to='/manage'>Manage account</NavLink>
+                        <li className={`page page__title ${this.props.location.pathname.indexOf("manage") > -1 ? "main-active" : ''}`} analyticstrack="leftnavmanageacct">
+                            <NavLink exact to='/manage'>Manage Account</NavLink>
                         </li>
-                        <li className=" ">
-                            <NavLink exact to="/manage/accountmanager">Account manager</NavLink>
+                        <li className=" " analyticstrack="leftnavacctmanager">
+                            <NavLink exact to="/manage/accountmanager">Account managers</NavLink>
                         </li>
-                        <li className=" ">
+                        <li className=" " analyticstrack="leftnavgreetingname">
                             <NavLink exact to="/manage/greetingname">Greeting name</NavLink>
                         </li>
-                        <li className=" ">
+                        <li className=" " analyticstrack="leftnavtransferservice">
                             <NavLink exact to="/manage/transferofservice">Transfer of service</NavLink>
                         </li>
 
 
-                        <li className={`page page__title ${this.props.location.pathname.indexOf("privacypermissions")>-1?"main-active":''}`}>
+                        <li className={`page page__title ${this.props.location.pathname.indexOf("privacypermissions") > -1 ? "main-active" : ''}`} analyticstrack="leftnavprivacypermissions">
                             <NavLink exact to='/privacypermissions'>Privacy & Permissions</NavLink>
                         </li>
-                        <li className="">
-                        <NavLink exact to='/privacypermissions/privacysettings'>Privacy settings</NavLink>
+                        <li className="" analyticstrack="leftnavprivacysettings">
+                            <NavLink exact to='/privacypermissions/privacysettings'>Privacy settings</NavLink>
                         </li>
-                        <li className=" ">
-                        <NavLink exact to='/privacypermissions/verizonselects'>Verizon selects preferences</NavLink>
+                        <li className=" " analyticstrack="leftnavverizonselects">
+                            <NavLink exact to='/privacypermissions/verizonselects'>Verizon selects preferences</NavLink>
                         </li>
                     </ul>
                 </div>
@@ -114,13 +114,13 @@ let leftnav = this.props.leftNavBar;
 }
 
 const mapStateToProps = state => {
-  return {
-    isFetching: state.leftNav.isFetching,
-     leftNavBar: state.leftNav.leftNav,
-  }
+    return {
+        isFetching: state.leftNav.isFetching,
+        leftNavBar: state.leftNav.leftNav,
+    }
 }
 
 const mapDispatchToProps = dispatch => ({
-actions: bindActionCreators(actions, dispatch),
+    actions: bindActionCreators(actions, dispatch),
 })
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LeftNav));

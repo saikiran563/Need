@@ -6,6 +6,28 @@ export const SET_PRIMARY_PHONE_SUCCESS = 'contacts/SET_PRIMARY_PHONE_SUCCESS'
 export const SET_PRIMARY_PHONE_ERROR = 'contacts/SET_PRIMARY_PHONE_ERROR'
 
 
+export const getPrimaryPhoneSuccess = (response) => ({
+  type: SET_PRIMARY_PHONE_SUCCESS,
+  status : response,
+});
+
+export const setPrimaryPhoneOnSuccess = (response) => ({
+   type: SET_PRIMARY_PHONE,
+  response,
+});
+
+export const getPrimaryPhoneError = (response) => ({
+  type: SET_PRIMARY_PHONE_ERROR,
+  status: response,
+})
+
+export const resetPrimaryPhoneStatus = (response) => dispatch => {
+  dispatch({
+    type: SET_PRIMARY_PHONE_SUCCESS,
+             status : response
+  } )
+}
+
 export const setPrimaryPhone = (data) => dispatch => {
     // API CAll WILL BE CALLED HERE
     
@@ -17,27 +39,19 @@ export const setPrimaryPhone = (data) => dispatch => {
     })
       .then((response) => {
         if(response.data.statusCode == "0"){
-          dispatch(setPrimaryPhoneonSuccess(data));
-          dispatch(getPrimaryPhoneSuccess(response.data.statusCode))
+         dispatch(getPrimaryPhoneSuccess(response.data.statusCode));
+        dispatch(setPrimaryPhoneOnSuccess(data))
         }else{
-          dispatch(getPrimaryPhoneError(err))
+          dispatch(getPrimaryPhoneError(response.data.statusCode))
         }
+        // dispatch(getPrimaryPhoneSuccess(response.status));
+        // dispatch(setPrimaryPhoneOnSuccess(data))
         
       })
       .catch((err) => {
-        dispatch(getPrimarPhoneError(err))
+        dispatch(getPrimaryPhoneError(err.status))
       })
 }
-export const getPrimaryPhoneSuccess = (response) => ({
-  type: SET_PRIMARY_PHONE_SUCCESS,
-  response,
-})
-export const setPrimaryPhoneOnSuccess = (response) => ({
-   type: SET_PRIMARY_PHONE,
-  response,
-})
-export const getPrimaryPhoneError = (error) => ({
-  type: SET_PRIMARY_PHONE_ERROR,
-  error,
-})
+
+
 

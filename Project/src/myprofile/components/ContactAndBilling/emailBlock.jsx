@@ -53,13 +53,13 @@ class EmailAddress extends Component {
 
   render() {
     const {  emailidInvalidMessages, requiredError, userEmail } = this.state;
-    const { userEmailInfo, showEmailEdit, userEditMode, emailSaved } = this.props;
+    const { userEmailInfo, showEmailEdit, userEditMode, emailStatus } = this.props;
     const isValid = this.state.isValid;
     const editableClassName = userEditMode ? "" : "description_box_disabled";
     const savedSectionStyle = {
       "display": "inline",
-      "margin-top": "10px",
-      "padding-top": "10px"
+      "marginTop": "10px",
+      "paddingTop": "10px"
     };
     return (
      <div className={`row description_box ${editableClassName}`}>
@@ -84,7 +84,7 @@ class EmailAddress extends Component {
                       <div className="col-xs-12">
                         <div className="form-group email-block-input">
                           <label htmlFor="email">Change Email Address</label>
-                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="name@domain.com" name="emailid" valid={isValid} touched={this.state.istouched} value={userEmail} />
+                          <InputField type="text" handleOnChange={this.handleOnChange} placeholder="name@domain.com" name="emailid" valid={isValid} touched={this.state.istouched} value={userEmail} analyticstrack="emailId-inputfield" />
                           {!isValid && <span className="help-block">{emailidInvalidMessages[0].name}</span>}
                         </div>
                       </div>
@@ -94,25 +94,25 @@ class EmailAddress extends Component {
                 
               </div>
               {
-                 emailSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                 emailStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                 &nbsp;Saved
                  </span>
                } 
               {
                 showEmailEdit && <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('emailBlock')} role="button">Edit</a>
+                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('emailBlock')} role="button" analyticstrack="emailId-edit">Edit</a>
                 </div>
               }
               {
                 !showEmailEdit && userEditMode &&
                   <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="emailId-cancel">Cancel</a>
                 </div>
               }
                 {
               !showEmailEdit && userEditMode && <div className="footer description_box__control-btn col-xs-12">
                 <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')}>Cancel</button>
-                <button className="btn btn--round" disabled={requiredError} onClick={() => this.props.handleSave('emailBlock', {emailID:userEmail}, event)}>Save Changes</button>
+                <button className="btn btn--round" disabled={requiredError || reactGlobals.isCsr} onClick={() => this.props.handleSave('emailBlock', {emailID:userEmail}, event)} analyticstrack="emailId-savechanges">Save Changes</button>
              </div>
         }
             </div>

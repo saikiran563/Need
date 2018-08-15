@@ -27,12 +27,13 @@ class VerizonSelects extends Component {
 
                 <div className="col-sm-4 description_box__header">
                     <h4>Verizon Selects</h4>
-                    <p>Participate in Verizon Selects and earn Smart Rewards</p>
+                    <p>Manage settings for the Verizon Selects Program.</p>
                 </div>
                 <div className="col-sm-8 description_box__large-container">
                     <div className="row">
                         <div className="col-xs-12 description_box__details">
-                            <a href="https://wbillpay.verizonwireless.com/vzw/secure/mcm/mcmDisplayPreferences.action" role="button" className="btn btn--round-invert btn-transfer">Change settings</a>
+                            <a href="https://qa2billpay.verizonwireless.com/vzw/secure/mcm/mcmDisplayPreferences.action" role="button" 
+                            className="btn btn--round-invert btn-transfer" analyticstrack="privacy-verizon-settings">Change settings</a>
                         </div>
                     </div>
                 </div>

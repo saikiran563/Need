@@ -12,9 +12,9 @@ import ManagersListToAccountManager from './components/ManagersListToAccountMana
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
-const accountOwner =  true//reactGlobals.role.toLocaleLowerCase() == 'ao'
-const accountMember = false//reactGlobals.mdnRole == 'mobileSecure'
-const accountManager =  false//reactGlobals.role.toLocaleLowerCase() == "amgr"
+const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
+const accountMember = reactGlobals.mdnRole == 'mobileSecure'
+const accountManager = reactGlobals.mdnRole == 'accountManager'
 
 class AccountManagerBlock extends Component {
   constructor(props) {
@@ -100,8 +100,7 @@ getinitialState(){
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false,
-      showLearnMorePopUp: false,
-      accountManagerRequests: this.props.accountManagerRequests
+      showLearnMorePopUp: false
     }
 }
 
@@ -117,9 +116,9 @@ getinitialState(){
     const postPayload = {
         "firstName": managerToRemove.firstName,
         "lastName": managerToRemove.lastName,
-        "selectedMtn": managerToRemove.phoneNumber,
+        "phoneNumber": managerToRemove.phoneNumber,
         "emailId": managerToRemove.emailId,
-        "acctTypeCode": managerToRemove.phoneNumber === 'Not Applicable' ? 'FAC' : ''
+        "acctTypeCode":managerToRemove.phoneNumber==='noLineAssigned' ? 'FAC' :''
       }
     this.props.actions.postRemoveManagerByAccountHolder(postPayload)
     this.props.handleRemoveManager(this.state.managerToRemove)
@@ -279,9 +278,10 @@ getinitialState(){
 
   handleDenyAccountManagerRequest(newRequest){
     const payload = {
+        "role":'',
         "firstName": newRequest.firstName,
         "lastName": newRequest.lastName,
-        "selectedMtn": newRequest.phoneNumber,
+        "phoneNumber": newRequest.phoneNumber,
         "emailId": newRequest.emailId,
         "status":"DENIED"
  }
@@ -291,9 +291,10 @@ getinitialState(){
 
   handleAppproveAccountManagerRequest(newRequest){
     const payload = {
+        "role":'',
         "firstName": newRequest.firstName,
         "lastName": newRequest.lastName,
-        "selectedMtn": newRequest.phoneNumber,
+        "phoneNumber": newRequest.phoneNumber,
         "emailId": newRequest.emailId,
         "status":"APPROVED"
  }
@@ -303,12 +304,12 @@ getinitialState(){
 
   handleSendRequestForAccountManager(newRequest){
     const payload = {
+        "role":'',
         "firstName": this.state.firstName,
         "lastName": this.state.lastName,
-        "selectedMtn": this.state.phoneNumber,
+        "phoneNumber": this.state.phoneNumber,
         "emailId": this.state.emailId,
-        "status":"PENDING",
-        "role": ""
+        "status":"PENDING"
  }
     this.props.actions.postSendRequestForAccountManager(payload)
     this.props.handleSendRequestForAccountManager(newRequest)
@@ -352,13 +353,14 @@ getinitialState(){
   }
 
   handleSave = (e) =>{
-    this.props.handleSave('accountManagerBlock', this.state, e)
+    // this.props.handleSave('accountManagerBlock',{firstName: this.state.firstName, emailId: this.state.emailId} , e)
+	this.props.handleSave('accountmanagerBlock',this.state, e)
     this.props.actions.postAddManagerByAccountHolder({
         "firstName": this.state.firstName,
         "lastName": this.state.lastName,
-        "selectedMtn": this.state.phoneNumber === 'noLineAssigned' ? '' : this.state.phoneNumber ,
+        "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
         "emailId": this.state.emailId,
-        "acctTypeCode": ''
+        "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
     })
     this.setState(this.getinitialState())
   }
@@ -417,7 +419,7 @@ getinitialState(){
                    </div>
                    <div className='footer col-xs-12'>
                      <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                       <button className='btn btn--round'  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+                       <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
                    </div>
                  </div>
               </div>
@@ -594,7 +596,7 @@ getinitialState(){
   }
 
   handleEditCancel = () => {
-    this.props.handleEditCancel('accountManagerblock')
+    this.props.handleEditCancel('accountmanagerblock')
     this.props.actions.fetchMtns()
     this.props.actions.fetchManagerRequests()
   }
@@ -606,6 +608,8 @@ getinitialState(){
   }
 
   render() {
+    console.log('THIS PROPS', this.props)
+    
     const { firstName, lastName, phoneNumber, emailId } = this.state;
     const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
     const editableClassName = managerEditMode ? 'description_box--edit-view' : 'description_box_disabled';
@@ -623,8 +627,16 @@ getinitialState(){
           <div className='clearfix'></div>
           <div className='body'>
             <div className='col-xs-12 col-sm-4 description_box__header'>
-              <h4 tabIndex='0'>Account Managers</h4>
-              <p>[Account Managers can manage all lines on the account in retail stores and by calling Customer Service.]</p>
+              <div className='col-xs-12'>
+              <h4 tabIndex='0' >Account Managers</h4>
+              {/*
+                  showManagerEdit && ( accountOwner || accountMember ) &&
+                  <div className='description_box__edit description_box__edit_section col-xs-4'>
+                    <a className='btn btn-anchor'  onClick={() => this.handleEditCancel()} role='button'>Edit</a>
+                  </div> */
+              }
+              </div>
+              <p>Account Managers can manage all lines on the account in retail stores and by calling Customer Service.</p>
             </div>
             <div className='col-xs-12 col-sm-8 description_box__large-container'>
               {

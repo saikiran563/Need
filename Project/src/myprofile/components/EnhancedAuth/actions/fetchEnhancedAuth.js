@@ -9,9 +9,20 @@ export const FETCH_ENHANCED_AUTH_EDIT_SUCCESS = 'FETCH_ENHANCED_AUTH_EDIT_SUCCES
 export const fetchEnhAuthEdit = () => dispatch => {
 dispatch(fetchEnhAuthEditBegin())
 
-  mockAPI.fetchEnhAuthEdit(response => {
-    dispatch(fetchEnhancedAuthEdit(response))
-  })
+  // mockAPI.fetchEnhAuthEdit(response => {
+  //   dispatch(fetchEnhancedAuthEdit(response))
+  // })
+  // https://vzwqa2.verizonwireless.com/ui/acct/secure/data/ao/profile/twoFactorAuth
+
+  axios.get("https://vzwqa2.verizonwireless.com/ui/acct/secure/data/ao/profile/twoFactorAuth")
+    .then((response) => {
+    dispatch(fetchEnhancedAuthEdit(response.data))
+    })
+     .catch((err) => {
+       dispatch()
+      })
+
+
 }
 
 // export const fetchEnhAuthEdit = () => dispatch => {

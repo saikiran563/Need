@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
-import {encrypt, decrypt,hasValueinArray} from './util'
+import {encrypt, decrypt,hasValueinArray} from "../../../utils/config"
 import './style.css'
 
 class PasswordBlock extends Component {
@@ -17,6 +17,7 @@ class PasswordBlock extends Component {
        isCurrentPwdValid: '',
       istouched: false,
       isMismatch: false,
+      showSaved: false,
       currentPassword: "", newPassword: "", confirmPassword: "",
       errorMessages: [
         { name: '8-20 characters', error: false, type: 'minmax'},
@@ -56,6 +57,23 @@ class PasswordBlock extends Component {
   
   handleOnChangeCurrentPwd= (e) => {
     this.setState({ currentPassword: e.target.value });
+  }
+
+  componentWillUpdate(prevProps){
+    if(prevProps.pwdBlock !== this.props.pwdBlock){
+      console.log(prevProps.pwdBlock)
+      this.setState({
+        showSaved: true
+      })
+    }
+  }
+
+  handleMouseClick = event => {
+    if(this.state.showSaved){
+     this.setState({
+       showSaved: false
+     })
+    }
   }
 
   updateUser = (currentUser) => {
@@ -167,7 +185,7 @@ class PasswordBlock extends Component {
        }*/
     const editableClassName = passwordEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
-        <div className={`row description_box ${editableClassName}`}>
+        <div ref={node => this.node = node} onClick={this.handleMouseClick}  className={`row description_box ${editableClassName}`}>
 	
 	<div className="col-xs-12 col-sm-4 description_box__header">
 		<h4 tabIndex="0">{passwordInfo.title}</h4>
@@ -261,25 +279,23 @@ class PasswordBlock extends Component {
       
       {
 			showPasswordEdit &&  
-			<div className="col-sm-2 description_box__edit description_box__edit_section" analyticstrack="pwdblock-edit">
+			<div className="description_box__edit description_box__edit_section" analyticstrack="pwdblock-edit">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('passwordblock')} role="button">Edit</a>
 			</div>
 			}	
        {
 			!showPasswordEdit && passwordEditMode &&   
-			<div className="col-sm-2 description_box__edit description_box__edit_section cancel" analyticstrack="pwdblock-cancel">
+			<div className="description_box__edit description_box__edit_section cancel" analyticstrack="pwdblock-cancel">
 				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
 			</div>
 			}	
-       {
-              pwdSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
-            }
+       {this.state.showSaved ? <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span> : ""}
      
 			{
                !showPasswordEdit && passwordEditMode && 
 			   <div className="footer col-xs-12">
                   <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pwdblock-cancel">Cancel</a>
-                  <button className="btn btn--round"  disabled={!isValid || !isMismatch}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}
+                  <button className="btn btn--round"  disabled={!isValid || !isMismatch || reactGlobals.isCsr}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}
                   analyticstrack="pwdblock-save">Save Changes</button> 
                 </div>
              }

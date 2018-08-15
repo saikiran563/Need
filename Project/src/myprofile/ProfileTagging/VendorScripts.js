@@ -46,13 +46,14 @@ export default class VendorScripts extends Component {
             const deviceType = getDeviceType();
             if(!reactGlobals.customProps){
                 window.vzwDL.page.condition = "";
-                window.vzwDL.page.pageName = "/" + deviceType + "/my verizon/postpay/overview";
-                window.vzwDL.page.hier1 = deviceType + "/my verizon/postpay/overview";
-                window.vzwDL.page.selfServiceType = deviceType + ": overview page: view"; 
+                window.vzwDL.page.pageName = "/" + deviceType + "/my verizon/postpay/my profile/overview";
+                window.vzwDL.page.hier1 = deviceType + "/my verizon/postpay/my profile/overview";
+                window.vzwDL.page.selfServiceType = deviceType + ": my profile page: view"; 
                 window.vzwDL.page.platform = deviceType;
                 window.vzwDL.page.mlsExp = ONED + ":" + deviceType;
                 window.vzwDL.page.section2 = response.data.ensightenDto.page.section2 + "/postpay";
-                window.vzwDL.page.section3 = "";
+                window.vzwDL.page.section3 = "/my verizon/postpay/my profile";
+                window.vzwDL.page.flowName = "my profile"
                 window.vzwDL.authentication.prepayInd = "";
             }
         }

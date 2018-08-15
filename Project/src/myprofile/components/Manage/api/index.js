@@ -1,14 +1,16 @@
-const BASE_URL = 'https://qa/data'
+const BASE_URL = 'https://vzwqa2.verizonwireless.com/ui/acct/secure'
 
-export const GET_MANAGE_LANDING_URL =  'https://api.myjson.com/bins/w43mg'//BASE_URL
-export const GET_ACCOUNT_MANAGE_URL =  BASE_URL
-export const GET_ACCOUNT_MEMBER_DETAILS =  BASE_URL
-export const ADD_MANAGER_URL = 'http://requestbin.fullcontact.com/1fzqcc71'//BASE_URL + '/ahonly/profile/modifyacctmgr'
-export const REMOVE_MANAGER_URL =  'http://requestbin.fullcontact.com/1fzqcc71'//BASE_URL + '/ahonly/profile/downgradeacctmgr'
-export const SEND_ACCOUNT_MANGER_REQUEST_URL = 'http://saikiran.proxy.beeceptor.com '//BASE_URL + '/ao/profile/accountManagerRequest'
-export const APPROVE_MANAGER_URL = BASE_URL + '/ao/profile/accountManagerRequest'
-export const DENY_MANAGER_URL = BASE_URL + '/ao/profile/accountManagerRequest'
-export const GET_MTNS_URL = 'https://api.myjson.com/bins/h1n5g'  // BASE_URL +  'ao/profile/mtns'
-export const GET_MANAGER_REQUESTS_URL = 'https://api.myjson.com/bins/ydcus'  // BASE_URL +  ''/ahonly/profile/pendingRequests'
-export const POST_GREETING_NAME_URL = 'http://requestbin.fullcontact.com/1fzqcc71' // BASE_URL + 'givenURL'
-export const GET_ACCOUNT_MEMBER_DETAILS_URL =  'https://api.myjson.com/bins/olwuk'
+export const GET_MANAGE_LANDING_URL = BASE_URL + '/data/ao/profile/accountmanager' 
+export const GET_ACCOUNT_MANAGE_URL =  BASE_URL + '/data/ao/profile/accountmanager'
+export const GET_ACCOUNT_MEMBER_DETAILS =  BASE_URL + '/data/am/profile/pendingRequests'
+export const ADD_MANAGER_URL = BASE_URL + '/data/ahonly/profile/modifyacctmgr'
+export const REMOVE_MANAGER_URL =  BASE_URL + '/data/ahonly/profile/downgradeacctmgr'
+export const SEND_ACCOUNT_MANGER_REQUEST_URL = BASE_URL + '/data/am/profile/accountManagerRequest'
+export const APPROVE_MANAGER_URL = BASE_URL + '/data/ahonly/profile/accountManagerRequest'
+export const DENY_MANAGER_URL = BASE_URL + '/data/ahonly/profile/accountManagerRequest'
+export const GET_MTNS_URL =  BASE_URL +  '/data/ao/profile/mtns'  //'https://api.myjson.com/bins/z3tsc'
+export const GET_MANAGER_REQUESTS_URL =  BASE_URL +  '/data/ahonly/profile/pendingRequests'
+export const POST_GREETING_NAME_URL =  BASE_URL + '/data/secure/profile/greetingname'
+export const GET_ACCOUNT_MEMBER_DETAILS_URL =  BASE_URL+ '/data/secure/profile/contactAndBillingInfo'
+
+//export const GET_MANAGE_LANDING_URL = 'https://mypf-2a66b.firebaseio.com/activemanagers.json' 

@@ -9,6 +9,7 @@ import HeaderContent from './HeaderContent';
 
 import TileProfile from './TileProfile';
 
+import VendorScripts from '../../ProfileTagging/VendorScripts'
 
 
 import LeftNav from '../LeftNavBar/leftNav';
@@ -21,28 +22,19 @@ require('../../../assets/css/phoenixGlobal.css');
 
 class QuickLinks extends Component {
   componentDidMount() {
-    //console.log('this.props:', this.props);
     this.props.actions.fetchDeviceTiles()
     this.props.actions.showDeviceTiles();
   }
 
   render() {
     let profileobj = this.props.deviceTiles;
-    
+
     return (
       <React.Fragment>
-
-          <HeaderContent />
-        
-            <TileProfile/>
-         
-          {/* { profileobj.map(item => <TileProfile title={item.overline}/>)} */}
-          {/*<Devices profile={this.props.profile} /> */}
-          {/*<AccountCheckup profile={this.props.profile} />*/}
-       
-       
-      
-      </React.Fragment >
+        <HeaderContent />
+        <TileProfile />
+        <VendorScripts />
+      </React.Fragment>
     )
   }
 }
@@ -53,7 +45,7 @@ const mapStateToProps = state => {
     isFetching: state.myprofile.isFetching,
     deviceTiles: state.myprofile.deviceTiles,
     visible: state.myprofile.visible,
-    state:state,
+    state: state,
   }
 }
 

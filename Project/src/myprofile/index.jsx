@@ -10,8 +10,8 @@ import ErrorBoundary from './components/QuickLinks/ErrorBoundary'
 
 import initStyle from '../assets/js/globalStyles'
 
-//import 'vz-odt-styles/fonts.css'
-//import 'vz-odt-styles/index.css'
+import 'vz-odt-styles/fonts.css'
+import 'vz-odt-styles/index.css'
 
 initStyle()
 

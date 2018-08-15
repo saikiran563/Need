@@ -13,7 +13,7 @@ class RevokeAccess extends Component {
               <div className='revoke-popup-seperator'/>
               <div className='revoke-popup-body'>
                 <p>
-                  Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum Lorem Ipusum
+                Once removed, this person will no longer be able to make changes to the account’s lines and information.
                 </p>
               </div>
               <div className='flex'>

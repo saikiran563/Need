@@ -79,8 +79,10 @@
     color: #737373;
     font-size: 11px;
 }
-.aMyProfile .description_box {
+/*to be removed*/
+.aMyProfile .description_box__edit_section {
     margin-top: 10px !important;
+    position: relative; 
 }
 .gquxWn {
     border-bottom: 2px solid #ed7000 !important;

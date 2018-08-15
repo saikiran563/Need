@@ -82,8 +82,9 @@ const customHeaders = {
 //Landing Page when clicked on Manage Account on Leftnav
 export const fetchLandingManageData = () => dispatch => {
   dispatch(fetchLandingManageDataBegin())
-  axios.get(GET_MANAGE_LANDING_URL,{hearders: customHeaders})
+  axios.get(GET_MANAGE_LANDING_URL,{headers: customHeaders})
   .then(response => {
+
     dispatch(fetchLandingManageDataSuccess(response.data))
   })
  .catch((error) => {
@@ -160,9 +161,14 @@ const fetchManagerRequestsMtnsFailed = error => ({
 
 // Add account Manager by Account Holder directly
 export const postAddManagerByAccountHolder = (payload) => dispatch => {
+  console.log("Add account manager request body", payload)  
   dispatch(postAddManagerByAccountHolderBegin())
+  // ADD_MANAGER_URL
+  // "http://www.mocky.io/v2/5b732d733200005c083a7ff2"
   axios.post(ADD_MANAGER_URL,payload)
   .then(response => {
+    response.data.data = payload
+    console.log("Add account manager POST response", response)
     dispatch(postAddManagerByAccountHolderSuccess(response.data))
   })
  .catch((error) => {

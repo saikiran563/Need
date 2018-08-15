@@ -3,9 +3,9 @@
   //FETCH_CONTACT_AND_BILLING_SUCCESS,
 //} from '../actions/fetchContactDetails'
 import { SET_EMAILID, SET_EMAILID_SUCCESS, SET_EMAILID_ERROR } from '../actions/setEmailid';
-import { SET_PRIMARY_PHONE } from '../actions/setPrimaryPhone';
-import { SET_BILLING_ADDRESS } from '../actions/setBillingAddress';
-
+import { SET_PRIMARY_PHONE, SET_PRIMARY_PHONE_SUCCESS, SET_PRIMARY_PHONE_ERROR } from '../actions/setPrimaryPhone';
+import { SET_BILLING_ADDRESS, SET_BILLING_ADDRESS_SUCCESS, SET_BILLING_ADDRESS_ERROR } from '../actions/setBillingAddress';
+import { EDIT_ADDRESS_OR_EDIT_CLICKED, CANCEL_BUTTON_CLICKED } from "../actions/setServiceAddress"
 import {
   SHOW_MODAL,
   HIDE_MODAL,
@@ -25,6 +25,9 @@ const initialState = {
   contactDetails: null,
   isFetching: false,
   emailStatus: null,
+  primaryPhoneStatus: null,
+  billingAddressStatus: null,
+  editAddressOrLineClicked: false,
   showPopup: false,
   popupContents: {
       header: '',
@@ -61,15 +64,29 @@ const fetchContactAndBillingSuccess = (state, action) => {
 
 const setEmailIdSuccess = (state, action) => {
 
-     //response.status = true;
    return updateObject(state, {
     isFetching :false,
-    emailStatus:action.response.status
+    emailStatus:action.status
   })
 
 }
 
-const serEmailId = (state, action) => {
+const setPrimaryPhoneSuccess = (state, action) => {
+  
+   return updateObject(state, {
+    isFetching :false,
+    primaryPhoneStatus:action.status
+  })
+}
+
+const setBillingAddresSuccess = (state, action) => {
+   return updateObject(state, {
+    isFetching :false,
+    billingAddressStatus:action.status
+  })
+}
+
+const setEmailId = (state, action) => {
    return updateObject(state, {
   
       list: Object.assign({}, state.list, {emailID:action.response.emailID})
@@ -114,6 +131,16 @@ const setModalContent = (state, action) => {
 const contactDetailsReducer = (state = initialState, action) => {
   const { type } = action
   switch (type) {
+    case EDIT_ADDRESS_OR_EDIT_CLICKED:
+      return {
+        ...state,
+        editAddressOrLineClicked: action.payload
+      }
+    case CANCEL_BUTTON_CLICKED:
+      return {
+        ...state,
+        editAddressOrLineClicked: action.payload
+      }
     case FETCH_CONTACT_AND_BILLING_BEGIN:
       return fetchContactAndBillingBegin(state, action)
     case FETCH_CONTACT_AND_BILLING_SUCCESS:
@@ -121,11 +148,15 @@ const contactDetailsReducer = (state = initialState, action) => {
     case SET_EMAILID_SUCCESS:
       return setEmailIdSuccess(state, action)
     case SET_EMAILID:
-      return serEmailId(state, action);
+      return setEmailId(state, action);
     case SET_BILLING_ADDRESS:
       return setBillingAddress(state, action)
+     case SET_BILLING_ADDRESS_SUCCESS:
+      return setBillingAddresSuccess(state, action)
     case SET_PRIMARY_PHONE:
       return setPrimaryPhone(state, action)
+      case SET_PRIMARY_PHONE_SUCCESS:
+      return setPrimaryPhoneSuccess(state, action)
     case SHOW_MODAL:
       return showModal(state, action)
     case HIDE_MODAL:
