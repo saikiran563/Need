@@ -257,6 +257,7 @@ const mapStateToProps = state => {
   return {
     managers: state.accManagerReducer.managers,
     state:state,
+    accountManagerRequests: state.accManagerReducer.accountManagerRequests
   }
 }
 

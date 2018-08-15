@@ -10,11 +10,221 @@ import RequestSent  from './Popup/RequestSent'
 import AccessRoles  from './Popup/AccessRoles'
 import ManagersListToAccountManager from './components/ManagersListToAccountManager'
 import ManagerCard from './components/ManagerCard'
+import ManagerEditCard from './components/ManagerEditCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
 const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
 const accountMember = reactGlobals.mdnRole == 'mobileSecure'
 const accountManager = reactGlobals.mdnRole == 'accountManager'
+
+const SendRequestByAccountMember = () => {
+  return(
+    <div />
+  )
+}
+
+class AddManagerByAccountHolder extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      emailId: '',
+      mtns: []
+    }
+  }
+
+  render(){
+    const showAddManagerTo= accountOwner
+    if( !showAddManagerTo ) return <div />
+    if( this.props.showManagerEdit ) return <div />
+    const { firstName, lastName, phoneNumber, emailId, mtns } = this.state;
+    return (
+      <div className='row add-manager-cont'>
+          <h4 tabIndex='0'>Add Account Managers</h4>
+          <a className='question'> What can an Account Manager do ?</a>
+          <p className='answer'>
+            An Account Manager does NOT have to have a mobile number on your
+            account. By providing a name only, they will be able to manage all lines
+             on the account in retails stores and by calling Customer Service.
+          </p>
+          <div>
+              <div>
+                <div>
+                  <div className='add-manager-fields'>
+                     <div className='manager-fn-cont '>
+                        <label htmlFor='userId'>First Name</label>
+                        <InputField type='text' handleOnChange={e=>this.setState({firstName: e.target.value})} placeholder='Name' name='firstName' value={firstName}/>
+                     </div>
+                     <div className='manager-ln-cont '>
+                         <label htmlFor='userId'>Last Name</label>
+                         <InputField type='text' handleOnChange={e=>this.setState({lastName: e.target.value})}   placeholder='Name' name='lastName'value={lastName}/>
+                     </div>
+                 </div>
+                </div>
+                <div>
+                     <p>If you assign a mobile number and email address, the Account
+                         Manager will be given My Verizon Online access to your account.</p>
+                 </div>
+                 <div className='contact-cont'>
+                     <div>
+                       <h4>Mobile Number</h4>
+                       <select value={this.state.phoneNumber} onChange={e=>this.setState({phoneNumber: e.target.value})}>
+                           <option value='' >Select</option>
+                           <option value='noLineAssigned' >No Line Assigned</option>
+                           {
+                             mtns.map(eachMtns=>{
+                               return <option value={eachMtns}>{eachMtns}</option>
+                             })
+                           }
+                       </select>
+                     </div>
+                     {
+                       this.state.phoneNumber != 'noLineAssigned' &&
+                       <div>
+                           <h4>Email Address</h4>
+                           <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/>
+                       </div>
+                      }
+                 </div>
+               </div>
+            </div>
+            <div className='footer col-xs-12'>
+              <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+            </div>
+      </div>
+    )
+  }
+}
+
+const Requests = ({ requests, showManagerEdit }) =>{
+  const showRequestTo = accountOwner
+  if( !showRequestTo ) return <div />
+  if( showManagerEdit ) return <div />
+  return(
+    <div>
+        {
+          requests.map(eachRequest=>{
+            return(
+              <div key={ eachRequest.phoneNumber + eachRequest.emailId }>
+                <div className='row request-cont'>
+                    <p>Requested by { eachRequest.phoneNumber } </p>
+                </div>
+                 <div className='row'>
+                     <h4 tabIndex='0'>{eachRequest.firstName+ '  ' + eachRequest.lastName}</h4>
+                     <p>{eachRequest.phoneNumber}</p>
+                     <p>{eachRequest.emailId}</p>
+                 </div>
+                 <div className='row'>
+                   <div className='col-md-1'/>
+                    <div className='col-md-5'>
+                        <button className='btn btn--round-invert' onClick={(e) =>this.handleDenyAccountManagerRequest(eachRequest)}>Deny</button>
+                    </div>
+                    <div className='col-md-2'/>
+                    <div className='col-md-5'>
+                      <button className='btn btn--round' onClick={(e) =>this.handleAppproveAccountManagerRequest(eachRequest)}>Approve</button>
+                    </div>
+                    <div className='col-md-1'/>
+                 </div>
+                 <div className='row seperator'/>
+              </div>
+            )
+          })
+        }
+    </div>
+  )
+}
+
+const ManagersList = ({ managersList, showManagerEdit }) => {
+  if( !showManagerEdit ) return <ManagersListOnEdit managersList={managersList}/>
+  let managerAccountOwner = {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    emailId : ''
+  }
+  let otherManagers = []
+  managersList.map(eachManager => {
+    if(eachManager.role == 'accountHolder') {
+       managerAccountOwner = eachManager
+    } else {
+      otherManagers.push(eachManager)
+    }
+  })
+  return(
+    <div>
+          <div>
+             <div className='row owner-info'>
+                 <h4 className='manager-name'>{managerAccountOwner.firstName+ ' '+ managerAccountOwner.lastName}( Account Owner )</h4>
+                 <p>{managerAccountOwner.phoneNumber}</p>
+                 <p>{managerAccountOwner.emailId}</p>
+             </div>
+          </div>
+        {
+          otherManagers.map(eachManager=>{
+            return <ManagerCard managerInfo={eachManager}/>
+          })
+        }
+    </div>
+  )
+}
+
+const ManagersListOnEdit = ({ managersList, showManagerEdit }) => {
+  const showRemoveOptionTo = accountOwner
+  let managerAccountOwner = {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    emailId : ''
+  }
+  let otherManagers = []
+  managersList.map(eachManager => {
+    if(eachManager.role == 'accountHolder') {
+       managerAccountOwner = eachManager
+    } else {
+      otherManagers.push(eachManager)
+    }
+  })
+  return(
+    <div>
+        <div>
+          <div className='row owner-info'>
+              <h1>Current Account Manager</h1>
+              <h4 className='manager-name'>{managerAccountOwner.firstName+ ' '+ managerAccountOwner.lastName}( Account Owner )</h4>
+              <p>{managerAccountOwner.phoneNumber}</p>
+              <p>{managerAccountOwner.emailId}</p>
+          </div>
+        </div>
+        {
+          otherManagers.map(eachManager=>{
+            return <ManagerEditCard managerInfo={eachManager} isNewlyAdded={true} showRemoveButton={showRemoveOptionTo}/>
+          })
+        }
+    </div>
+  )
+}
+
+const ManagerAccountHeader = ({ handleToggleEditCancel, showManagerEdit }) => {
+  const showEditButtonTo = accountOwner || accountMember
+  const actionLabel =  showManagerEdit ? 'Edit' :  'Cancel'
+  const action = showManagerEdit ? () => handleToggleEditCancel('accountmanagerblock') : () => handleToggleEditCancel('cancelaccountmanagerblock')
+  return(
+    <div className='body'>
+      <div className='col-xs-12 col-sm-4 description_box__header'>
+          <h4 tabIndex='0'>Account Managers</h4>
+          <p>[Account Managers can manage all lines on the account in retail stores and by calling Customer Service.]</p>
+      </div>
+      {
+        showEditButtonTo  &&
+        <div className='description_box__edit description_box__edit_section'>
+          <a className='btn btn-anchor'  onClick={ () =>action() } role='button'> { actionLabel  }</a>
+        </div>
+      }
+    </div>
+  )
+}
 
 class AccountManagerBlock extends Component {
   constructor(props) {
@@ -595,11 +805,9 @@ getinitialState(){
         )
   }
 
-  handleEditCancel = () => {
-    this.props.handleEditCancel('accountmanagerblock')
-    this.props.actions.fetchMtns()
-    this.props.actions.fetchManagerRequests()
-  }
+  // handleToggleEditCancel = (action) => {
+  //     this.props.handleEditCancel(action)
+  // }
 
   toggleLearnMorePopup = () =>{
     this.setState({
@@ -608,11 +816,29 @@ getinitialState(){
   }
 
   render() {
-    console.log('THIS PROPS', this.props)
-    
     const { firstName, lastName, phoneNumber, emailId } = this.state;
-    const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
+    const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup, accountManagerRequests } = this.props;
+    const { handleEditCancel } = this.props
     const editableClassName = managerEditMode ? 'description_box--edit-view' : 'description_box_disabled';
+    return(
+      <div className={`row description_box ${editableClassName}`}>
+        <Popup showPopup={this.state.showPopup} onClosePopup ={()=>{this.handleClosePopup()}} showCrossWires>
+            <RevokeAccess handleRevokeAccess={()=>{this.handleRevokeAccess()}} onClosePopup ={()=>{this.handleClosePopup()}}/>
+        </Popup>
+        <Popup showPopup={this.props.showRequestSuccessPopup}>
+            <RequestSent onClosePopup ={()=>{this.props.toggleRequestSuccessPopup()}}/>
+        </Popup>
+        <Popup showPopup={this.state.showLearnMorePopUp}>
+            <AccessRoles onClosePopup ={()=>{this.toggleLearnMorePopup()}}/>
+        </Popup>
+        <div className='clearfix'></div>
+        <ManagerAccountHeader  handleToggleEditCancel={(action)=>handleEditCancel(action)} showManagerEdit={showManagerEdit}/>
+        <ManagersList managersList={managers} showManagerEdit={showManagerEdit}/>
+        <Requests requests={ accountManagerRequests } showManagerEdit={showManagerEdit}/>
+        <AddManagerByAccountHolder showManagerEdit={showManagerEdit}/>
+        <SendRequestByAccountMember />
+      </div>
+    )
     return (
         <div className={`row description_box ${editableClassName}`}>
           <Popup showPopup={this.state.showPopup} onClosePopup ={()=>{this.handleClosePopup()}} showCrossWires>
@@ -627,16 +853,8 @@ getinitialState(){
           <div className='clearfix'></div>
           <div className='body'>
             <div className='col-xs-12 col-sm-4 description_box__header'>
-              <div className='col-xs-12'>
-              <h4 tabIndex='0' >Account Managers</h4>
-              {/*
-                  showManagerEdit && ( accountOwner || accountMember ) &&
-                  <div className='description_box__edit description_box__edit_section col-xs-4'>
-                    <a className='btn btn-anchor'  onClick={() => this.handleEditCancel()} role='button'>Edit</a>
-                  </div> */
-              }
-              </div>
-              <p>Account Managers can manage all lines on the account in retail stores and by calling Customer Service.</p>
+              <h4 tabIndex='0'>Account Managers</h4>
+              <p>[Account Managers can manage all lines on the account in retail stores and by calling Customer Service.]</p>
             </div>
             <div className='col-xs-12 col-sm-8 description_box__large-container'>
               {

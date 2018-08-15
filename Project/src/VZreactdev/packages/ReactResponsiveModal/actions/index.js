@@ -1,1 +1,0 @@
-export { fetchModalContent } from './fetchModalContent'
