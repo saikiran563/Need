@@ -1,0 +1,46 @@
+{
+  "data": {
+    "products": {},
+    "typeAheadSummary": {
+      "autoSelectTerm": "galaxy*",
+      "TypeAheadSuggestedTerms": [
+        {
+          "name": "Samsung Galaxy S9",
+          "href": "/onesearch/search?q=Samsung Galaxy S9&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy S9 Plus",
+          "href":
+            "/onesearch/search?q=Samsung Galaxy S9 Plus&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy Note 8",
+          "href":
+            "/onesearch/search?q=Samsung Galaxy Note 8&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy S8",
+          "href": "/onesearch/search?q=Samsung Galaxy S8&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy S8 Plus",
+          "href":
+            "/onesearch/search?q=Samsung Galaxy S8 Plus&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy S7",
+          "href": "/onesearch/search?q=Samsung Galaxy S7&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Samsung Galaxy S7 edge",
+          "href":
+            "/onesearch/search?q=Samsung Galaxy S7 edge&lid=sayt&sayt=galaxy*"
+        },
+        {
+          "name": "Galaxy",
+          "href": "/search/?q=Galaxy&lid=sayt&sayt=galaxy*"
+        }
+      ]
+    }
+  }
+}

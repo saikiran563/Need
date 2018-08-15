@@ -1,0 +1,61 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+em {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "NeueHaasGroteskDisplayBold", Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #8c8b8b;
+}
+
+_:-ms-fullscreen,
+:root #deviceIETileImage {
+  max-height: auto;
+  max-width: auto;
+  padding-left: 30px;
+  width: 300px; /*or 70%, or what you want*/
+  height: 220px; /*or 70%, or what you want*/
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+_:-ms-fullscreen,
+:root #deviceIEPromoImage {
+  right: 6rem;
+}
+_:-ms-fullscreen,
+:root #device-ctn {
+  position: relative;
+  left: 345px;
+  bottom: -5px;
+}

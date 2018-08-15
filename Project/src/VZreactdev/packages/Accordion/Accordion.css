@@ -1,0 +1,139 @@
+.accordion__arrow {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 12px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -6px;
+}
+.accordion__arrow::after, .accordion__arrow::before {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 2px;
+    background-color: currentColor;
+    content: '';
+}
+.accordion__arrow::before {
+    left: 4px;
+    transform: rotate(90deg);
+}
+
+[aria-expanded='true'] .accordion__arrow::before, [aria-selected='true'] .accordion__arrow::before {
+    transform: rotate(180deg);
+}
+
+.accordion__arrow::after {
+    right: 4px;
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+[aria-expanded='true'] .accordion__arrow::after, [aria-selected='true'] .accordion__arrow::after {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+
+.accordion__arrow::before,
+.accordion__arrow::after {
+    transition: transform 0.25s ease, -webkit-transform 0.25s ease;
+}
+
+/* -------------------------------------------------- */
+/* ---------------- Animation part ------------------ */
+/* -------------------------------------------------- */
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.sectionhead span{
+  float: right;
+}
+.u-position-relative{
+  position: relative;
+}
+.accordion__title {
+    color: #000000;
+    cursor: pointer;
+    padding: 5% 0;
+    width: 100%;
+    text-align: left;
+    border: none;
+    display: inline-block;
+}
+div.accordion__title:focus{
+    outline: none;
+}
+div.accordion__title.focused:focus{
+    outline: #000000 dotted 1px;
+}
+.accordion__body {
+    padding: 5% 0;
+    display: block;
+    animation: fadein 0.35s ease-in;
+}
+.accordion__body--hidden {
+    display: none;
+    opacity: 0;
+    animation: fadein 0.35s ease-in;
+}
+.accordion-title{
+  font-family: NHaasGroteskDSStd-55Rg;
+    font-size: 1.05rem;
+    color: #000000;
+}
+.accordion-title{
+  width: 96%;
+}
+.accordion-title span{
+  float: right;
+  font-family: NHaasGroteskDSStd-75Bd;
+}
+.accordion__item{
+    border-top: 1px solid #000000;
+}
+@media (min-width:768px){
+  .accordion-title{
+    font-size: 1.5rem;
+  }
+  .accordion__title,.accordion__body{
+    padding: 2% 0;
+  }
+}
+@media (min-width:992px){
+  .accordion-title{
+    font-size: 1.25rem;
+  }
+  .accordion__title,.accordion__body{
+    padding: 2% 0;
+  }
+}
+
+@media(min-width:1025px){
+    .billTotal{
+        padding-bottom: 140px;
+    }
+    .accordion__title{
+        padding: 20px 0;
+    }
+    .accordion__body{
+        padding: 12px 0;
+    }
+}
+
+
+@media (max-width: 481px) {
+  .accordion-title{
+    padding: 3.75% 0;
+  }
+}

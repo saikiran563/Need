@@ -1,0 +1,60 @@
+{
+  "_from": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#release/0.1",
+  "_id": "vz-react-dev@0.1.0",
+  "_inBundle": false,
+  "_location": "/vz-react-dev",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#release/0.1",
+    "rawSpec": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#release/0.1",
+    "saveSpec": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#release/0.1",
+    "fetchSpec": "https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git",
+    "gitCommittish": "release/0.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#429cbe83decd37998c9bca9af0eb9356f962e09f",
+  "_spec": "git+https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git#release/0.1",
+  "_where": "C:\\Users\\paddesa\\Desktop\\New\\myv_acct_microsite\\src\\main\\resources\\templates\\reactOD",
+  "bundleDependencies": false,
+  "dependencies": {
+    "qs": "^6.5.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-html-parser": "^2.0.2",
+    "react-responsive-modal": "^3.1.0",
+    "react-select": "^2.0.0-beta.6",
+    "recharts": "^1.0.0",
+    "shiitake": "^2.2.4"
+  },
+  "deprecated": false,
+  "description": "Global component for the One Digital experience.",
+  "devDependencies": {
+    "@storybook/addon-info": "^3.4.6",
+    "@storybook/addon-knobs": "^3.4.6",
+    "@storybook/react": "^3.4.6",
+    "autosuggest-highlight": "^3.1.1",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "lodash": "^4.17.10",
+    "qs": "^6.5.2",
+    "react-autosuggest": "^9.3.4",
+    "react-redux": "^5.0.7",
+    "react-responsive-modal": "^3.1.0",
+    "recharts": "^1.0.0",
+    "storybook-readme": "^3.3.0",
+    "styled-components": "^3.3.0"
+  },
+  "main": "index.js",
+  "name": "vz-react-dev",
+  "repository": {
+    "type": "git",
+    "url": "https://SVC-ESP-NextGen:oC15nL20aoC15nL20aoC15nL20a@onestash.verizon.com/scm/bnvi/vz-react.git"
+  },
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook"
+  },
+  "version": "0.1.0"
+}

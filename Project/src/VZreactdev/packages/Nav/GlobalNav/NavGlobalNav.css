@@ -1,0 +1,36 @@
+.vz-odt--nav--globalnav {
+    display: none;
+    font-size: .875rem;
+}
+
+@media (min-width: 780px) {
+    .vz-odt--nav--globalnav {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 1024px) {
+    
+}
+
+.vz-odt--nav--globalnav--mainnav {
+    display: flex;
+    flex-direction: row;
+    font-family: "NeueHaasGroteskDisplay", Arial, Helvetica, sans-serif;
+}
+
+.vz-odt--nav--globalnav--mainnav div {
+    margin-right: .875rem;
+}
+
+.vz-odt--nav--globalnav--subnav {
+    display: flex;
+    flex-direction: row;
+    font-family: "NeueHaasGroteskDisplayBold", Arial, Helvetica, sans-serif;
+    margin-top: .875rem;
+}
+
+.vz-odt--nav--globalnav--subnav div {
+    margin-right: .875rem;
+}

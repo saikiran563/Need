@@ -1,0 +1,605 @@
+{
+  "statusCode": "00",
+  "statusMessage": "",
+  "data": {
+    "TESTONEDIGITALSEARCH": {
+      "conversationToken": "VZTOKEN-36cc0763-27a8-41db-bb29-360de51ce2a4",
+      "status": "Success",
+      "code": "00000",
+      "cards": [
+        {
+          "style": "card_text",
+          "eyebrow": "FAQ",
+          "heading":
+            "How can I view my bill in the Documents & Receipts page if I have paper-free billing?",
+          "action": {
+            "type": "link",
+            "url":
+              "http://www.verizonwireless.com/support/paper-free-billing-faqs/#view",
+            "target": "_self"
+          }
+        },
+        {
+          "style": "card_text",
+          "eyebrow":
+            "How can I view my bill in the Documents &amp; Receipts page if I have paper-free billing?",
+          "heading":
+            "To view your bill:Go to the Documents &amp; Receipts page in My Verizon.Note: You must be an Account Owner or Account Manager to view Documents &amp; Receipts.Select Monthly Bills from the Categories dropdown.Click the title of the document you wish to view.When you click a document's title, it will open a PDF* file, which you can then save or print.To learn more about paper-free billing and our other bill pay options:Watch our How to Pay Your Bill Online and How to Set up Auto Pay videosRead our Billing Statement FAQsManage paper-free billing in My Verizon",
+          "action": {
+            "type": "link",
+            "url":
+              "http://www.verizonwireless.com/support/my-documents-and-receipts-faqs/#item5",
+            "target": "_self"
+          }
+        },
+        {
+          "style": "card_text",
+          "eyebrow": "My Documents and Receipts FAQs",
+          "heading":
+            "Learn about your important documents and receipts stored in My Verizon, including how to view, print and save them.",
+          "action": {
+            "type": "link",
+            "url":
+              "http://www.verizonwireless.com/support/my-documents-and-receipts-faqs/",
+            "target": "_self"
+          }
+        },
+        {
+          "style": "card_text",
+          "eyebrow": "Support",
+          "heading": "Need Help, Let's Chat",
+          "background": "white",
+          "action": {
+            "type": "function",
+            "function_name": "EchannelVera.init({})"
+          }
+        }
+      ]
+    },
+    "onesearch": {
+      "originalQuery": "bose headpones",
+      "correctedQuery": "bose headphones",
+      "resultsCount": 6,
+      "results": [
+        {
+          "recordContentType": "Devices",
+          "recordProductCategory": "Smartphones",
+          "recordUrl":
+            "https://www.verizonwireless.com/smartphones/moto-z-force-droid/",
+          "recordTitle": "Moto Z Force Droid",
+          "recordIntent": "shop",
+          "recordLabel": "Smartphone",
+          "recordSequence": 1,
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/Motorola_Java_M_White_Fine_Gold",
+          "recordSource": "Catalog-Devices",
+          "recordDisplayInSearch": true,
+          "recordIssue": "Nothing populated if recordDisplayInSearch = true",
+          "product.number_of_reviews": "0",
+          "product.operating_system": "Android",
+          "product.average_rating": "0.0",
+          "product.coming_soon_flag": false,
+          "product.image_name": "Motorola_JavaM_Black",
+          "product.start_date": "1469095200000",
+          "unitsSold30": "3979",
+          "imgDomainName": "//ss71.vzw.com/is/image/VerizonWireless",
+          "recordLowestRetailPrice": "241.00",
+          "recordLowestMonthlyPrice": "10.00",
+          "recordLowestPrepayPrice": "240.00",
+          "recordLowestTwoYearPrice": "200.00",
+          "recordDisplayPrice": "10.00",
+          "recordDisplayPricePrefix": "Starts at",
+          "recordDisplayPriceSuffix": "/mo",
+          "recordDisplayPriceText":
+            "For 24 months; 0% APR; Retail Price: $241.00",
+          "recordDisplayBadgeText": "Buy 1, get 1 free. No trade-in req'd.\r",
+          "recordDisplayBadgeTextTooltip":
+            "Up to $960 device payment purchase per device required. 2nd phone of equal or lesser value & of same manufacturer: less up to $799.99 promo credit applied to account over 24 mos w/in 1-2 billing cycles; promo credit ends when balance paid or line terminated/transferred; 0% APR. New line of service required.",
+          "productPriceInfo": {
+            "discountedPrice": "0.0",
+            "giftCardPricingText": null,
+            "bicDiscountInfo": null,
+            "discountText": null,
+            "sedOfferToolTipText": "Buy one get one free",
+            "edgeContractInfo": null,
+            "ecpdDiscount": false,
+            "edgeFullRetailContractInfo": null,
+            "employeeOfferText": null,
+            "twoYearContractInfo": {
+              "showTwoYearPrice": true,
+              "discountedPrice": "300.0",
+              "originalPrice": "300.0",
+              "twoYearName": "2-Year Contract",
+              "promoBadgeMessages": [
+                {
+                  "badgeText": "Buy 1, get S9 free. No trade-in req'd.\r",
+                  "badgeToolTip":
+                    "Up to $960 device payment purchase per device required. 2nd phone of equal or lesser value & of same manufacturer: less up to $799.99 promo credit applied to account over 24 mos w/in 1-2 billing cycles; promo credit ends when balance paid or line terminated/transferred; 0% APR. New line of service required.",
+                  "placement": "HEADERMSG"
+                }
+              ]
+            },
+            "discountPercentage": "0.0",
+            "rebateInfo": null,
+            "selectedContractInfo": "twoYearContractInfo",
+            "fullRetailContractInfo": {
+              "discountedPrice": "720.0",
+              "originalPrice": "720.0",
+              "showRetailPrice": true
+            },
+            "prePayContractInfo": null
+          },
+          "productId": "dev6360192",
+          "outOfStock": false,
+          "brand": "Motorola",
+          "annualUpgradeEligible": false,
+          "displayName": "Moto Z Force Droid",
+          "defaultSkuId": "sku2090778",
+          "mobileAppImageName": null,
+          "skuColors": [
+            {
+              "colorStyle1": "#FFFFFF",
+              "color": "White",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_Java_M_White_Fine_Gold",
+              "sorId": "MOTXT1650MFG",
+              "skuid": "sku2090778",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#edccbd",
+              "color": "Rose Gold",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "MotoZForceDroid_RoseGold",
+              "sorId": "MOTXT1650MRG",
+              "skuid": "sku2080198",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#000000",
+              "color": "Black",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_JavaM_Black",
+              "sorId": "MOTXT1650M",
+              "skuid": "sku2080197",
+              "colorImage": null
+            }
+          ]
+        },
+        {
+          "recordContentType": "Support",
+          "recordHelpCategory": "FAQs",
+          "recordUrl":
+            "https://www.verizonwireless.com/support/mobile-hotspot-faqs/",
+          "recordTitle": "Mobile Hotspot FAQs",
+          "recordIntent": "help",
+          "recordLabel": "FAQs",
+          "recordSequence": 2,
+          "recordDescription": "FAQs for Mobile Hotspots F ",
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/faq-red-500-icon?fmt=png-alpha&wid=200&hei=200",
+          "recordSource": "Support-KB",
+          "recordDisplayInSearch": true,
+          "recordIssue": null,
+          "contentTile": true
+        },
+        {
+          "recordContentType": "Devices",
+          "recordProductCategory": "Smartphones",
+          "recordUrl":
+            "https://www.verizonwireless.com/smartphones/moto-z-force-droid/",
+          "recordTitle": "Moto Z Force Droid",
+          "recordIntent": "shop",
+          "recordLabel": "Smartphone",
+          "recordSequence": 3,
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/Motorola_Java_M_White_Fine_Gold",
+          "recordSource": "Catalog-Devices",
+          "recordDisplayInSearch": true,
+          "recordIssue": "Nothing populated if recordDisplayInSearch = true",
+          "numOfReviews": "0",
+          "operatingSystem": "Android",
+          "averageRating": "0.0",
+          "comingSoon": false,
+          "imageName": "Motorola_JavaM_Black",
+          "deals": null,
+          "startDate": "1469095200000",
+          "unitsSold30": "3979",
+          "imgDomainName": "//ss71.vzw.com/is/image/VerizonWireless",
+          "recordLowestRetailPrice": "241.00",
+          "recordLowestMonthlyPrice": "10.00",
+          "recordLowestPrepayPrice": "240.00",
+          "recordLowestTwoYearPrice": "200.00",
+          "recordDisplayPrice": "10.00",
+          "recordDisplayPricePrefix": "Starts at",
+          "recordDisplayPriceSuffix": "/mo",
+          "recordDisplayPriceText":
+            "For 24 months; 0% APR; Retail Price: $241.00",
+          "recordDisplayBadgeText": "Buy 1, get 1 free. No trade-in req'd.\r",
+          "recordDisplayBadgeTextTooltip":
+            "Up to $960 device payment purchase per device required. 2nd phone of equal or lesser value & of same manufacturer: less up to $799.99 promo credit applied to account over 24 mos w/in 1-2 billing cycles; promo credit ends when balance paid or line terminated/transferred; 0% APR. New line of service required.",
+          "specialOffers": "",
+          "skuWith2YearPricing": false,
+          "deviceCategory": "Smartphones",
+          "productPriceInfo": {
+            "discountedPrice": "0.0",
+            "giftCardPricingText": null,
+            "bicDiscountInfo": null,
+            "discountText": null,
+            "sedOfferToolTipText": "Buy one get one free",
+            "edgeContractInfo": null,
+            "ecpdDiscount": false,
+            "edgeFullRetailContractInfo": null,
+            "employeeOfferText": null,
+            "twoYearContractInfo": {
+              "showTwoYearPrice": true,
+              "discountedPrice": "300.0",
+              "originalPrice": "300.0",
+              "twoYearName": "2-Year Contract",
+              "promoBadgeMessages": null
+            },
+            "discountPercentage": "0.0",
+            "rebateInfo": null,
+            "selectedContractInfo": "twoYearContractInfo",
+            "fullRetailContractInfo": {
+              "discountedPrice": "720.0",
+              "originalPrice": "720.0",
+              "showRetailPrice": true
+            },
+            "prePayContractInfo": null
+          },
+          "productId": "dev6360191",
+          "outOfStock": false,
+          "brand": "Motorola",
+          "annualUpgradeEligible": false,
+          "displayName": "Moto Z Force Droid",
+          "defaultSkuId": "sku2090778",
+          "mobileAppImageName": null,
+          "skuColors": [
+            {
+              "colorStyle1": "#FFFFFF",
+              "color": "White",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_Java_M_White_Fine_Gold",
+              "sorId": "MOTXT1650MFG",
+              "skuid": "sku2090778",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#edccbd",
+              "color": "Rose Gold",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "MotoZForceDroid_RoseGold",
+              "sorId": "MOTXT1650MRG",
+              "skuid": "sku2080198",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#000000",
+              "color": "Black",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_JavaM_Black",
+              "sorId": "MOTXT1650M",
+              "skuid": "sku2080197",
+              "colorImage": null
+            }
+          ]
+        },
+        {
+          "recordContentType": "Support",
+          "recordHelpCategory": "FAQs",
+          "recordUrl":
+            "https://www.verizonwireless.com/support/mobile-hotspot-faqs/",
+          "recordTitle": "Mobile Hotspot FAQs",
+          "recordIntent": "help",
+          "recordLabel": "FAQs",
+          "recordSequence": 4,
+          "recordDescription": "FAQs for Mobile Hotspots",
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/faq-red-500-icon?fmt=png-alpha&wid=200&hei=200",
+          "recordSource": "Support-KB",
+          "recordDisplayInSearch": true,
+          "recordIssue": null,
+          "contentTile": true
+        },
+        {
+          "recordContentType": "Devices",
+          "recordProductCategory": "Smartphones",
+          "recordUrl":
+            "https://www.verizonwireless.com/smartphones/moto-z-force-droid/",
+          "recordTitle": "Moto Z Force Droid",
+          "recordIntent": "shop",
+          "recordLabel": "Smartphone",
+          "recordSequence": 5,
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/Motorola_Java_M_White_Fine_Gold",
+          "recordSource": "Catalog-Devices",
+          "recordDisplayInSearch": true,
+          "recordIssue": "Nothing populated if recordDisplayInSearch = true",
+          "numOfReviews": "0",
+          "operatingSystem": "Android",
+          "averageRating": "0.0",
+          "comingSoon": false,
+          "imageName": "Motorola_JavaM_Black",
+          "deals": null,
+          "startDate": "1469095200000",
+          "unitsSold30": "3979",
+          "imgDomainName": "//ss71.vzw.com/is/image/VerizonWireless",
+          "recordLowestRetailPrice": "241.00",
+          "recordLowestMonthlyPrice": "10.00",
+          "recordLowestPrepayPrice": "240.00",
+          "recordLowestTwoYearPrice": "200.00",
+          "recordDisplayPrice": "10.00",
+          "recordDisplayPricePrefix": "Starts at",
+          "recordDisplayPriceSuffix": "/mo",
+          "recordDisplayPriceText":
+            "For 24 months; 0% APR; Retail Price: $241.00",
+          "recordDisplayBadgeText": "Buy 1, get 1 free. No trade-in req'd.\r",
+          "recordDisplayBadgeTextTooltip":
+            "Up to $960 device payment purchase per device required. 2nd phone of equal or lesser value & of same manufacturer: less up to $799.99 promo credit applied to account over 24 mos w/in 1-2 billing cycles; promo credit ends when balance paid or line terminated/transferred; 0% APR. New line of service required.",
+          "specialOffers": "",
+          "skuWith2YearPricing": false,
+          "deviceCategory": "Smartphones",
+          "productPriceInfo": {
+            "discountedPrice": "0.0",
+            "giftCardPricingText": null,
+            "bicDiscountInfo": null,
+            "discountText": null,
+            "sedOfferToolTipText": "Buy one get one free",
+            "edgeContractInfo": null,
+            "ecpdDiscount": false,
+            "edgeFullRetailContractInfo": null,
+            "employeeOfferText": null,
+            "twoYearContractInfo": {
+              "showTwoYearPrice": true,
+              "discountedPrice": "300.0",
+              "originalPrice": "300.0",
+              "twoYearName": "2-Year Contract",
+              "promoBadgeMessages": null
+            },
+            "discountPercentage": "0.0",
+            "rebateInfo": null,
+            "selectedContractInfo": "twoYearContractInfo",
+            "fullRetailContractInfo": {
+              "discountedPrice": "720.0",
+              "originalPrice": "720.0",
+              "showRetailPrice": true
+            },
+            "prePayContractInfo": null
+          },
+          "productId": "dev6360193",
+          "outOfStock": false,
+          "brand": "Motorola",
+          "annualUpgradeEligible": false,
+          "displayName": "Moto Z Force Droid",
+          "defaultSkuId": "sku2090778",
+          "mobileAppImageName": null,
+          "skuColors": [
+            {
+              "colorStyle1": "#FFFFFF",
+              "color": "White",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_Java_M_White_Fine_Gold",
+              "sorId": "MOTXT1650MFG",
+              "skuid": "sku2090778",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#edccbd",
+              "color": "Rose Gold",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "MotoZForceDroid_RoseGold",
+              "sorId": "MOTXT1650MRG",
+              "skuid": "sku2080198",
+              "colorImage": null
+            },
+            {
+              "colorStyle1": "#000000",
+              "color": "Black",
+              "colorStyle2": null,
+              "mobileAppImageName": null,
+              "skuImageName": "Motorola_JavaM_Black",
+              "sorId": "MOTXT1650M",
+              "skuid": "sku2080197",
+              "colorImage": null
+            }
+          ]
+        },
+        {
+          "recordContentType": "Support",
+          "recordHelpCategory": "FAQs",
+          "recordUrl":
+            "https://www.verizonwireless.com/support/mobile-hotspot-faqs/",
+          "recordTitle": "Mobile Hotspot FAQs",
+          "recordIntent": "help",
+          "recordLabel": "FAQs",
+          "recordSequence": 6,
+          "recordDescription": "FAQs for Mobile Hotspots",
+          "recordImageUrl":
+            "https://ss7.vzw.com/is/image/VerizonWireless/faq-red-500-icon?fmt=png-alpha&wid=200&hei=200",
+          "recordSource": "Support-KB",
+          "recordDisplayInSearch": true,
+          "recordIssue": null,
+          "contentTile": true
+        }
+      ],
+      "alternateSuggestions": [
+        {
+          "label": "Trade-In",
+          "url": "/od/search/?q=Trade-In"
+        },
+        {
+          "label": "iPhone",
+          "url": "/od/search/?q=iPhone"
+        }
+      ],
+      "refinements": [
+        {
+          "refinementOptions": [
+            {
+              "refinementCount": "9",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Apple",
+              "filter": "Apple",
+              "displayFlag": true
+            },
+            {
+              "refinementCount": "2",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "ASUS",
+              "filter": "ASUS",
+              "displayFlag": true
+            },
+            {
+              "refinementCount": "4",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Google",
+              "filter": "Google",
+              "displayFlag": true
+            }
+          ],
+          "refinementName": "Brand",
+          "refinementStyle": "link",
+          "multiselect": false,
+          "defaultView": "collapse",
+          "facet": "product.manufacturer.name_str"
+        },
+        {
+          "refinementOptions": [
+            {
+              "refinementCount": "21",
+              "multiSelect": true,
+              "selectionFlag": true,
+              "navigationState": "/smartphones/rose-gold/",
+              "legacyNavState": "N=10238+4294820610",
+              "label": "Rose Gold",
+              "filter": "Rose Gold",
+              "displayFlag": true
+            },
+            {
+              "refinementCount": "9",
+              "colorStyle": null,
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Silver",
+              "filter": "Silver",
+              "displayFlag": true
+            }
+          ],
+          "refinementName": "Color",
+          "refinementStyle": "link",
+          "multiselect": false,
+          "defaultView": "collapse",
+          "facet": "sku.color_str"
+        },
+        {
+          "refinementOptions": [
+            {
+              "refinementCount": "2",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Smartphones",
+              "filter": "Smartphones",
+              "displayFlag": true
+            },
+            {
+              "refinementCount": "15",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Cases",
+              "filter": "Cases",
+              "displayFlag": true
+            },
+            {
+              "refinementCount": "2",
+              "multiSelect": true,
+              "selectionFlag": false,
+              "label": "Cases & Protection",
+              "filter": "Cases & Protection",
+              "displayFlag": true
+            }
+          ],
+          "refinementName": "Product Category",
+          "refinementStyle": "link",
+          "multiselect": false,
+          "defaultView": "collapse",
+          "facet": "recordContentType_str"
+        }
+      ],
+      "sortOptions": [
+        {
+          "selectionFlag": true,
+          "condition": "score desc",
+          "label": "Best Match",
+          "displayFlag": true
+        },
+        {
+          "selectionFlag": false,
+          "condition": "recordMonthlyPrice asc, recordRetailPrice asc",
+          "filterCondition": "recordIntent:shop",
+          "label": "Price Low-High",
+          "displayFlag": true
+        },
+        {
+          "selectionFlag": false,
+          "condition": "recordMonthlyPrice desc, recordRetailPrice desc",
+          "filterCondition": "recordIntent:shop",
+          "label": "Price High-Low",
+          "displayFlag": true
+        },
+        {
+          "selectionFlag": false,
+          "condition": "recordTitle asc",
+          "label": "A-Z",
+          "displayFlag": true
+        },
+        {
+          "selectionFlag": false,
+          "condition": "recordTitle desc",
+          "label": "Z-A",
+          "displayFlag": true
+        }
+      ],
+      "contentTypeRefinements": {
+        "facet": "recordContentType_str",
+        "refinementOptions": [
+          {
+            "selectionFlag": true,
+            "label": "All",
+            "filter": "*",
+            "displayFlag": true
+          },
+          {
+            "selectionFlag": false,
+            "label": "Devices",
+            "filter": "Devices",
+            "displayFlag": true
+          },
+          {
+            "selectionFlag": false,
+            "label": "Accessories",
+            "filter": "Accessories",
+            "displayFlag": true
+          },
+          {
+            "selectionFlag": false,
+            "label": "Other",
+            "filter": "Other",
+            "displayFlag": false
+          }
+        ]
+      }
+    }
+  }
+}
