@@ -12,6 +12,8 @@ import ManagersListToAccountManager from './components/ManagersListToAccountMana
 import ManagerCard from './components/ManagerCard'
 import ManagerEditCard from './components/ManagerEditCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
+import { postAddManagerByAccountHolder } from './actions'
+import store from '../../../store'
 
 const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
 const accountMember = reactGlobals.mdnRole == 'mobileSecure'
@@ -33,6 +35,17 @@ class AddManagerByAccountHolder extends React.Component {
       emailId: '',
       mtns: []
     }
+  }
+
+  handleAddNewManager(){
+    const postPayload  = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+        emailId: this.state.emailId,
+        "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
+    }
+    store.dispatch(postAddManagerByAccountHolder(postPayload))
   }
 
   render(){
@@ -84,7 +97,7 @@ class AddManagerByAccountHolder extends React.Component {
                        this.state.phoneNumber != 'noLineAssigned' &&
                        <div>
                            <h4>Email Address</h4>
-                           <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/>
+                           <InputField type='text' handleOnChange={(e)=>{this.setState({emailId:e.target.value})}} placeholder='name@domain.com' name='email' value={emailId}/>
                        </div>
                       }
                  </div>
@@ -92,7 +105,7 @@ class AddManagerByAccountHolder extends React.Component {
             </div>
             <div className='footer col-xs-12'>
               <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+                <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleAddNewManager() }>Add Manager</button>
             </div>
       </div>
     )
