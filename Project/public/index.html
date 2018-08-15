@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=5"
   />
   <title>My Verizon -Profile</title>
-  <link rel="stylesheet" href="//scache.vzw.com/ui-one-digital/gn/build/gnav.css" type="text/css">
   <style>
     body {
 
@@ -52,15 +51,20 @@
     reactGlobals.deviceLandingUrl = /*[[${deviceLandingUrl}]]*/ '';
     reactGlobals.greetingName = /*[[${greetingName}]]*/ '';
     reactGlobals.rotatingText = /*[[${rotatingText}]]*/ '';
+    reactGlobals.isCsr = /*[[${isCsr}]]*/ '';
     reactGlobals.rotatingTextArr = ['How can we help you ?', 'Ask your question here.', 'Enter your search here.'];
     if (reactGlobals.rotatingText && reactGlobals.rotatingText.questions) {
       reactGlobals.rotatingTextArr = reactGlobals.rotatingText.questions;
     }
-    
+
+reactGlobals.configUrl = {
+    getSecurityInfo: '/ui/acct/secure/data/secure/profile/securityInfo'
+};
+
     reactGlobals.analytics = {
     utagSync: /*[[${ensightenUtagSync}]]*/ '',
     utagAsync: /*[[${ensightenUtagAsync}]]*/ '',
-    ensightenAPIURL: /*[[${ensightenUrl1D}]]*/ ''
+    ensightenAPIURL: '/ui/acct/secure/data/secure/account/ensighten/DESKTOP_LANDING/tags'
   }
 
   var urlConfig={
@@ -69,14 +73,15 @@
   }
 
   </script>
-  <link th:href="@{${staticUrl}+'/reactOD/build/static/myprofile/common.css'}" rel="stylesheet">
 </head>
 
 <body id="body" onload="footerDelay()">
   <div id="vzw-gn" class="sticky"></div>
   <div id="app"></div>
   <div id="vzw-gf"></div>
-  <script type="text/javascript" src="//scache.vzw.com/ui-one-digital/gn/build/gnav.js"></script>
+  <link th:href="@{${gnavCSSUrl}}" type="text/css" rel="stylesheet">
+  <script type="text/javascript" th:src="@{${gnavJSUrl}}"></script>
+  <link th:href="@{${staticUrl}+'/reactOD/build/static/myprofile/common.css'}" rel="stylesheet">
   <script type="text/javascript" th:src="@{${staticUrl} +'/reactOD/build/static/myprofile/myprofile.js'}"></script>
   <script>
     function footerDelay() {
@@ -85,7 +90,7 @@
           var element = document.getElementById('vzw-gf');
           element.style.opacity = "1";
           element.style.filter = 'alpha(opacity=100)';
-        }, 2500);
+        }, 2000);
     }
 
   </script>
