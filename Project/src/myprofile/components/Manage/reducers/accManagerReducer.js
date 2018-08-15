@@ -38,7 +38,7 @@ const accManagerReducer = (state = initialState, action) => {
         ...state,
         managers: [...state.managers, action.response.data]
       }
-    
+
     case FETCH_MANAGE_LANDING_SUCCESS:
       return updateObject(state, {
         managers: action.response.customerInfo
@@ -50,7 +50,7 @@ const accManagerReducer = (state = initialState, action) => {
     case FETCH_MANAGER_REQUESTS_SUCCESS:
       let accountManagerRequests = []
       action.response.customerInfo.forEach(eachManager => {
-        if( !('role' in eachManager) ){ // Managers who does not have role key are considered as waiting for approval
+        if( eachManager.role === 'mobileSecure' ){
           accountManagerRequests.push(eachManager)
         }
       })

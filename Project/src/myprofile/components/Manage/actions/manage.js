@@ -161,7 +161,7 @@ const fetchManagerRequestsMtnsFailed = error => ({
 
 // Add account Manager by Account Holder directly
 export const postAddManagerByAccountHolder = (payload) => dispatch => {
-  console.log("Add account manager request body", payload)  
+  console.log("Add account manager request body: ", payload)
   dispatch(postAddManagerByAccountHolderBegin())
   // ADD_MANAGER_URL
   // "http://www.mocky.io/v2/5b732d733200005c083a7ff2"

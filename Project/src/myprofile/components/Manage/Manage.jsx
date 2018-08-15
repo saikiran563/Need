@@ -13,6 +13,10 @@ require('../../../assets/css/my-profile.css');
 require('../../../assets/css/oneD-Global.css');
 require('../../../assets/css/phoenixGlobal.css');
 
+const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
+const accountMember = reactGlobals.mdnRole == 'mobileSecure'
+const accountManager = reactGlobals.mdnRole == 'accountManager'
+
 class Manage extends Component {
   constructor(props) {
     super(props)
@@ -70,21 +74,21 @@ class Manage extends Component {
 
   componentWillReceiveProps(newProps){
       this.setState({
-        managers: newProps.managers
+        managers: newProps.managers,
+        accountManagerRequests: newProps.accountManagerRequests
       })
   }
 
   handleAppproveAccountManagerRequest(newRequest){
-      let { managers, accountManagerRequests }  = this.state
+      let { managers, accountManagerRequests } = this.state
       managers.push({
-        firstName: newRequest.firstName,
-        lastName:newRequest.lastName,
+        firstName:  newRequest.firstName,
+        lastName: newRequest.lastName,
         phoneNumber: newRequest.phoneNumber,
         emailId: newRequest.emailId
       })
-
       let pendingAccountManagerRequests = []
-      accountManagerRequests.forEach(eachRequest=>{
+      accountManagerRequests.forEach(eachRequest => {
         eachRequest.phoneNumber !== newRequest.phoneNumber ? pendingAccountManagerRequests.push(eachRequest) : {}
       })
       this.setState({
@@ -120,13 +124,15 @@ class Manage extends Component {
 handleEditCancel = (type) =>  {
     switch(type) {
       case 'accountmanagerblock':
+        if( !accountManager ) {
+          this.props.actions.fetchMtns()
+          this.props.actions.fetchManagerRequests()
+          this.props.actions.getAccountMemberDetailsToSendRequest()
+        }
         this.setState({
           showManagerEdit: false, showGreetingEdit : false , showTransferOfServiceEdit: false,
           managerEditMode: true, greetingEditMode: false,transferOfServiceEditMode:false
         });
-        this.props.actions.fetchMtns()
-        this.props.actions.fetchManagerRequests()
-        this.props.actions.getAccountMemberDetailsToSendRequest()
         this.props.history.push('/manage/accountmanager');
       break;
 
@@ -215,6 +221,7 @@ handleEditCancel = (type) =>  {
   }
 
   handleUndoRevoke(){
+      this.props.actions.postAddManagerByAccountHolder(this.state.revokedManager)
       this.setState({
         managers: [...this.state.managers,this.state.revokedManager]
       },()=>{
@@ -238,6 +245,7 @@ handleEditCancel = (type) =>  {
                   handleAppproveAccountManagerRequest={(newRequest)=>this.handleAppproveAccountManagerRequest(newRequest)}
                   handleDenyAccountManagerRequest={(newRequest)=>this.handleDenyAccountManagerRequest(newRequest)}
                   deniedAccountManagerRequests={deniedAccountManagerRequests}
+                  accountManagerRequests={accountManagerRequests}
                   handleRemoveManager={(managerToRemove)=>this.handleRemoveManager(managerToRemove)}
                   handleUndoDenyAccountManagerRequest={(deniedRequest)=>this.handleUndoDenyAccountManagerRequest(deniedRequest)}
                   handleUndoRevoke = {(managerToAdd)=>this.handleUndoRevoke(managerToAdd)}
@@ -256,6 +264,7 @@ handleEditCancel = (type) =>  {
 const mapStateToProps = state => {
   return {
     managers: state.accManagerReducer.managers,
+    accountManagerRequests:  state.accManagerReducer.accountManagerRequests,
     state:state,
   }
 }

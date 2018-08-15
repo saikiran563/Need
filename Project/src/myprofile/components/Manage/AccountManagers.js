@@ -204,6 +204,9 @@ getinitialState(){
 
   getManagersEditView(){
     const { managers, revokedManager } = this.props
+    if(accountManager){
+      return <ManagersListToAccountManager managers={managers} toggleLearnMorePopup={()=>this.toggleLearnMorePopup()}/>
+    }
     return(
         <div>
           {
@@ -291,7 +294,6 @@ getinitialState(){
 
   handleAppproveAccountManagerRequest(newRequest){
     const payload = {
-        "role":'',
         "firstName": newRequest.firstName,
         "lastName": newRequest.lastName,
         "phoneNumber": newRequest.phoneNumber,
@@ -299,7 +301,7 @@ getinitialState(){
         "status":"APPROVED"
  }
     this.props.actions.postApproveManagerByAccountHolder(payload)
-    this.props.handleAppproveAccountManagerRequest(newRequest)
+    this.props.handleAppproveAccountManagerRequest(payload)
   }
 
   handleSendRequestForAccountManager(newRequest){
@@ -366,6 +368,7 @@ getinitialState(){
   }
 
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
+  if(accountManager) return <div />
     const { newAccountMemberRequest, mtns } = this.props
     if( newAccountMemberRequest.status === 'not requested' ){
       if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
@@ -609,7 +612,7 @@ getinitialState(){
 
   render() {
     console.log('THIS PROPS', this.props)
-    
+
     const { firstName, lastName, phoneNumber, emailId } = this.state;
     const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
     const editableClassName = managerEditMode ? 'description_box--edit-view' : 'description_box_disabled';
@@ -666,7 +669,7 @@ getinitialState(){
 const mapStateToProps = state => {
   return {
     mtns: state.accManagerReducer.mtns,
-    accountManagerRequests: state.accManagerReducer.accountManagerRequests,
+    //accountManagerRequests: state.accManagerReducer.accountManagerRequests,
     memberEmailId: state.accManagerReducer.emailId,
     memberPhoneNumber: state.accManagerReducer.phoneNumber,
   }
