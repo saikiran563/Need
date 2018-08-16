@@ -5,8 +5,8 @@ export default ({managerInfo,isNewlyAdded}) => {
     <div className='row owner-info-second' key={managerInfo.phoneNumber}>
        <div className='row col-xs-12 col-sm-11'>
            <h4 className='medium-text bold'>{ managerInfo.firstName.toUpperCase() } { managerInfo.lastName.toUpperCase() }</h4>
-           <p className='medium-text'>{phoneNumber}</p>
-           <p className='medium-text'>{managerInfo.emailId.toLowerCase()}</p>
+           <div className='medium-text t-1'>{phoneNumber}</div>
+           <div className='medium-text t-1'>{managerInfo.emailId.toLowerCase()}</div>
        </div>
          {
            isNewlyAdded &&

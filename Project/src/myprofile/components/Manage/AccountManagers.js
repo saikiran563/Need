@@ -181,8 +181,8 @@ getinitialState(){
                   <div key={eachManager.phoneNumber}>
                      <div className='row owner-info'>
                          <h4 className='medium-text bold'>{eachManager.firstName.toUpperCase()+ ' '+ eachManager.lastName.toUpperCase()}( Account Owner )</h4>
-                         <p className='medium-text'>{eachManager.phoneNumber}</p>
-                         <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
+                         <div className='medium-text t-1'>{eachManager.phoneNumber}</div>
+                         <div className='medium-text t-1'>{eachManager.emailId.toLowerCase()}</div>
                      </div>
                   </div>
                 )
@@ -220,13 +220,13 @@ getinitialState(){
                             <h1 className='large-text bold'>Current Account Managers</h1>
                         </div>
                       <div className='row col-xs-12 col-sm-1 col-md-1'>
-                           <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                           <a className='btn btn-anchor medium-text'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
                       </div>
                     </div>
                      <div className='row owner-info'>
-                         <p  className='medium-text bold'>{eachManager.firstName.toUpperCase()+ ' '+ eachManager.lastName.toUpperCase()}( Account Owner )</p>
-                         <p className='medium-text'>{phoneNumber}</p>
-                         <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
+                         <div  className='medium-text bold'>{eachManager.firstName.toUpperCase()+ ' '+ eachManager.lastName.toUpperCase()}( Account Owner )</div>
+                         <div className='medium-text  t-1'>{phoneNumber}</div>
+                         <div className='medium-text t-1'>{eachManager.emailId.toLowerCase()}</div>
                      </div>
                      <div className='row seperator'/>
                   </div>
@@ -236,14 +236,14 @@ getinitialState(){
                 <div>
                     <div className='row owner-info-second' key={eachManager.phoneNumber}>
                          <div className='row col-xs-12 col-sm-11'>
-                             <p  className='medium-text bold'>{ eachManager.firstName.toUpperCase() } { eachManager.lastName.toUpperCase() }</p>
-                             <p className='medium-text'>{phoneNumber}</p>
-                             <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
+                             <div  className='medium-text bold'>{ eachManager.firstName.toUpperCase() } { eachManager.lastName.toUpperCase() }</div>
+                             <div className='medium-text  t-1'>{phoneNumber}</div>
+                             <div className='medium-text  t-1'>{eachManager.emailId.toLowerCase()}</div>
                          </div>
                          {
                            accountOwner &&
                            <div className='row col-xs-12 col-sm-1'>
-                                <a className='btn btn-anchor'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
+                                <a className='btn btn-anchor medium-text'  onClick={() => this.showConfirmPopUp(eachManager)} role='button'>Remove</a>
                            </div>
                          }
                     </div>
@@ -422,8 +422,8 @@ getinitialState(){
                         }
                    </div>
                    <div className='footer col-xs-12'>
-                     <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                       <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+                     <a className='btn btn--round-invert medium-text' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                       <button className='btn btn--round medium-text' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
                    </div>
                  </div>
               </div>
@@ -433,9 +433,9 @@ getinitialState(){
         if(accountMember){
           return(
             <div className='row add-manager-cont'>
-              <h4 tabIndex='0'>Add Account Managers</h4>
-              <a className='question'> What can an Account Manager do ?</a>
-              <p className='answer'>
+              <h4 tabIndex='0' className='medium-text' >Add Account Managers</h4>
+              <a className='small-text'> What can an Account Manager do ?</a>
+              <p className='small-text'>
                 An Account Manager does NOT have to have a mobile number on your
                 account. By providing a name only, they will be able to manage all lines
                  on the account in retails stores and by calling Customer Service.
@@ -445,51 +445,51 @@ getinitialState(){
                     <div>
                       <div className='add-manager-fields'>
                          <div className='manager-fn-cont '>
-                            <label htmlFor='userId'>First Name</label>
+                            <label htmlFor='userId' className='medium-text bold'>First Name</label>
                             <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' name='firstName' value={firstName}/>
                          </div>
                          <div className='manager-ln-cont '>
-                             <label htmlFor='userId'>Last Name</label>
+                             <label htmlFor='userId' className='medium-text bold'>Last Name</label>
                              <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder='Name' name='lastName'value={lastName}/>
                          </div>
                      </div>
                     </div>
                     <div>
-                         <p>If you assign a mobile number and email address, the Account
+                         <p className='medium-text'>If you assign a mobile number and email address, the Account
                              Manager will be given My Verizon Online access to your account.</p>
                      </div>
                      <div className='contact-cont'>
                          <div className='row'>
                              <div className='col-sm-3'>
-                                 <label>Phone Number</label>
+                                 <label className='medium-text bold'>Phone Number</label>
                              </div>
                              <div className='p-t-7 col-sm-3'>
-                                 <p>{phoneNumber}</p>
+                                 <p className='medium-text'>{phoneNumber}</p>
                              </div>
                          </div>
                          <div className='row'>
                              <div className='col-sm-3'>
-                                 <label>Email Address</label>
+                                 <label className='medium-text bold'>Email Address</label>
                              </div>
                              <div className='p-t-7 col-sm-3'>
                                {
                                  this.state.isEditEmailOnAccountMemberSelected  ?
                                  <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
-                                 <p>{emailId}</p>
+                                 <p className='medium-text'>{emailId}</p>
                                }
                              </div>
                              <div className='col-sm-1'>
                                {
                                  this.state.isEditEmailOnAccountMemberSelected  ?
-                                 <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
-                                 <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
+                                 <a className='edit-btn medium-text' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
+                                 <a className='edit-btn medium-text' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
                                }
                              </div>
                          </div>
                      </div>
                      <div className='footer col-xs-12'>
-                       <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                         <button className='btn btn--round'  onClick={() =>this.handleSendRequestForAccountManager(this.state) }>Send Request</button> :
+                       <a className='btn btn--round-invert medium-text' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                         <button className='btn btn--round medium-text'  onClick={() =>this.handleSendRequestForAccountManager(this.state) }>Send Request</button>
                      </div>
                    </div>
                 </div>
@@ -501,8 +501,8 @@ getinitialState(){
     if(this.props.newAccountMemberRequest.status === 'request pending'){
       return(
         <div className='row'>
-              <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
-              <p className='account-member-'>
+              <h2 className='account-manager-request-heading medium-text'>Request to Become an Account Manager</h2>
+              <p className='medium-text'>
                   Submit a request to your Account Owner to gain Account Manager access and abilities.
                   You must be 18 years or older to be an Account Manager.
                   <br/>
@@ -512,7 +512,7 @@ getinitialState(){
                   If accepted, you will receive an email to change your role to Account Manager.
                   You will then have access to manage all lines on the account in retails stores, by calling Customer Service, or through My Verizon Online.
             </p>
-            <h4 className='account-manager-request-pending'>
+            <h4 className='account-manager-request-pending medium-text'>
                 You have one (1) request currently pending. Please contact your Account Owner for updates on open requests.
             </h4>
         </div>
@@ -522,11 +522,11 @@ getinitialState(){
     if(this.props.newAccountMemberRequest.status === 'request denied'){
       return(
         <div className='row'>
-              <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
-              <h3 className='account-manager-request-pending'>
+              <h2 className='account-manager-request-heading medium-text'>Request to Become an Account Manager</h2>
+              <h3 className='account-manager-request-pending medium-text'>
                     Your Account Owner  has denied your request
               </h3>
-              <p className='account-member-'>
+              <p className='medium-text'>
                   you can always submit another request you can always submit another request you can always
                   submit another request you can always submit another request you can always submit another request
             </p>
@@ -537,9 +537,9 @@ getinitialState(){
 
     return(
       <div className='row add-manager-cont'>
-          <h4 tabIndex='0'>Request to Become an Account Manager</h4>
-          <a className='question'> What can an Account Manager do ?</a>
-          <p className='answer'>
+          <h4 tabIndex='0' className='medium-text'>Request to Become an Account Manager</h4>
+          <a className='small-text'> What can an Account Manager do ?</a>
+          <p className='small-text'>
             Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.
           </p>
           <div>
@@ -549,11 +549,11 @@ getinitialState(){
                 <div>
                   <div className='add-manager-fields'>
                      <div className='manager-fn-cont '>
-                        <label htmlFor='userId'>First Name</label>
+                        <label htmlFor='userId' className='medium-text bold'>First Name</label>
                         <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' name='firstName' value={firstName}/>
                      </div>
                      <div className='manager-ln-cont '>
-                         <label htmlFor='userId'>Last Name</label>
+                         <label htmlFor='userId' className='medium-text bold'>Last Name</label>
                          <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder='Name' name='lastName'value={lastName}/>
                      </div>
                  </div>
@@ -574,23 +574,23 @@ getinitialState(){
                       {
                         this.state.isEditEmailOnAccountMemberSelected  ?
                         <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
-                        <p>samurai.jack@verizon.com</p>
+                        <p medium-text>samurai.jack@verizon.com</p>
                       }
                     </div>
                     <div className='col-sm-1'>
                       {
                         this.state.isEditEmailOnAccountMemberSelected  ?
-                        <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
-                        <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
+                        <a className='edit-btn medium-text' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
+                        <a className='edit-btn medium-text' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
                       }
                     </div>
                     <div className='footer col-xs-12'>
-                          <a className='btn' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                          <button className='btn btn--round'  onClick={(e) =>{this.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
+                          <a className='btn' role='button medium-text' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
+                          <button className='btn btn--round medium-text'  onClick={(e) =>{this.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
                     </div>
                 </div>
                </div> :
-               <div className='warning'>
+               <div className='medium-text'>
                     <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
                 </div>
              }

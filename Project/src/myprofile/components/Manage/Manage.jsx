@@ -47,7 +47,8 @@ class Manage extends Component {
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
       this.setState({
-        accountManagerRequests: this.props.accountManagerRequests
+        accountManagerRequests: this.props.accountManagerRequests,
+        newAccountMemberRequest: this.props.newAccountMemberRequest
       })
   }
 
@@ -55,6 +56,7 @@ class Manage extends Component {
   handleSendRequestForAccountManager(newManagerInfo){
         //Api call to Save new Manager Info
         this.toggleRequestSuccessPopup()
+        this.props.action
         this.setState({
           newAccountMemberRequest: {
             status: 'request pending',
@@ -75,7 +77,8 @@ class Manage extends Component {
   componentWillReceiveProps(newProps){
       this.setState({
         managers: newProps.managers,
-        accountManagerRequests: newProps.accountManagerRequests
+        accountManagerRequests: newProps.accountManagerRequests,
+        newAccountMemberRequest: newProps.newAccountMemberRequest
       })
   }
 
@@ -176,7 +179,6 @@ handleEditCancel = (type) =>  {
            emailId: eachManager.emailId
          })
        })
-       // Make a API call to generate Unique Id to the the Manager
        const id = Math.round((new Date()).getTime() / 1000) // A unique id should generated each time a manager is added.
        let addedManager = {
          type: "none",
@@ -266,6 +268,7 @@ const mapStateToProps = state => {
     managers: state.accManagerReducer.managers,
     accountManagerRequests:  state.accManagerReducer.accountManagerRequests,
     state:state,
+    newAccountMemberRequest: state.accManagerReducer.newAccountMemberRequest
   }
 }
 

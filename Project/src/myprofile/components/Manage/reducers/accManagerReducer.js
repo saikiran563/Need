@@ -59,8 +59,11 @@ const accManagerReducer = (state = initialState, action) => {
       })
     case GET_ACCOUNT_MEMBER_DETAILS_SUCCESS :
     return updateObject(state, {
-      emailId: action.response.emailID,
-      phoneNumber: action.response.primaryPhone,
+      emailId: action.response.emailId,
+      phoneNumber: action.response.phoneNumber,
+      newAccountMemberRequest : {
+        status: action.response.hasPendingRequests ? 'request pending' : 'not requested'
+      }
     })
     default:
       return state
