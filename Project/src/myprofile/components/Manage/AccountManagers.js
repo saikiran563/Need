@@ -207,10 +207,12 @@ getinitialState(){
     if(accountManager){
       return <ManagersListToAccountManager managers={managers} toggleLearnMorePopup={()=>this.toggleLearnMorePopup()}/>
     }
+    //const phoneNumber = managerInfo.phoneNumber === 'Not Applicable' ? '' : ''
     return(
         <div>
           {
             managers.map((eachManager)=>{
+              const phoneNumber = eachManager.phoneNumber === 'Not Applicable' ? '' : ''
               if(eachManager.role === 'accountHolder'){
                 return(
                   <div key={eachManager.phoneNumber}>
@@ -224,7 +226,7 @@ getinitialState(){
                     </div>
                      <div className='row owner-info'>
                          <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
-                         <p>{eachManager.phoneNumber}</p>
+                         <p>{phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
                      <div className='row seperator'/>
@@ -236,7 +238,7 @@ getinitialState(){
                     <div className='row owner-info-second' key={eachManager.phoneNumber}>
                          <div className='row col-xs-12 col-sm-11'>
                              <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
-                             <p>{eachManager.phoneNumber}</p>
+                             <p>{phoneNumber}</p>
                              <p>{eachManager.emailId}</p>
                          </div>
                          {
