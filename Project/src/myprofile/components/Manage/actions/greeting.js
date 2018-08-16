@@ -13,7 +13,11 @@ export const POST_GREETING_NAME_FAIL = 'POST_GREETING_NAME_FAIL'
 //Post greeting name
 export const postGreetingName = (payload) => dispatch => {
   dispatch(postGreetingNameBegin())
-  axios.post(POST_GREETING_NAME_URL,payload)
+  axios({
+    method: 'POST',
+    url: POST_GREETING_NAME_URL,
+    data: payload,
+    })
   .then(response => {
     dispatch(postGreetingNameSuccess())
   })

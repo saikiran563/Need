@@ -161,3 +161,46 @@ select {
   text-align: center;
   text-decoration: none !important;
 }
+
+.requested-by-header{
+  font-size: 18px !important;
+}
+.request-by-name {
+  font-weight: bold;
+}
+
+.request-sub-cont{
+  margin-top: 3%;
+}
+
+.request-detail {
+  margin-top: 0.5%;
+}
+
+.request-options {
+  margin-top: 4%;
+}
+
+.approve-deny-Cont {
+  width: 100%;
+}
+
+.large-text {
+    font-size: 20px;
+}
+
+.medium-text {
+    font-size: 16px !important;
+}
+
+.bold{
+    font-weight: 800  !important;
+}
+
+.small-text {
+    font-size: 14px !important;
+}
+
+.t-1{
+  margin-top: 1% !important;
+}

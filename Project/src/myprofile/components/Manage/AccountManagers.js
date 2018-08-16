@@ -32,28 +32,27 @@ class AccountManagerBlock extends Component {
     }
   }
 
-  getAccountManagerRequestCard=(request)=>{
+  getAccountManagerRequestCard = (request) => {
     const { managers } = this.props
     const isMaxManagersReached = managers.length > MAXIMUM_ACCOUNT_MANAGERS_ACTIVE
     if( isMaxManagersReached == false ){
       return(
         <div key={ request.phoneNumber + request.emailId }>
           <div className='row request-cont'>
-              <p>Requested by { request.phoneNumber } </p>
+              <p className='medium-text'>Requested by { request.phoneNumber } </p>
           </div>
-           <div className='row'>
-               <h4 tabIndex='0'>{request.firstName+ '  ' + request.lastName}</h4>
-               <p>{request.phoneNumber}</p>
-               <p>{request.emailId}</p>
+           <div className='row request-sub-cont'>
+               <h4 className='medium-text bold'>{request.firstName.toUpperCase()+ '  ' + request.lastName.toUpperCase()}</h4>
+                <span className='medium-text'>{request.phoneNumber}</span>
+                <span className='medium-text'>{request.emailId.toLowerCase()}</span>
            </div>
-           <div className='row'>
-             <div className='col-md-1'/>
-              <div className='col-md-5'>
-                  <button className='btn btn--round-invert' onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
+           <div className='row request-options'>
+              <div className='col-md-6'>
+                  <button className='btn btn--round-invert approve-deny-Cont medium-text' onClick={(e) =>this.handleDenyAccountManagerRequest(request)}>Deny</button>
               </div>
               <div className='col-md-2'/>
-              <div className='col-md-5'>
-                <button className='btn btn--round' onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
+              <div className='col-md-6'>
+                <button className='btn btn--round approve-deny-Cont medium-text' onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
               </div>
               <div className='col-md-1'/>
            </div>
@@ -71,9 +70,9 @@ class AccountManagerBlock extends Component {
             <p>Requested by { request.phoneNumber } </p>
         </div>
          <div className='row'>
-             <h4 tabIndex='0'>{request.firstName+ '  ' + request.lastName}</h4>
-             <p>{request.phoneNumber}</p>
-             <p>{request.emailId}</p>
+             <h4 tabIndex='0'>{request.firstName.toUpperCase()+ '  ' + request.lastName.toUpperCase()}</h4>
+             <p  className='medium-text'>{request.phoneNumber}</p>
+             <p  className='medium-text'>{request.emailId.toLowerCase()}</p>
          </div>
          <div className='row'>
            <div className='col-md-1'/>
@@ -181,9 +180,9 @@ getinitialState(){
                 return(
                   <div key={eachManager.phoneNumber}>
                      <div className='row owner-info'>
-                         <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
-                         <p>{eachManager.phoneNumber}</p>
-                         <p>{eachManager.emailId}</p>
+                         <h4 className='medium-text bold'>{eachManager.firstName.toUpperCase()+ ' '+ eachManager.lastName.toUpperCase()}( Account Owner )</h4>
+                         <p className='medium-text'>{eachManager.phoneNumber}</p>
+                         <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
                      </div>
                   </div>
                 )
@@ -218,16 +217,16 @@ getinitialState(){
                   <div key={eachManager.phoneNumber}>
                     <div className='row'>
                         <div className='row col-xs-12 col-sm-1 col-md-11'>
-                            <h1>Current Account Manager</h1>
+                            <h1 className='large-text bold'>Current Account Managers</h1>
                         </div>
                       <div className='row col-xs-12 col-sm-1 col-md-1'>
                            <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
                       </div>
                     </div>
                      <div className='row owner-info'>
-                         <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
-                         <p>{phoneNumber}</p>
-                         <p>{eachManager.emailId}</p>
+                         <p  className='medium-text bold'>{eachManager.firstName.toUpperCase()+ ' '+ eachManager.lastName.toUpperCase()}( Account Owner )</p>
+                         <p className='medium-text'>{phoneNumber}</p>
+                         <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
                      </div>
                      <div className='row seperator'/>
                   </div>
@@ -237,9 +236,9 @@ getinitialState(){
                 <div>
                     <div className='row owner-info-second' key={eachManager.phoneNumber}>
                          <div className='row col-xs-12 col-sm-11'>
-                             <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
-                             <p>{phoneNumber}</p>
-                             <p>{eachManager.emailId}</p>
+                             <p  className='medium-text bold'>{ eachManager.firstName.toUpperCase() } { eachManager.lastName.toUpperCase() }</p>
+                             <p className='medium-text'>{phoneNumber}</p>
+                             <p className='medium-text'>{eachManager.emailId.toLowerCase()}</p>
                          </div>
                          {
                            accountOwner &&
@@ -326,7 +325,7 @@ getinitialState(){
       return(
         <div>
             <div className='row request-header'>
-                <h1> Account Manager Requests </h1>
+                <h1 className='large-text bold'> Account Manager Requests </h1>
             </div>
             {
               accountManagerRequests.map(eachRequest =>{
@@ -342,7 +341,7 @@ getinitialState(){
               <div className='row owner-info-second'>
                   <div className='row col-xs-12 col-sm-11 undo-message-cont'>
                     <span className='text-success fa fa-check-circle'></span>
-                    <p className='undo-message'>Account Manager Request from {deniedAccountManagerRequests.phoneNumber} is denied </p>
+                    <p className='medium-text'>Account Manager Request from {deniedAccountManagerRequests.phoneNumber} is denied </p>
                   </div>
                   <div className='row col-xs-12 col-sm-1'>
                       <a className='undo' role='button' onClick={() => this.props.handleUndoDenyAccountManagerRequest()}>Undo</a>
@@ -376,9 +375,9 @@ getinitialState(){
       if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
         <div className='row add-manager-cont'>
-            <h4 tabIndex='0'>Add Account Managers</h4>
-            <a className='question'> What can an Account Manager do ?</a>
-            <p className='answer'>
+            <h4  className='medium-text  bold'>Add Account Managers</h4>
+            <p className='small-text t-1'> What can an Account Manager do ?</p>
+            <p className='small-text'>
               An Account Manager does NOT have to have a mobile number on your
               account. By providing a name only, they will be able to manage all lines
                on the account in retails stores and by calling Customer Service.
@@ -388,22 +387,22 @@ getinitialState(){
                   <div>
                     <div className='add-manager-fields'>
                        <div className='manager-fn-cont '>
-                          <label htmlFor='userId'>First Name</label>
+                          <label htmlFor='userId' className='medium-text bold'>First Name</label>
                           <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' name='firstName' value={firstName}/>
                        </div>
                        <div className='manager-ln-cont '>
-                           <label htmlFor='userId'>Last Name</label>
+                           <label htmlFor='userId' className='medium-text bold'>Last Name</label>
                            <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder='Name' name='lastName'value={lastName}/>
                        </div>
                    </div>
                   </div>
                   <div>
-                       <p>If you assign a mobile number and email address, the Account
+                       <p className='small-text'>If you assign a mobile number and email address, the Account
                            Manager will be given My Verizon Online access to your account.</p>
                    </div>
                    <div className='contact-cont'>
                        <div>
-                         <h4>Mobile Number</h4>
+                         <h4 className='medium-text bold'>Mobile Number</h4>
                          <select value={this.state.phoneNumber} onChange={(e)=>this.handleOnChange('phoneNumber',e.target.value)}>
                              <option value='' >Select</option>
                              <option value='noLineAssigned' >No Line Assigned</option>
@@ -417,7 +416,7 @@ getinitialState(){
                        {
                          this.state.phoneNumber != 'noLineAssigned' &&
                          <div>
-                             <h4>Email Address</h4>
+                             <h4 className='medium-text bold'>Email Address</h4>
                              <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/>
                          </div>
                         }
@@ -631,9 +630,9 @@ getinitialState(){
           </Popup>
           <div className='clearfix'></div>
           <div className='body'>
-            <div className='col-xs-12 col-sm-4 description_box__header'>
-              <div className='col-xs-12'>
-              <h4 tabIndex='0' >Account Managers</h4>
+            <div className='row col-xs-12 col-sm-4'>
+              <div className='row col-xs-12'>
+              <h4 tabIndex='0' className='medium-text bold'>Account Managers</h4>
               {/*
                   showManagerEdit && ( accountOwner || accountMember ) &&
                   <div className='description_box__edit description_box__edit_section col-xs-4'>
@@ -641,7 +640,7 @@ getinitialState(){
                   </div> */
               }
               </div>
-              <p>Account Managers can manage all lines on the account in retail stores and by calling Customer Service.</p>
+              <p className='small-text t-1'>Account Managers can manage all lines on the account in retail stores and by calling Customer Service.</p>
             </div>
             <div className='col-xs-12 col-sm-8 description_box__large-container'>
               {
