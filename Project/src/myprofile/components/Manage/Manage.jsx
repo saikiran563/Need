@@ -7,6 +7,7 @@ import Greetings from './Greetings'
 import TransferOfService from './TransferOfService'
 import './style.css'
 import Popup from './Popup/Popup';
+import Spinner from "../Spinner/Spinner";
 
 require('../../../assets/css/main.css');
 require('../../../assets/css/my-profile.css');
@@ -235,9 +236,12 @@ handleEditCancel = (type) =>  {
 
   render() {
     const { managers, accountManagerRequests,deniedAccountManagerRequests } = this.state;
+    const { showSpinner } = this.props
     return (
       <div>
           <h1 className="title title--lg">Manage Account</h1>
+          {
+          showSpinner ? <Spinner /> :
           <div className="col-xs-12">
               <AccountManagers
                   managers={managers}
@@ -258,6 +262,7 @@ handleEditCancel = (type) =>  {
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <TransferOfService {...this.state}/>
           </div>
+        }
       </div>
     )
   }
@@ -268,6 +273,7 @@ const mapStateToProps = state => {
     managers: state.accManagerReducer.managers,
     accountManagerRequests:  state.accManagerReducer.accountManagerRequests,
     state:state,
+    showSpinner: state.accManagerReducer.showSpinner,
     newAccountMemberRequest: state.accManagerReducer.newAccountMemberRequest
   }
 }

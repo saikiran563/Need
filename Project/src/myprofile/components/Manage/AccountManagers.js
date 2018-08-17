@@ -27,7 +27,8 @@ class AccountManagerBlock extends Component {
     if(this.props.memberEmailId !== nextProps.memberEmailId) {
       this.setState({
         phoneNumber: nextProps.memberPhoneNumber,
-        emailId: nextProps.memberEmailId
+        emailId: nextProps.memberEmailId,
+        showLearnMorePopUp: nextProps.showLearnMorePopUp
       })
     }
   }
@@ -99,7 +100,7 @@ getinitialState(){
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false,
-      showLearnMorePopUp: false
+      showLearnMorePopUp: this.props.showLearnMorePopUp
     }
 }
 
@@ -319,16 +320,16 @@ getinitialState(){
   }
 
   getAccountManagerRequestsView(){
-    if(accountMember) return <div /> // Account Members do not see pending requests
+    if( accountMember ) return <div /> // Account Members do not see pending requests
     const { accountManagerRequests, deniedAccountManagerRequests } = this.props
-    if( accountManagerRequests.length || deniedAccountManagerRequests){
+    if( accountManagerRequests.length || deniedAccountManagerRequests ){
       return(
         <div>
             <div className='row request-header'>
                 <h1 className='large-text bold'> Account Manager Requests </h1>
             </div>
             {
-              accountManagerRequests.map(eachRequest =>{
+              accountManagerRequests.map(eachRequest => {
                   return (
                     <div key={eachRequest.phoneNumber}>
                         { this.getAccountManagerRequestCard(eachRequest) }
@@ -369,14 +370,14 @@ getinitialState(){
   }
 
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
-  if(accountManager) return <div />
+    if(accountManager) return <div />
     const { newAccountMemberRequest, mtns } = this.props
-    if( newAccountMemberRequest.status === 'not requested' ){
-      if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
+    if( accountOwner ){
+      if( managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
         <div className='row add-manager-cont'>
             <h4  className='medium-text  bold'>Add Account Managers</h4>
-            <p className='small-text t-1'> What can an Account Manager do ?</p>
+            <a className='small-text t-1' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
             <p className='small-text'>
               An Account Manager does NOT have to have a mobile number on your
               account. By providing a name only, they will be able to manage all lines
@@ -498,7 +499,7 @@ getinitialState(){
         }
       }
 
-    if(this.props.newAccountMemberRequest.status === 'request pending'){
+    if(this.props.newAccountMemberRequest.status === 'request pending' && accountMember){
       return(
         <div className='row'>
               <h2 className='account-manager-request-heading medium-text'>Request to Become an Account Manager</h2>
@@ -606,9 +607,12 @@ getinitialState(){
   }
 
   toggleLearnMorePopup = () =>{
-    this.setState({
-      showLearnMorePopUp: ! this.state.showLearnMorePopUp
-    })
+    debugger
+    if(this.props.showLearnMorePopUp){
+      this.props.actions.hideLearnMorePopUp()
+    }else {
+      this.props.actions.showLearnMorePopUp()
+    }
   }
 
   render() {
@@ -625,7 +629,7 @@ getinitialState(){
           <Popup showPopup={this.props.showRequestSuccessPopup}>
               <RequestSent onClosePopup ={()=>{this.props.toggleRequestSuccessPopup()}}/>
           </Popup>
-          <Popup showPopup={this.state.showLearnMorePopUp}>
+          <Popup showPopup={this.props.showLearnMorePopUp}>
               <AccessRoles onClosePopup ={()=>{this.toggleLearnMorePopup()}}/>
           </Popup>
           <div className='clearfix'></div>
@@ -673,6 +677,7 @@ const mapStateToProps = state => {
     //accountManagerRequests: state.accManagerReducer.accountManagerRequests,
     memberEmailId: state.accManagerReducer.emailId,
     memberPhoneNumber: state.accManagerReducer.phoneNumber,
+    showLearnMorePopUp: state.accManagerReducer.showLearnMorePopUp
   }
 }
 

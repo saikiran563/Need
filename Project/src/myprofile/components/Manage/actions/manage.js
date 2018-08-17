@@ -74,10 +74,22 @@ export const GET_ACCOUNT_MEMBER_DETAILS_BEGIN= 'GET_ACCOUNT_MEMBER_DETAILS_BEGIN
 export const GET_ACCOUNT_MEMBER_DETAILS_SUCCESS = 'GET_ACCOUNT_MEMBER_DETAILS_SUCCESS'
 export const GET_ACCOUNT_MEMBER_DETAILS_FAIL = 'GET_ACCOUNT_MEMBER_DETAILS_FAIL'
 
+export const SHOW_LEARN_MORE_POPUP = 'SHOW_LEARN_MORE_POPUP'
+export const HIDE_LEARN_MORE_POPUP = 'HIDE_LEARN_MORE_POPUP'
+
 const customHeaders = {
  "Accept": "application/json"
  //"Authorization": "'client_ip':10.191.198.160,'channel':'web'",
 }
+
+//Pop- ups
+export const showLearnMorePopUp = () => ({
+  type: SHOW_LEARN_MORE_POPUP
+})
+
+export const  hideLearnMorePopUp= () => ({
+   type: HIDE_LEARN_MORE_POPUP,
+})
 
 //Landing Page when clicked on Manage Account on Leftnav
 export const fetchLandingManageData = () => dispatch => {
@@ -131,7 +143,6 @@ const fetchMtnsFailed = error => ({
   type: FETCH_MTNS_FAIL,
   error
 })
-
 
 // Fetch Manager Requests
 export const fetchManagerRequests = () => dispatch => {

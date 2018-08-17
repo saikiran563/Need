@@ -49,7 +49,6 @@ const greetingReducer = (state = initialState, action) => {
       })
     case POST_GREETING_NAME_FAIL:
       return updateObject(state, {
-        greetingName: action.error,
         postStatus: 'failed'
       })
     default:

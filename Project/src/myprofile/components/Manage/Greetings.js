@@ -23,6 +23,12 @@ class GreetingBlock extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps){
+    this.setState({
+      greetingName: newProps.greetingName
+    })
+  }
+
   handleOnChange = e => {
     if(e.target.value.length <= 10){
           this.setState({ greetingName: e.target.value }, () => this.onChangeInput());
@@ -82,11 +88,18 @@ class GreetingBlock extends Component {
 
   handleSaveGreetingName(){
     this.props.actions.postGreetingName(this.state.greetingName)
+    this.props.handleEditCancel("cancelblock")
+  }
+
+  handleCancelGreetingName(){
+    this.setState({
+      greetingName : this.props.greetingname
+    })
+    this.props.handleEditCancel("cancelblock")
   }
 
   render() {
     const {
-      controlButtons,
       useridInvalidMessages,
       useridValid,
       requiredError,
@@ -106,7 +119,7 @@ class GreetingBlock extends Component {
               {
                 showGreetingEdit  &&  (
                 <div>
-                  <p>{this.props.greetingName}</p>
+                  <p>{this.state.greetingName}</p>
                 </div>
               )}
               { !showGreetingEdit && greetingEditMode && (
@@ -174,7 +187,7 @@ class GreetingBlock extends Component {
               <a
                 className="btn btn--round-invert"
                 role="button"
-                onClick={() => this.props.handleEditCancel("cancelblock")}
+                onClick={() => this.handleCancelGreetingName()}
               >
                 Cancel
               </a>

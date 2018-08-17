@@ -7,7 +7,9 @@ export {
     postApproveManagerByAccountHolder,
     postDenyManagerByAccountHolder,
     postSendRequestForAccountManager,
-    getAccountMemberDetailsToSendRequest  
+    getAccountMemberDetailsToSendRequest ,
+    showLearnMorePopUp,
+    hideLearnMorePopUp
   } from './manage'
 
   export {
