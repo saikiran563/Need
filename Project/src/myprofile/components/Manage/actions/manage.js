@@ -79,6 +79,15 @@ const customHeaders = {
  //"Authorization": "'client_ip':10.191.198.160,'channel':'web'",
 }
 
+//Pop- ups
+export const showLearnMorePopUp = () => ({
+  type: SHOW_LEARN_MORE_POPUP
+})
+
+export const  hideLearnMorePopUp= () => ({
+   type: HIDE_LEARN_MORE_POPUP,
+})
+
 //Landing Page when clicked on Manage Account on Leftnav
 export const fetchLandingManageData = () => dispatch => {
   dispatch(fetchLandingManageDataBegin())

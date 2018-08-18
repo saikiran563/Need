@@ -49,10 +49,21 @@ hr {
 }
 
 .enhancedauth {
-    margin: -30px 124px -18px -2px !important;
+    margin: -55px 30px -18px -2px !important;
 }
 
 /* enhancedauth_p {
     padding: 0px 0px 55px;
 } */
 
+.userbio .col-xs-6.radio_table__header{
+width:20%;
+}
+
+.userbio .email, .userbio .edit{
+    width:auto;
+}
+
+.userbio .textmessage{
+    clear:both;
+}

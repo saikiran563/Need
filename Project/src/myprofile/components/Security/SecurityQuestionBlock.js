@@ -1,27 +1,40 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as actions from './actions'
-import InputField from '../FormElements/InputComponent';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actions from "./actions";
+import InputField from "../FormElements/InputComponent";
 import Modal from "../Modal/modal";
 import axios from "axios";
-import './style.css';
-import { getSecretPinStatus, getListOfUserNumbers, sendSecurePinToPhone, confirmSecurePinCode } from "./actions/fetchSecurities";
-import SecurePin from "../SecurePin/SecurePin"
+import "./style.css";
+import {
+  getSecretPinStatus,
+  getListOfUserNumbers,
+  sendSecurePinToPhone,
+  confirmSecurePinCode,
+  clearErrorCodes
+} from "./actions/fetchSecurities";
+import SecurePin from "../SecurePin/SecurePin";
+import { getErrorMsgByCode } from "../../../utils/config";
 
 class SecurityQuestionBlock extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       requiredError: true,
-      userId: "1234", /*props.userId,*/
-      isValid: '',
-      isCurrentPinValid: '',
+      userId: "1234" /*props.userId,*/,
+      isValid: "",
+      isCurrentPinValid: "",
       istouched: false,
-      currentQuestion: "", newQuestion: "", newAnswer: "",
+      currentQuestion: "",
+      newQuestion: "",
+      newAnswer: "",
       errorMessages: [
-        { name: '3-40 characters in length', error: false, type: 'minmax' },
-        { name: 'Letters, numbers, spaces, and/or periods (.) only', error: false, type: 'onCharset' }
+        { name: "3-40 characters in length", error: false, type: "minmax" },
+        {
+          name: "Letters, numbers, spaces, and/or periods (.) only",
+          error: false,
+          type: "onCharset"
+        }
       ],
       modalStatus: false,
       selectedPhone: null,
@@ -33,71 +46,104 @@ class SecurityQuestionBlock extends Component {
       authorizationCode: "",
       afterGetRequest: [],
       wrongCodeErrorMessage: ""
+    };
+  }
+
+  componentDidMount() {
+    // document.onclick = event => {
+    //   if(this.state.showSaved && !this.state.modalStatus){
+    //     this.setState({
+    //       showSaved: false
+    //     })
+    //    }
+    // }
+    this.setState({
+      newQId: this.props.metaBlock.qId
+    });
+  }
+
+  componentWillUpdate(prevProps) {
+    if (prevProps.questionStatus != this.props.questionStatus) {
+      return this.setState({
+        showSaved: true
+      });
+    }
+
+    if (this.state.showSaved) {
+      if (prevProps.event != this.props.event) {
+        this.setState({
+          showSaved: false
+        });
+      }
+    }
+    if (this.props.error || this.props.quesError) {
+      if (prevProps.event != this.props.event) {
+        this.props.clearErrorCodes();
+      }
     }
   }
 
-  componentDidMount(){
-    this.setState({
-      newQId: this.props.metaBlock.qId
-    })
-  }
-
-  componentWillUpdate(prevProps){
-    if(prevProps.isSecurePinValidated != this.props.isSecurePinValidated){
-       return this.setState({
-        showSaved: true
-      })
-    } 
-  }
-  
   saveChangesClickedHandler = () => {
-    this.props.getSecretPinStatus().then(() =>{
+    this.props.getSecretPinStatus().then(() => {
       const { securePin } = this.props;
-      console.log(securePin)
-      if(typeof securePin !== "string"){
-        if(!securePin.securePinEnabled){
-          console.log("secure pin not enabled")
-          return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
-        } 
+      console.log(securePin);
+      if (!this.props.error) {
+        if (!securePin.securePinEnabled) {
+          console.log("secure pin not enabled");
+          return this.props.handleSave(
+            "questionForm",
+            {
+              challengeQuestionID: this.state.newQId,
+              challengeAnswer: this.state.newAnswer
+            },
+            event
+          );
+        }
         if (!securePin.securePinVerified) {
-          console.log("secure pin not verified, go through secure pin flow")
+          console.log("secure pin not verified, go through secure pin flow");
           this.props.getListOfUserNumbers().then(() => {
-              this.setState({
-                  modalStatus: true,
-                  listOfAccountNumbersModal: true,
-                  afterGetRequest: this.props.listOfUserNumbers
-              })
-          })
+            this.setState({
+              modalStatus: true,
+              listOfAccountNumbersModal: true,
+              afterGetRequest: this.props.listOfUserNumbers
+            });
+          });
         } else {
-          console.log("secure pin already verified")
-          return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+          console.log("secure pin already verified");
+          return this.props.handleSave(
+            "questionForm",
+            {
+              challengeQuestionID: this.state.newQId,
+              challengeAnswer: this.state.newAnswer
+            },
+            event
+          );
         }
       } else {
         this.setState({
           errorModal: true,
           afterGetRequest: this.props.securePin
-        })
+        });
       }
-    })
-  }
+    });
+  };
 
-  handleOnChange = (e) => {
+  handleOnChange = e => {
     var value = e.target.value;
     if (value.length > 40) return;
     this.setState({ newAnswer: value }, () => this.onChangeInput());
-  }
+  };
 
-  handleOnSave = (e) => {
-    let { newAnswer, requiredError, newQuestion } = this.state;  
-      if (!requiredError) {
-        this.props.handleSave('questionForm', { newAnswer, newQuestion }, event)
-   
-     }   
-  }
+  handleOnSave = e => {
+    let { newAnswer, requiredError, newQuestion } = this.state;
+    if (!requiredError) {
+      this.props.handleSave("questionForm", { newAnswer, newQuestion }, event);
+    }
+  };
 
-  handleOnChangeCurrentPin = (e) => {
+  handleOnChangeCurrentPin = e => {
     this.setState({ currentQuestion: e.target.value });
-  }
+  };
 
   onChangeInput = () => {
     const newques = this.state.newAnswer;
@@ -105,81 +151,121 @@ class SecurityQuestionBlock extends Component {
     const errorMessages = JSON.parse(JSON.stringify(this.state.errorMessages));
     if (newques.length === 0) {
       this.setState({
-        requiredError: true, istouched: false, isValid: false, errorMessages: [
-          { name: '3-40 characters in length', error: false, type: 'minmax' },
-          { name: 'Letters, numbers, spaces, and/or periods (.) only', error: false, type: 'onCharset' }
+        requiredError: true,
+        istouched: false,
+        isValid: false,
+        errorMessages: [
+          { name: "3-40 characters in length", error: false, type: "minmax" },
+          {
+            name: "Letters, numbers, spaces, and/or periods (.) only",
+            error: false,
+            type: "onCharset"
+          }
         ]
       });
     } else {
       this.setState({ requiredError: false });
       if (newques.length < 3 || newques.length > 40) {
-        let inavlidMessage = errorMessages.find(message => message.type === 'minmax');
+        let inavlidMessage = errorMessages.find(
+          message => message.type === "minmax"
+        );
         inavlidMessage.error = true;
         this.setState({ errorMessages });
       } else {
-        let inavlidMessage = errorMessages.find(message => message.type === 'minmax');
+        let inavlidMessage = errorMessages.find(
+          message => message.type === "minmax"
+        );
         inavlidMessage.error = false;
         this.setState({ errorMessages });
       }
 
       if (newques.match(/^[a-zA-Z0-9]+(?:[ .][a-zA-Z0-9]+)?$/)) {
-        let inavlidMessage = errorMessages.find(message => message.type === 'onCharset');
+        let inavlidMessage = errorMessages.find(
+          message => message.type === "onCharset"
+        );
         inavlidMessage.error = false;
         this.setState({ errorMessages });
       } else {
-        let inavlidMessage = errorMessages.find(message => message.type === 'onCharset');
+        let inavlidMessage = errorMessages.find(
+          message => message.type === "onCharset"
+        );
         inavlidMessage.error = true;
         this.setState({ errorMessages });
       }
     }
-  }
+  };
 
-  onQuestionChange = (e) => {
+  onQuestionChange = e => {
     this.setState({
       newQId: e.target.value
     });
-  }
+  };
 
   handleMouseClick = event => {
-    if(this.state.showSaved && !this.state.modalStatus){
-     this.setState({
-       showSaved: false
-     })
+    if (this.state.showSaved && !this.state.modalStatus) {
+      this.setState({
+        showSaved: false
+      });
     }
-  }
+  };
 
-  getQuestions = (selectedVal) => {
+  getQuestions = selectedVal => {
     return (
-      <select className="state-select" name="USA State" onChange={this.onQuestionChange} defaultValue={selectedVal} analyticstrack="secqueblock-selList">
-        {
-          this.props.questionBlock.map((que) => {
-            return (<option key={que.Id} value={que.Id} analyticstrack={`secqueblock-option${que.Id}`}>{que.Question}</option>)
-          })
-        }
+      <select
+        className="state-select"
+        name="USA State"
+        onChange={this.onQuestionChange}
+        defaultValue={selectedVal}
+        analyticstrack="secqueblock-selList"
+      >
+        {this.props.questionBlock.map(que => {
+          return (
+            <option
+              key={que.Id}
+              value={que.Id}
+              analyticstrack={`secqueblock-option${que.Id}`}
+            >
+              {que.Question}
+            </option>
+          );
+        })}
       </select>
-    )
-  }
+    );
+  };
 
   closeModal = () => {
+    this.props.clearErrorCodes();
     this.setState({
       errorModal: false,
       modalStatus: false,
       selectedPhone: null,
       authorizationCode: ""
-    })
-  }
-
-  handleErrors = error => {
-    if(error == "1"){
-        return "Something went wronggggg"
-    }
-}
+    });
+  };
 
   render() {
-    const { controlButtons, errorMessages, userId, requiredError, istouched,
-      currentQuestion, newQuestion, newQId, newAnswer, isCurrentPinValid } = this.state;
-    const { questionInfo, showQuestionEdit, questionEditMode, questionSaved, questionBlock, metaBlock } = this.props;
-    const isValid = !errorMessages.find(user => user.error) && newAnswer.length > 0;
+    const {
+      controlButtons,
+      errorMessages,
+      userId,
+      requiredError,
+      istouched,
+      currentQuestion,
+      newQuestion,
+      newQId,
+      newAnswer,
+      isCurrentPinValid
+    } = this.state;
+    const {
+      questionInfo,
+      showQuestionEdit,
+      questionEditMode,
+      questionSaved,
+      questionBlock,
+      metaBlock
+    } = this.props;
+    const isValid =
+      !errorMessages.find(user => user.error) && newAnswer.length > 0;
     const isCPValid = isCurrentPinValid;
     let errorDisplay;
     let errorMsg;
@@ -187,129 +273,202 @@ class SecurityQuestionBlock extends Component {
       if (questionBlock && questionBlock.status) {
         errorDisplay = "dontDisplay";
         errorMsg = "";
-      }
-      else {
+      } else {
         errorDisplay = "errorDisplay";
         errorMsg = "Error response";
       }
     }
-    const editableClassName = questionEditMode ? "description_box--edit-view" : "description_box_disabled";
+    const editableClassName = questionEditMode
+      ? "description_box--edit-view"
+      : "description_box_disabled";
     return (
-      <div ref={node => this.node = node} onClick={this.handleMouseClick} className={`row description_box ${editableClassName}`}>
-
+      <div className={`row description_box ${editableClassName}`}>
         <div className="col-xs-12 col-sm-4 description_box__header">
-          <h4 tabIndex="0">{questionInfo.title}</h4>
+          <h4>{questionInfo.title}</h4>
           <p>{questionInfo.desc}</p>
         </div>
         <div className="col-xs-12 col-sm-8 description_box__large-container">
           <div className="row">
             <div className="col-xs-12 col-sm-10 description_box__details">
-              {
-                (!questionEditMode || showQuestionEdit) && 
+              {(!questionEditMode || showQuestionEdit) && (
                 <div className="description_box__read">
                   <p>{metaBlock.question}</p>
                 </div>
-              }
-              {
-                !showQuestionEdit && questionEditMode && questionBlock &&
-                <div className="description_box__form">
-                  <div className="row">
-                    <div className="col-xs-12 col-sm-12">
-                      <div className="form-group">
-                        <label htmlFor="questionInfo">Current Question</label>
-                        <p id="questionInfo">
-                          {metaBlock.question}
-                        </p>
+              )}
+              {!showQuestionEdit &&
+                questionEditMode &&
+                questionBlock && (
+                  <div className="description_box__form">
+                    <div className="row">
+                      <div className="col-xs-12 col-sm-12">
+                        <div className="form-group">
+                          <label htmlFor="questionInfo">Current Question</label>
+                          <p id="questionInfo">{metaBlock.question}</p>
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="newQuestion">New Question </label>
+                          {this.getQuestions(metaBlock.qId)}
+                        </div>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="newQuestion">New Question </label>
-                        {this.getQuestions(metaBlock.qId)}
+                      <div className="col-xs-12 col-sm-6">
+                        <div className="form-group">
+                          <label htmlFor="newAnswer">Answer</label>
+                          <InputField
+                            type="text"
+                            handleOnChange={this.handleOnChange}
+                            placeholder=""
+                            name="newAnswer"
+                            valid={isValid}
+                            touched={istouched}
+                            value={newAnswer}
+                            anlyticstrack="secqueblock-anstxt"
+                          />
+                          {/* <p className={errorDisplay}>{errorMsg}</p> */}
+                          {this.props.quesError ? (
+                            <p className="errorDisplay">
+                              <span className="fa fa-exclamation-circle" />
+                              {getErrorMsgByCode(this.props.quesError)}
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <div className="form-group">
-                        <label htmlFor="newAnswer">Answer</label>
-                        <InputField type="text"
-                          handleOnChange={this.handleOnChange}
-                          placeholder=""
-                          name="newAnswer"
-                          valid={isValid}
-                          touched={istouched}
-                          value={newAnswer} 
-                          anlyticstrack="secqueblock-anstxt"/>
-                        <p className={errorDisplay}>{errorMsg}</p>
-                      </div>
-                    </div>
-                    <div className="col-xs-12 col-sm-6">
-                      <h3>Answer Requirements</h3>
-                      <ul className="fieldErrors">
-                        {
-                          errorMessages.map((message) => {
+                      <div className="col-xs-12 col-sm-6">
+                        <h3>Answer Requirements</h3>
+                        <ul className="fieldErrors">
+                          {errorMessages.map(message => {
                             return (
                               <li key={message.name}>
                                 {!requiredError &&
-                                  (message.error ? <span className="text-warning"><i className="fa fa-times-circle"></i> </span> :
-                                    <span><i className="fa fa-check-circle"></i> </span>)}
-                                {requiredError && <span><i className="fa fa-check-circle"></i> </span>}
+                                  (message.error ? (
+                                    <span className="text-warning">
+                                      <i className="fa fa-times-circle" />
+                                    </span>
+                                  ) : (
+                                    <span>
+                                      <i className="fa fa-check-circle" />
+                                    </span>
+                                  ))}
+                                {requiredError && (
+                                  <span>
+                                    <i className="fa fa-check-circle" />
+                                  </span>
+                                )}
                                 {message.name}
                               </li>
-                            )
-                          })
-                        }
-                      </ul>
+                            );
+                          })}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
+                )}
             </div>
-            {
-              !showQuestionEdit && questionEditMode &&
-              <div className="description_box__edit description_box__edit_section cancel ">
-                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="secqueblock-cancel">Cancel</a>
-              </div>
-            }
-            {
-              showQuestionEdit &&
+            {!showQuestionEdit &&
+              questionEditMode && (
+                <div className="description_box__edit description_box__edit_section cancel ">
+                  <a
+                    className="btn btn-anchor"
+                    onClick={() => this.props.handleEditCancel("cancelblock")}
+                    role="button"
+                    analyticstrack="secqueblock-cancel"
+                    href="#/security"
+                  >
+                    Cancel
+                  </a>
+                </div>
+              )}
+            {showQuestionEdit && (
               <div className="description_box__edit description_box__edit_section">
-                <a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('questionblock')} role="button" analyticstrack="secqueblock-edit">Edit</a>
+                <a
+                  className="btn btn-anchor"
+                  onClick={() => this.props.handleEditCancel("questionblock")}
+                  role="button"
+                  href="#/security/question"
+                  analyticstrack="secqueblock-edit"
+                  tabIndex="0"
+                >
+                  Edit
+                </a>
               </div>
-            }
-            {this.state.showSaved ? <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span> : ""}
-            {
-              !showQuestionEdit && questionEditMode &&
-              <div className="footer col-xs-12">
-                <a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="secqueblock-cancel">Cancel</a>
-                <button className="btn btn--round" disabled={!isValid || reactGlobals.isCsr} onClick={this.saveChangesClickedHandler} analyticstrack="secqueblock-save">Save Changes</button>
-              </div>
-            }
+            )}
+            {this.state.showSaved ? (
+              <span className="col-xs-12 section-saved text-success fa fa-check-circle">
+                Saved
+              </span>
+            ) : (
+              ""
+            )}
+            {/* {this.props.error ? <span style={{color: "red"}} className="text-success fa fa-exclamation-circle col-xs-12 section-saved"> Error </span> : ""} */}
+            {!showQuestionEdit &&
+              questionEditMode && (
+                <div className="footer col-xs-12">
+                  <a
+                    className="btn btn--round-invert"
+                    role="button"
+                    onClick={() => this.props.handleEditCancel("cancelblock")}
+                    analyticstrack="secqueblock-cancel"
+                    href="#/security"
+                  >
+                    Cancel
+                  </a>
+                  <button
+                    className="btn btn--round"
+                    disabled={!isValid || reactGlobals.isCsr}
+                    onClick={this.saveChangesClickedHandler}
+                    analyticstrack="secqueblock-save"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              )}
             <Modal
               modalStatus={this.state.errorModal}
               closeModal={this.closeModal}
             >
-              <div>{this.handleErrors(this.state.afterGetRequest)}</div>
+              <div>
+                <p>{getErrorMsgByCode(this.props.error)}</p>
+                <button
+                  className="btn btn--round-invert"
+                  onClick={this.closeModal}
+                >
+                  Close
+                </button>
+              </div>
             </Modal>
             <Modal
               modalStatus={this.state.modalStatus}
               closeModal={this.closeModal}
             >
               <SecurePin
-                newQId={this.state.newQId}
-                newAnswer={this.state.newAnswer}
+                handleSaveType="questionForm"
+                handleSaveData={{
+                  newQId: this.state.newQId,
+                  newAnswer: this.state.newAnswer
+                }}
+                closeModal={this.closeModal}
                 handleSave={this.props.handleSave}
               />
-           </Modal>
+            </Modal>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 const mapStateToProps = state => {
   // console.log("STATEEEE",state)
   return {
     securePin: state.security.secretPin,
-    isSecurePinValidated: state.security.isSecurePinValidated    
-  }
-}
+    isSecurePinValidated: state.security.isSecurePinValidated,
+    quesError: state.security.setQuestionError,
+    questionStatus: state.security.questionStatus,
+    error: state.security.securePinError
+  };
+};
 
-export default connect(mapStateToProps, {getSecretPinStatus, getListOfUserNumbers})(SecurityQuestionBlock);
+export default connect(
+  mapStateToProps,
+  { getSecretPinStatus, getListOfUserNumbers, clearErrorCodes }
+)(SecurityQuestionBlock);

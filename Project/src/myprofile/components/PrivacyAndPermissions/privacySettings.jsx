@@ -55,7 +55,7 @@ class PrivacySettings extends Component {
 
     saveNewPrivacySettings = () => {
         this.props.postPrivacyPermissions(this.props.privacyDetails.privacySettings)
-        console.log(this.props.privacyDetails.privacySettings.privacySettingItems)
+        // console.log(this.props.privacyDetails.privacySettings.privacySettingItems)
         // axios.post("http://www.mocky.io/v2/5b6852e2330000661832dbe9", this.props.privacyDetails.privacySettings, {
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ class PrivacySettings extends Component {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         // console.log("privacySettings",this.state)
         const { showPrivacyEdit, privacySettingsEditMode, userEditMode, privacySaved } = this.props;
         const privacydata = this.props.privacyDetails.privacySettingsInfo;
@@ -105,7 +105,7 @@ class PrivacySettings extends Component {
 
                                             {this.props.count === 0 ? (
                                                 <p>None of your lines are currently sharing information.</p>
-                                            ) : <p>Some information is being shared across multiple lines.</p>
+                                            ) : <p>Some of your lines are currently sharing information.</p>
                                             }
 
                                         </div>
@@ -114,7 +114,7 @@ class PrivacySettings extends Component {
                                         !showPrivacyEdit && userEditMode &&
                                         <div>
                                             <p>Your privacy is an important priority at Verizon Wireless. Our Privacy Policy informs
-                                            you about information we collect and how we use it. Read our Privacy Policy.</p>
+                                            you about information we collect and how we use it. <a className="dlink" href="https://www.verizon.com/about/privacy/privacy-policy-summary">Read our Privacy Policy</a></p>
 
                                             <h3 className="details__title">Customer Proprietary Network Information Settings</h3>
 
@@ -224,7 +224,7 @@ class PrivacySettings extends Component {
                                 }
 
                                 {
-                                    this.props.privacySaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
+                                    this.props.privacySaved && this.props.privacyDetails.privacySettings && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
                                 }
 
 
@@ -254,7 +254,7 @@ class PrivacySettings extends Component {
                                     <div className="description_box__read">
                                         {this.props.count === 0 ? (
                                             <p>None of your lines are currently sharing information.</p>
-                                        ) : <p>Some information is being shared across multiple lines.</p>
+                                        ) : <p>Some of your lines are currently sharing information..</p>
                                         }
 
                                     </div>

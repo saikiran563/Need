@@ -1,35 +1,52 @@
-import React, { Component } from 'react'
-import InputField from '../FormElements/InputComponent'
-import './style.css'
+import React, { Component } from "react";
+import InputField from "../FormElements/InputComponent";
+import "./style.css";
 
-import ServiceLine from './serviceLine';
+import { connect } from "react-redux";
+
+import ServiceLine from "./serviceLine";
+
+import Modal from "../Modal/modal";
+import SecurePin from "../SecurePin/SecurePin";
+
+import {
+  getSecretPinStatus,
+  getListOfUserNumbers,
+  sendSecurePinToPhone,
+  confirmSecurePinCode
+} from "../Security/actions/fetchSecurities";
 
 class ServiceAddressBlock extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       requiredError: true,
-      isValid: '',
+      isValid: "",
       istouched: false,
-     serviceAddressInvalidMessages: [
-        { name: '6-60 characters', error: false, type: 'character' }
-      ],
-    }
+      serviceAddressInvalidMessages: [
+        { name: "6-60 characters", error: false, type: "character" }
+      ]
+    };
   }
 
-   handleServiceLineEditMode = () => {
-     console.log('Inside handle edit mode');
-   } 
-   handleOnEditCancel = (type) => {
-      //this.setState({
-       // address: this.props.userServiceAddressInfo.address
-      //});
-      this.props.handleEditCancel(type);
-    }
+  handleServiceLineEditMode = () => {
+    console.log("Inside handle edit mode");
+  };
+  handleOnEditCancel = type => {
+    //this.setState({
+    // address: this.props.userServiceAddressInfo.address
+    //});
+    this.props.handleEditCancel(type);
+  };
 
-    getUSAStates = (selectedVal) => {
-      return (
-        <select className="state-select" name="USA State" onChange={this.onUSstateChange} defaultValue={selectedVal}>
+  getUSAStates = selectedVal => {
+    return (
+      <select
+        className="state-select"
+        name="USA State"
+        onChange={this.onUSstateChange}
+        defaultValue={selectedVal}
+      >
         <option value="AA">AA</option>
         <option value="AE">AE</option>
         <option value="AL">AL</option>
@@ -92,83 +109,127 @@ class ServiceAddressBlock extends Component {
         <option value="WV">WV</option>
         <option value="WI">WI</option>
         <option value="WY">WY</option>
-        </select>)
-    }
+      </select>
+    );
+  };
 
   render() {
     const { serviceAddressInvalidMessages, requiredError } = this.state;
-     const { userServiceAddressInfo, showServiceAddress, serviceAddressEditMode } = this.props;
-     const isValid = !serviceAddressInvalidMessages.find(address => address.error)
-     const editableClassName = serviceAddressEditMode ? "" : "description_box_disabled";
-
-     const renderServiceLines = (serviceLine) => {
-       console.log("renderServiceLines")
-        return(
-             <div className="description_box__read description_box__read_service_line" key={serviceLine}>
-                      
-                <ServiceLine serviceLine={serviceLine} serviceAddress={null} handleSave={this.props.handleSave} addressListOnAccount={this.props.addressListOnAccount} handleEditMode={this.handleServiceLineEditMode} editMode="true" />
-
-             </div>
-        )
-     };
-     const serviceAddressWithEdit = (addr) => {
-       console.log("serviceAddressWithEdit")
-       return (
-              <div className="description_box__read description_box__read_service_line">
-                      
-                <ServiceLine serviceLine={null} serviceAddress={addr} addressListOnAccount={this.props.addressListOnAccount} />
-
-             </div>   
-       );
-     }
-     const renderEachAddressBlock = (addr) => {
-       console.log("renderEachAddressBlock")
-       return (
-                 <div className="description_box__read service-address-sub-block" key={addr}>
-                      <div className="description_box__details">
-                           {
-                             addr.billingAddress ? <p><strong>Same as billing address</strong></p> : serviceAddressWithEdit(addr)
-                           }
-                     </div>
-                     <div className="service-lines">
-
-                           {addr.serviceLines.line.map(renderServiceLines)}
-
-                    </div>
-
-                  </div>
-       );
-
-
-     }
+    const {
+      userServiceAddressInfo,
+      showServiceAddress,
+      serviceAddressEditMode,
+      serviceAddressStatus
+    } = this.props;
+    const isValid = !serviceAddressInvalidMessages.find(
+      address => address.error
+    );
+    const editableClassName = serviceAddressEditMode
+      ? ""
+      : "description_box_disabled";
+const savedSectionStyle = {
+      "display": "inline",
+      "marginTop": "10px",
+      "paddingTop": "10px"
+    };
+    const renderServiceLines = serviceLine => {
+      return (
+        <div
+          className="description_box__read description_box__read_service_line"
+          key={serviceLine}
+        >
+          <ServiceLine
+            serviceLine={serviceLine}
+            serviceAddress={null}
+            handleSave={this.props.handleSave}
+            addressListOnAccount={this.props.addressListOnAccount}
+            handleEditMode={this.handleServiceLineEditMode}
+            serviceAddressEditMode={this.props.serviceAddressEditMode}
+            editMode="true"
+          />
+        </div>
+      );
+    };
+    const serviceAddressWithEdit = addr => {
+      return (
+        <div className="description_box__read description_box__read_service_line">
+          <ServiceLine
+            serviceLine={null}
+            serviceAddressEditMode={this.props.serviceAddressEditMode}
+            serviceAddress={addr}
+            handleSave={this.props.handleSave}
+            addressListOnAccount={this.props.addressListOnAccount}
+          />
+        </div>
+      );
+    };
+    const renderEachAddressBlock = addr => {
+      return (
+        <div
+          className="description_box__read service-address-sub-block"
+          key={addr}
+        >
+          <div className="description_box__details">
+            {addr.billingAddress ? (
+              <p>
+                <strong>Same as billing address</strong>
+              </p>
+            ) : (
+              serviceAddressWithEdit(addr)
+            )}
+          </div>
+          <div className="service-lines">
+            {addr.serviceLines.line.map(renderServiceLines)}
+          </div>
+        </div>
+      );
+    };
 
     return (
-     <div className={`row description_box ${editableClassName}`}>
-        <div className="clearfix"></div>
+      <div className={`row description_box ${editableClassName}`}>
+        <div className="clearfix" />
         <div className="body">
-        <div className="col-xs-12 col-sm-4 description_box__header">
-                        <h4 tabIndex="0">Service Addresses</h4>
-                        <p>Tell us where you use the service so we can calculate the right taxes and surcharges</p>
-                    </div>
-                    <div className="col-xs-12 col-sm-8 description_box__large-container">
-                        <div className="service-address-list">
-
-                <div className="description_box__details">
-                  {/* {
+          <div className="col-xs-12 col-sm-4 description_box__header">
+            <h4 tabIndex="0">Service Addresses</h4>
+            <p>
+              Tell us where you use the service so we can calculate the right
+              taxes and surcharges
+            </p>
+          </div>
+          {
+                serviceAddressStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                &nbsp;Saved
+                 </span>
+               } 
+          <div className="col-xs-12 col-sm-8 description_box__large-container">
+            <div className="service-address-list">
+              <div className="description_box__details">
+                {/* {
                       !(!showServiceAddress && serviceAddressEditMode) &&  userServiceAddressInfo.serviceAddresses.sort((x, y) => (x.billingAddress === y.billingAddress)? 0 : x? 1 : -1).map(renderEachAddressBlock)
                    } */}
-                   {showServiceAddress && serviceAddressEditMode ? userServiceAddressInfo.serviceAddresses.map(renderEachAddressBlock) : ""}
-               
+                {!(!showServiceAddress && serviceAddressEditMode)
+                  ? userServiceAddressInfo.serviceAddresses
+                      .sort((a, b) => b.billingAddress - a.billingAddress)
+                      .map(renderEachAddressBlock)
+                  : null}
               </div>
-             
             </div>
           </div>
-    
         </div>
-                    
       </div>
-);
+    );
   }
 }
 
-export default ServiceAddressBlock;
+const mapStateToProps = state => {
+  console.log("STATEEEE", state);
+  return {
+    securePin: state.security.secretPin,
+    isSecurePinValidated: state.security.isSecurePinValidated
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSecretPinStatus, getListOfUserNumbers }
+)(ServiceAddressBlock);

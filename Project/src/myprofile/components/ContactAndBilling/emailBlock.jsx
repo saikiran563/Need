@@ -11,7 +11,10 @@ class EmailAddress extends Component {
       isValid: true,
       istouched: false,
       emailidInvalidMessages: [
-        { name: 'Invalid email address format', error: false, type: 'character' }
+        { name: 'Invalid email address format', error: false, type: 'character' },
+        { name: 'We are currently unable to update your email address. Please check the format and re-enter.'},
+        { name: 'Vtext.com is a text messaging address and not a valid email address. Please enter an email address.'},
+        { name: 'We are currently unable to update your primary email address.'}
       ],
     }
   }
@@ -38,7 +41,7 @@ class EmailAddress extends Component {
     this.setState({istouched: true});
     const val = this.state.userEmail;
     const emailidInvalidMessages = JSON.parse(JSON.stringify(this.state.emailidInvalidMessages));
-    if (/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w{2,}([-.]\w+)*$/.test(val)){
+    if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(val)){
       this.setState({ requiredError: false, isValid: true });
  
     } else {
@@ -53,7 +56,7 @@ class EmailAddress extends Component {
 
   render() {
     const {  emailidInvalidMessages, requiredError, userEmail } = this.state;
-    const { userEmailInfo, showEmailEdit, userEditMode, emailStatus } = this.props;
+    const { userEmailInfo, showEmailEdit, userEditMode, emailStatus, emailOkContinue } = this.props;
     const isValid = this.state.isValid;
     const editableClassName = userEditMode ? "" : "description_box_disabled";
     const savedSectionStyle = {
@@ -86,6 +89,7 @@ class EmailAddress extends Component {
                           <label htmlFor="email">Change Email Address</label>
                           <InputField type="text" handleOnChange={this.handleOnChange} placeholder="name@domain.com" name="emailid" valid={isValid} touched={this.state.istouched} value={userEmail} analyticstrack="emailId-inputfield" />
                           {!isValid && <span className="help-block">{emailidInvalidMessages[0].name}</span>}
+                          { (emailStatus !== '0' &&  emailStatus !== null) ? <span className="help-block">{getErrorMsgByCode(emailStatus)}</span>  : null}
                         </div>
                       </div>
                     </div>
@@ -94,7 +98,7 @@ class EmailAddress extends Component {
                 
               </div>
               {
-                 emailStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                emailOkContinue && emailStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
                 &nbsp;Saved
                  </span>
                } 
@@ -105,7 +109,7 @@ class EmailAddress extends Component {
               }
               {
                 !showEmailEdit && userEditMode &&
-                  <div className="description_box__edit description_box__edit_section">
+                  <div className="description_box__edit description_box__edit_section cancel">
                   <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="emailId-cancel">Cancel</a>
                 </div>
               }

@@ -28,12 +28,13 @@ const EmailVerificationNeeded = props => {
           <i className="fa fa-times-circle" />
         </span> You must have have a verified email address to use this feature. {refreshParagraphText}
       </p>
+      <div className="userbio">
       <div className="row">
-        <div className="col-xs-6 radio_table__header">Email</div>
-        <div className="col-xs-3">
+      <div className="col-xs-6 radio_table__header ">Email</div>
+        <div className="col-xs-3 email">
           <p>{props.emailAddress}</p>
         </div>
-        <div className="col-xs-3">
+        <div className="col-xs-3 edit">
           <p>
             <a
               href="#/contactbilling/email"
@@ -45,11 +46,20 @@ const EmailVerificationNeeded = props => {
           </p>
         </div>
         <div className="footer col-xs-12">
-          {resendVerificationButton}
+          {/* {resendVerificationButton}
           <button className="btn btn--round" onClick={props.verifyModal}>
             {buttonText}
-          </button>
+          </button> */}
+          <a
+            className="btn btn--round"
+            role="button"
+            style={{ textDecoration: 'none', backgroundColor:'black', color:'white', marginTop:-10 }} role="button"
+            onClick={() => props.handleEditCancel("cancelblock")}
+          >
+            Cancel
+          </a>
         </div>
+      </div>
       </div>
     </div>
   );

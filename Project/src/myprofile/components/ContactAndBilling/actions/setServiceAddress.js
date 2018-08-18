@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getURL } from '../../../../utils/config';
+import mockProfileAPI from '../api';
+import { FETCH_CONTACT_AND_BILLING_SUCCESS } from './fetchContactDetails';
 
 export const SET_SERVICE_ADDRESS = 'contacts/SET_SERVICE_ADDRESS'
 export const SET_SERVICE_ADDRESS_SUCCESS = 'contacts/SET_SERVICE_ADDRESS_SUCCESS'
@@ -38,7 +40,7 @@ export const showVerifyAddressModal = () => ({
 });
 
 export const setServiceAddressSuccess = (response) => ({
-  type: SET_SERVICE_ADDRESS_SUCCESS,
+  type: SET_SERVICE_ADDRES,
   status: response,
 })
 export const setServiceAddressError = (response) => ({
@@ -46,9 +48,9 @@ export const setServiceAddressError = (response) => ({
   status: response,
 })
 
-export const setServiceAddressOnSuccess = (response) => ({
-  type: SET_SERVICE_ADDRESS,
-  response,
+export const setServiceAddressOnSuccess = (status) => ({
+  type: SET_SERVICE_ADDRESS_SUCCESS,
+  status,
 })
 
 export const updateServiceAddress = (address) => dispatch => {
@@ -64,14 +66,15 @@ export const updateServiceAddress = (address) => dispatch => {
    
       
       if(response.data.statusCode == "0"){
-        dispatch(setServiceAddressOnSuccess(address))
-        dispatch(setServiceAddressSuccess(response.data.statusCode))   
+        dispatch(setServiceAddressOnSuccess(address.data.statusCode))
+        dispatch(refreshContactAndBilling())  
       }else{
       dispatch(setServiceAddressError(err))
-       }
+       } 
 
-      //  dispatch(setServiceAddressOnSuccess(address))
-      // dispatch(setServiceAddressSuccess(response.status)) 
+      // dispatch(setServiceAddressOnSuccess('0'))
+      // // To refresh service address block
+      // dispatch(refreshContactAndBilling())
         
     })
      .catch((err) => {
@@ -79,6 +82,17 @@ export const updateServiceAddress = (address) => dispatch => {
       })
  
 }
+
+export const refreshContactAndBilling = () => dispatch => {
+  mockProfileAPI.getContactAndBillingInfo(response => {
+		dispatch(fetchContactAndBillingSuccess(response.data))
+	});
+}
+
+export const fetchContactAndBillingSuccess = contacts => ({
+  type: FETCH_CONTACT_AND_BILLING_SUCCESS,
+  contacts,
+})
 
 export const resetServiceAddressStatus = (response) => dispatch => {
   dispatch({

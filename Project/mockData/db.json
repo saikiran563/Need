@@ -1,134 +1,128 @@
 {
   "contact": {
-    "emailID": "email@jhsxn.com",
-    "primaryPhone": "3148823211",
-    "alternatePhone": "3148823212",
-    "addressLine1": "RR 297 297 RURAL ROUTE 1 RT",
-    "addressLine2": "",
-    "city": "Somerset",
-    "state": "NJ",
-    "zip": "68474",
+    "emailID": "TEST9@GMAIL.COM",
+    "primaryPhone": "9376353674",
+    "alternatePhone": "3645433256",
+    "billingAddress": {
+      "addressLine1": "2658 WILDBERRY CT",
+      "addressLine2": "",
+      "city": "EDISON",
+      "state": "NJ",
+      "zip": "08817"
+    },
     "userServiceAddressInfo": {
       "serviceAddresses": [
         {
+          "billingAddress": false,
+          "address": {
+            "addressLine1": "CARLTON AVE",
+            "addressLine2": "",
+            "city": "PISCATAWAY",
+            "state": "NJ",
+            "zip": "08854"
+          },
+          "serviceLines": {
+            "line": [
+              "5052316366",
+              "7890678589"
+            ]
+          }
+        },
+        {
+          "billingAddress": false,
+          "address": {
+            "addressLine1": "CARLTON AVE",
+            "addressLine2": "",
+            "city": "PISCATAWAY",
+            "state": "NJ",
+            "zip": "08854"
+          },
+          "serviceLines": {
+            "line": [
+              "5052316366",
+              "7890678589"
+            ]
+          }
+        },
+        {
+          "billingAddress": false,
+          "address": {
+            "addressLine1": "CARLTON AVE",
+            "addressLine2": "",
+            "city": "PISCATAWAY",
+            "state": "NJ",
+            "zip": "08854"
+          },
+          "serviceLines": {
+            "line": [
+              "5052316366",
+              "7890678589"
+            ]
+          }
+        },
+        {
           "billingAddress": true,
           "address": {
-            "address": "Same as billing address"
+            "address": ""
           },
-          "serviceLines": [
-            {
-              "line": "0000-000"
-            },
-            {
-              "line": "0000-001"
-            }
-          ]
-        },
-        {
-          "billingAddress": false,
-          "address": {
-            "address": "0000 Street Name DR",
-            "apartment": "House No 42",
-            "city": "New York",
-            "state": "NY",
-            "zip": "00000-0000"
-          },
-          "serviceLines": [
-            {
-              "line": "0000-000"
-            },
-            {
-              "line": "000-001"
-            }
-          ]
-        },
-        {
-          "billingAddress": false,
-          "address": {
-            "address": "0000 Street Name R",
-            "apartment": "House No 42",
-            "city": "New York",
-            "state": "NY",
-            "zip": "00000-0000"
-          },
-          "serviceLines": [
-            {
-              "line": "0000-002"
-            },
-            {
-              "line": "000-004"
-            }
-          ]
+          "serviceLines": {
+            "line": [
+              "4109808522"
+            ]
+          }
         }
       ]
-    }
-  },
-  "email": {
-    "emailID": "email@jhsjkxn.com"
-  },
-  "primaryphone": {
-    "primaryPhone": "3148823216",
-    "alternatePhone": "3148823212"
+    },
+    "addressListOnAccount": [
+      {
+        "addressLine1": "2658 WILDBERRY CT",
+        "addressLine2": "",
+        "city": "EDISON",
+        "state": "NJ",
+        "zip": "08817"
+      },
+      {
+        "addressLine1": "2658 WILDBERRY CT",
+        "addressLine2": "",
+        "city": "EDISON",
+        "state": "NJ",
+        "zip": "08817"
+      },
+      {
+        "addressLine1": "CARLTON AVE",
+        "addressLine2": "",
+        "city": "PISCATAWAY",
+        "state": "NJ",
+        "zip": "08854"
+      }
+    ],
+    "errorCode": "00",
+    "correlation_id": "52105127-0c02-4b83-97d7-2dda0e1f7605"
   },
   "billingaddress": {
-    "addressLine1": "RR 297 297 RURAL ROUTE 1 RT",
-    "addressLine2": "bchgjh",
-    "city": "Somerset",
-    "zip": "68474",
+    "addressLine1": "123 WILDBERRY CT",
+    "addressLine2": "",
+    "city": "EDISON",
+    "zip": "08817",
     "state": "NJ"
   },
-  "userServiceAddressInfo": {
-    "serviceAddresses": [
-      {
-        "billingAddress": true,
-        "address": {
-          "address": "Same as billing address"
-        },
-        "serviceLines": [
-          {
-            "line": "0000-000"
-          },
-          {
-            "line": "0000-001"
-          }
-        ]
-      },
-      {
-        "billingAddress": false,
-        "address": {
-          "address": "0000 Street Name DR",
-          "apartment": "House No 42",
-          "city": "New York",
-          "state": "NY",
-          "zip": "00000-0000"
-        },
-        "serviceLines": [
-          {
-            "line": "0000-000"
-          },
-          {
-            "line": "000-001"
-          }
-        ]
-      },
-      {
-        "billingAddress": false,
-        "address": {
-          "address": "0000 Street Name R",
-          "apartment": "House No 42",
-          "city": "New York",
-          "state": "NY",
-          "zip": "00000-0000"
-        },
-        "serviceLines": [
-          {
-            "line": "0000-002"
-          },
-          {
-            "line": "000-004"
-          }
-        ]
-      }
+  "email": {
+    "emailID": "TESgT9@GMAIL.COM"
+  },
+  "primaryphone": {
+    "primaryPhone": "9376353678",
+    "alternatePhone": "3645433256"
+  },
+  "serviceaddress": {
+    "address": {
+      "addressLine1": "2658 WILDBERRY CT",
+      "addressLine2": "",
+      "city": "EDISON",
+      "state": "NJ",
+      "zip": "08817"
+    },
+    "mdns": [
+      "4109808522"
     ]
   }
 }

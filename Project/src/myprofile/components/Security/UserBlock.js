@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import InputField from '../FormElements/InputComponent'
 import './style.css'
+import { connect } from "react-redux";
 
 import {Link,NavLink} from 'react-router-dom';
+
+import { getErrorMsgByCode } from "../../../utils/config"
+import { clearErrorCodes } from "./actions/fetchSecurities"
+
 
 class UserBlock extends Component {
   constructor(props) {
@@ -14,6 +19,7 @@ class UserBlock extends Component {
       isValid: '',
       istouched: false,
       hasError:false,
+      userSaved: false,
       useridInvalidMessages: [
         { name: '6-60 characters, all letters or a combination of letters and numbers', error: false, type: 'character' },
         { name: 'Not all numbers', error: false, type: 'number' },
@@ -27,6 +33,26 @@ class UserBlock extends Component {
   handleOnChange = (e) => {
     if( e.target.value.length > 60) return;
     this.setState({ userId: e.target.value }, () => this.onChangeInput());
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.userSaved !== this.props.userSaved){
+      this.setState({
+        userSaved: true
+      })
+    }
+    if(this.state.userSaved){
+      if(prevProps.event != this.props.event){
+        this.setState({
+          userSaved: false
+        })
+      }
+    }
+    if(this.props.error){
+      if(prevProps.event != this.props.event){
+        this.props.clearErrorCodes()
+      }
+    }
   }
 
   onChangeInput = () => {
@@ -76,22 +102,14 @@ class UserBlock extends Component {
     }
   }
 
- /*shouldComponentUpdate(nextProps, nextState) {
-  console.log(nextProps,"-",nextState);
-  return (nextProps.userSaved != this.state.showSaved)
-  
-}*/
-componentWillReceiveProps(nextProps) {
-   if(nextProps.userSaved != this.state.showSaved )
-      this.setState({showSaved: nextProps.userSaved})
 
-}
 
 componentDidCatch(error,info) {
    console.log("CDC-UB",error,"-",info)
    this.setState({hasError:true});
 }
 render() {
+  // console.log("user block", this.props)
    const {  useridInvalidMessages, requiredError, userId ,showSaved,hasError } = this.state;
    const { userInfo, showUserEdit, userEditMode ,userSaved, userBlock, metaBlock} = this.props;
    const isValid = !useridInvalidMessages.find(user => user.error)
@@ -102,7 +120,7 @@ render() {
   <div className={`row description_box ${editableClassName}`}>
 	
 	<div className="col-xs-12 col-sm-4 description_box__header">
-		<h4 tabIndex="0">{userInfo.title}</h4>
+		<h4>{userInfo.title}</h4>
 		<p>{userInfo.desc}</p>
      </div>
       
@@ -123,12 +141,11 @@ render() {
 							<div className="col-xs-12 col-sm-5">
 								<div className="form-group">
 									<label htmlFor="userId">User ID</label>
-									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User ID" name="userid" valid={isValid} touched={this.state.istouched} 
+									<InputField type="text" handleOnChange={this.handleOnChange} placeholder="User ID" name="userId" valid={isValid} touched={this.state.istouched} 
 											value={userId} analyticstrack="userblock-usertxt"/>
+                      {this.props.error ? <p className="errorDisplay"><span className="fa fa-exclamation-circle"></span> {getErrorMsgByCode(this.props.error)}</p> : ""}
 									<p className="help-block">If available, you may use Email Address as your User ID.</p>
-                   { hasServerError && 
-                  <p className="errorDisplay">{userBlock.errorCode}</p>
-                  }
+
 								</div>
 							</div>
 							 
@@ -160,31 +177,36 @@ render() {
             {
             showUserEdit && 
 				<div className="description_box__edit description_box__edit_section" analyticstrack="userblock-edit">
-					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('useridblock')} role="button" >Edit</a>
+					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('useridblock')} role="button" tabIndex="0" href="#/security/userid">Edit</a>
 				</div>   
             }
             {
             !showUserEdit && userEditMode &&
           <div className="col-sm-2 description_box__edit description_box__edit_section cancel" analyticstrack="userblock-cancel">
-					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+					<a className="btn btn-anchor" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" href="#/security">Cancel</a>
 				</div>
         }
           {
-               showSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
+               this.state.userSaved && <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span>
             }
-			
+			{/* {this.props.error ? <span style={{color: "red"}} className="text-success fa fa-exclamation-circle col-xs-12 section-saved"> Error </span> : ""} */}
 			{
 			!showUserEdit && userEditMode && 
 				<div className="footer col-xs-12">
-					<a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="userblock-cancel">Cancel</a>
+					<a className="btn btn--round-invert" role="button" onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="userblock-cancel" href="#/security">Cancel</a>
 					<button className="btn btn--round"  disabled={!isValid || reactGlobals.isCsr} onClick={() => this.props.handleSave('userForm', userId, event)} analyticstrack="userblock-save">Save Changes</button>
 				</div>
 			}
 		</div>
-	</div>
+	</div>  
 </div>
     )
   }
 }
 
-export default UserBlock;
+const mapStateToProps = state => {
+  return {
+    error: state.security.userIdError
+  }
+}
+export default connect(mapStateToProps, { clearErrorCodes })(UserBlock);

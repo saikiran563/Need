@@ -1,6 +1,9 @@
 const FETCH_SET_ENHANCED_AUTH_SUCCESS = "SET ENHANCED";
 export const FETCH_ENHANCED_AUTH_EDIT_BEGIN = 'FETCH_ENHANCED_AUTH_EDIT_BEGIN';
 export const FETCH_ENHANCED_AUTH_EDIT_SUCCESS = 'FETCH_ENHANCED_AUTH_EDIT_SUCCESS';
+
+export const FETCH_SET_ENHANCED_AUTH_ERROR = 'FETCH_SET_ENHANCED_AUTH_ERROR';
+
 const VERIFY_EMAIL='VERIFY_EMAIL';
 
 import {
@@ -14,6 +17,7 @@ const initialState = {
   isFetching: false,
   enhancedAuth: {},
   verifyemail: false,
+  enhancedautherror: "",
 }
 
 const fetchEnhAuthEditBegin = (state, action) => {
@@ -30,6 +34,12 @@ const fetchSetEnhancedAuth = (state, action) => {
   })
 }
 
+const setEnahancedError = (state, action) => {
+  return {
+... state,
+enhancedautherror: action.payload
+  }
+}
 
 const fetchEnhancedAuthEdit = (state, action) => {
 
@@ -38,6 +48,8 @@ const fetchEnhancedAuthEdit = (state, action) => {
     isFetching: false
   })
 }
+
+
 const verifyemail = (state, action) => {
 
   return updateObject(state, {
@@ -58,7 +70,11 @@ const enhancedAuthReducer = (state = initialState, action) => {
     case FETCH_ENHANCED_AUTH_EDIT_SUCCESS:
       return fetchEnhancedAuthEdit(state, action)
     case FETCH_SET_ENHANCED_AUTH_SUCCESS:
+    console.log("success", action)
       return fetchSetEnhancedAuth(state, action)
+      case FETCH_SET_ENHANCED_AUTH_ERROR:
+      console.log("error", action)
+      return setEnahancedError(state,action)
       case VERIFY_EMAIL:
       return verifyemail(state, action)
     default:

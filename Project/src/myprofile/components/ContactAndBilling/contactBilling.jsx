@@ -30,10 +30,13 @@ class ContactAndBilling extends Component {
       showServiceAddress: true,
       serviceAddressEditMode: true,
       serviceAddressSaved: false,
-      showVerifyModal: false
+      showVerifyModal: false,
+      emailOkContinue: false
     };
   }
   componentDidMount() {
+
+    if(!this.props.contactDetails)
     this.props.actions.fetchContactAndBilling();
 
     const URL_MAP = this.props.match.url.split("/");
@@ -49,7 +52,8 @@ class ContactAndBilling extends Component {
 
   handleVerifyModalSave = () => {
     this.setState({
-      showVerifyModal: false
+      showVerifyModal: false,
+      emailOkContinue: true
     });
   };
 
@@ -57,6 +61,7 @@ class ContactAndBilling extends Component {
     this.props.actions.resetEmailStatus(null);
     this.props.actions.resetPrimaryPhoneStatus(null);
     this.props.actions.resetBillingAddressStatus(null);
+    //this.props.actions.resetServiceAddressStatus(null);
   }
 
   handleEditCancel = type => {
@@ -182,6 +187,10 @@ class ContactAndBilling extends Component {
         this.props.actions.updateServiceAddress(formData);
         break;
     }
+    //To remove saved after 20 sec
+    setTimeout(() => {
+     this.resetStatus()
+    }, 20000);
   };
 
   render() {
@@ -190,7 +199,8 @@ class ContactAndBilling extends Component {
       showSpinner,
       emailStatus,
       primaryPhoneStatus,
-      billingAddressStatus
+      billingAddressStatus,
+      serviceAddressStatus
     } = this.props;
 
     let acctHolder =
@@ -201,7 +211,7 @@ class ContactAndBilling extends Component {
 
     return (
       <div className="aMyProfile__CB">
-        {showSpinner ? <Spinner /> : null}
+        {!contactDetails ? <Spinner /> : null}
         <h1 className="title title--lg">Contact & Billing</h1>
         {contactDetails && (
           <div className="col-xs-12">
@@ -235,6 +245,7 @@ class ContactAndBilling extends Component {
                 addressListOnAccount={contactDetails.addressListOnAccount}
                 handleEditCancel={type => this.handleEditCancel(type)}
                 editAddressClicked={this.props.editAddressOrLineClicked}
+                serviceAddressStatus={serviceAddressStatus}
                 {...this.state}
               />
             )}
@@ -261,6 +272,7 @@ const mapStateToProps = state => {
     emailStatus: state.contactDetails.emailStatus,
     primaryPhoneStatus: state.contactDetails.primaryPhoneStatus,
     billingAddressStatus: state.contactDetails.billingAddressStatus,
+    serviceAddressStatus: state.contactDetails.serviceAddressStatus,
     editAddressOrLineClicked: state.contactDetails.editAddressOrLineClicked
   };
 };

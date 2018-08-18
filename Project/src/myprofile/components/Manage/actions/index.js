@@ -1,20 +1,26 @@
 export {
-    fetchLandingManageData,
-    fetchMtns,
-    fetchManagerRequests,
-    postAddManagerByAccountHolder,
-    postRemoveManagerByAccountHolder,
-    postApproveManagerByAccountHolder,
-    postDenyManagerByAccountHolder,
-    postSendRequestForAccountManager,
-    getAccountMemberDetailsToSendRequest  
-  } from './manage'
+  fetchLandingManageData,
+  fetchMtns,
+  fetchManagerRequests,
+  postAddManagerByAccountHolder,
+  postRemoveManagerByAccountHolder,
+  postApproveManagerByAccountHolder,
+  postDenyManagerByAccountHolder,
+  postSendRequestForAccountManager,
+  getAccountMemberDetailsToSendRequest
+} from "./manage";
 
-  export {
-    postGreetingName
-  } from './greeting'
+export {
+  getSecretPinStatus,
+  getListOfUserNumbers,
+  sendSecurePinToPhone,
+  confirmSecurePinCode,
+  clearErrorCodes
+} from "../../Security/actions/fetchSecurities";
 
-export const SHOWPOPUP ="SHOWPOPUP";
-export const CLOSEPOPUP ="CLOSEPOPUP";
-export { show_popup } from './popup';
-export { close_popup } from './popup';
+export { postGreetingName } from "./greeting";
+
+export const SHOWPOPUP = "SHOWPOPUP";
+export const CLOSEPOPUP = "CLOSEPOPUP";
+export { show_popup } from "./popup";
+export { close_popup } from "./popup";

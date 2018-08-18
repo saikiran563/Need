@@ -32,6 +32,8 @@ class PrivacyPermissions extends Component {
   }
 
   componentDidMount() {
+    // console.log("MOUNT");
+    if(!this.props.privacyDetails.privacySettings)
     this.props.actions.fetchPrivacyAndPermissions();
     // https://vzwqa2.verizonwireless.com/ui/acct/secure/data/secure/profile/privacyPermissions
      // http://www.mocky.io/v2/5b6c58102f00003700893d08
@@ -51,7 +53,7 @@ class PrivacyPermissions extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.privacyDetails.privacySettings != prevProps.privacyDetails.privacySettings) {
-      console.log("updated", this.props.privacyDetails);
+      // console.log("updated", this.props.privacyDetails);
       this.checkUserSecurityItems(this.props.privacyDetails.privacySettings.privacySettingItems)
       // this.setState({
       //   privacyDetailsState: this.props.privacyDetails
@@ -74,7 +76,7 @@ class PrivacyPermissions extends Component {
   }
 
   onRadioChangeHandler = event => {
-    console.log(this.props)
+    // console.log(this.props)
     
     const { id, value } = event.target;
     const userNumber = event.target.getAttribute("data-number");
@@ -157,7 +159,7 @@ class PrivacyPermissions extends Component {
 
   render() {
     const { privacyDetails, showSpinner } = this.props;
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div>
         {!this.props.privacyDetails.privacySettings ? (

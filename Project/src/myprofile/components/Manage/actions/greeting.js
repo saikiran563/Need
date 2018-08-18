@@ -10,10 +10,10 @@ export const POST_GREETING_NAME_BEGIN = 'POST_GREETING_NAME_BEGIN'
 export const POST_GREETING_NAME_SUCCESS = 'POST_GREETING_NAME_SUCCESS'
 export const POST_GREETING_NAME_FAIL = 'POST_GREETING_NAME_FAIL'
 
-//Post greeting name
+//Post greeting name.
 export const postGreetingName = (payload) => dispatch => {
   dispatch(postGreetingNameBegin())
-  axios.post(POST_GREETING_NAME_URL,payload)
+   axios.post(POST_GREETING_NAME_URL,JSON.stringify(payload),{headers :{'Content-Type':'application/json'}})
   .then(response => {
     dispatch(postGreetingNameSuccess())
   })

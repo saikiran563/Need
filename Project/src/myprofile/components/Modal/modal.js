@@ -3,10 +3,12 @@ import {getUid} from "../../../utils/config"
 
 const Modal = props => {
   const tagId = props.tagId ? props.tagId : getUid("modal");
+  const showClose = !props.show;
   return (
     <div id="overlayContainer" className={props.modalStatus ? 'visible' : 'hidden'}>
       <div id="overlayBackground"></div>
       <div id="overlayFrame" className="animated fadeIn a-fast">
+       { showClose &&
         <span className="close-wrapper">
           <a 
             id="overlayClose"
@@ -17,6 +19,7 @@ const Modal = props => {
             <span className="a-icon-overlay-close" aria-hidden="true"></span>
           </a>
         </span>
+       }
         <div>
           <div id={`overlayFrame ${tagId}`} className="aMyProfile aMyProfile__modal overlay-content">
             {props.children}

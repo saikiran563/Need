@@ -19,8 +19,15 @@ class GreetingBlock extends Component {
           type: "special"
         }
       ],
-      greetingName: this.props.greetingName
+      greetingName: this.props.greetingName,
+      moveCancelButton:0
     };
+  }
+
+  componentWillReceiveProps(newProps){
+    this.setState({
+      greetingName: newProps.greetingName
+    })
   }
 
   handleOnChange = e => {
@@ -81,9 +88,38 @@ class GreetingBlock extends Component {
   };
 
   handleSaveGreetingName(){
-    this.props.actions.postGreetingName(this.state.greetingName)
+    this.props.actions.postGreetingName({greetingName:this.state.greetingName})
+    this.props.handleEditCancel("cancelblock")
   }
 
+  handleCancelGreetingName(){
+    this.setState({
+      greetingName : this.props.greetingname
+    })
+    this.props.handleEditCancel("cancelblock")
+  }
+
+  componentDidMount(){
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+    if(window.innerWidth < 990 && window.innerWidth > 715){
+      this.setState({
+        moveCancelButton: 1
+      })
+    } else if (window.innerWidth < 715 ) {
+      this.setState({
+        moveCancelButton: 2
+      })
+    }
+    else {
+      this.setState({
+        moveCancelButton: 0
+      })
+    }
+  }
   render() {
     const {
       controlButtons,
@@ -98,7 +134,8 @@ class GreetingBlock extends Component {
         <div className={`row description_box ${editableClassName}`}>
           <div className="clearfix" />
             <div className="body">
-            <div className="col-xs-12 col-sm-4 description_box__header">
+            <div className="col-xs-12 col-sm-4 description_box__header" style={{padding: '0'}} >
+            {this.state.moveCancelButton === 2 && greetingEditMode && !showGreetingEdit ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
               <h4 tabIndex="0">Greeting Name</h4>
               <p>Tell us the name you would like to go by.</p>
             </div>
@@ -106,11 +143,12 @@ class GreetingBlock extends Component {
               {
                 showGreetingEdit  &&  (
                 <div>
-                  <p>{this.props.greetingName}</p>
+                  <p>{this.state.greetingName}</p>
                 </div>
               )}
               { !showGreetingEdit && greetingEditMode && (
                 <div>
+                                {this.state.moveCancelButton === 1 && greetingEditMode && !showGreetingEdit ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
                   <div className="greeting-fields col-md-5">
                       <label>Change Greeting Name</label>
                       <InputField
@@ -120,6 +158,7 @@ class GreetingBlock extends Component {
                         name="greeting"
                         value={this.state.greetingName}
                         valid={requiredError}
+                        analyticstrack="greeting-nametxt"
                       />
                     </div>
                   <div className="greeting-fields-req col-xs-12 col-sm-6  col-md-5">
@@ -149,9 +188,7 @@ class GreetingBlock extends Component {
                       })}
                     </ul>
                   </div>
-                    <div className="col-md-1">
-                        <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                    </div>
+                   
                 </div>
               )}
 
@@ -161,6 +198,7 @@ class GreetingBlock extends Component {
                     className="btn btn-anchor"
                     onClick={() => this.props.handleEditCancel("greetingnameblock")}
                     role="button"
+                    analyticstrack="greeting-edit"
                   >
                     Edit
                   </a>
@@ -174,11 +212,12 @@ class GreetingBlock extends Component {
               <a
                 className="btn btn--round-invert"
                 role="button"
-                onClick={() => this.props.handleEditCancel("cancelblock")}
+                onClick={() => this.handleCancelGreetingName() ("cancelblock")}
+                analyticstrack="greeting-cancel"
               >
                 Cancel
               </a>
-              <button className="btn btn--round" disabled={requiredError} onClick={()=>{this.handleSaveGreetingName()}}>
+              <button className="btn btn--round" disabled={requiredError} onClick={()=>{this.handleSaveGreetingName()}}analyticstrack="greeting-save">
                 Save Changes
               </button>
             </div>

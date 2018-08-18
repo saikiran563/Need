@@ -44,7 +44,7 @@ export const setPrimaryPhone = (data) => dispatch => {
         }else{
           dispatch(getPrimaryPhoneError(response.data.statusCode))
         }
-        // dispatch(getPrimaryPhoneSuccess(response.status));
+        // dispatch(getPrimaryPhoneSuccess('0'));
         // dispatch(setPrimaryPhoneOnSuccess(data))
         
       })

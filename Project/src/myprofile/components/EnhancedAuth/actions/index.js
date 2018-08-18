@@ -1,2 +1,2 @@
 export {  fetchEnhAuthEdit } from './fetchEnhancedAuth';
-export  { setEnhancedAuth, verifyEmail}  from './setEnhancedAuth';
+export  { setEnhancedAuth, setEnahancedError, verifyEmail}  from './setEnhancedAuth';

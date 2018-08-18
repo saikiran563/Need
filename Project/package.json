@@ -109,7 +109,8 @@
     "eslint": "eslint js --fix",
     "postinstall": "node -v && node scripts/vz-react-dev-copy.js",
     "vz-react-dev-update": "rm -r node_modules/vz-react-dev && npm install",
-    "mockdata": "json-server --watch mockData/db.json"
+    "mockdata": "json-server --watch mockData/db.json",
+    "dbjson": "json-server --watch mockData/db1.json"
   },
   "lint-staged": {
     "gitDir": "../../..",

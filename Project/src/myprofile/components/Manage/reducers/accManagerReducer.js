@@ -5,7 +5,9 @@ import {
   FETCH_MTNS_SUCCESS,
   FETCH_MANAGER_REQUESTS_SUCCESS,
   GET_ACCOUNT_MEMBER_DETAILS_SUCCESS,
-  ADD_NEW_MANAGER_SUCCESS
+  ADD_NEW_MANAGER_SUCCESS,
+  SHOW_LEARN_MORE_POPUP,
+  HIDE_LEARN_MORE_POPUP
 } from '../actions/manage'
 
 const initialState = {
@@ -18,9 +20,11 @@ const initialState = {
   phoneNumber:'',
   deniedAccountManagerRequests: null,
   showRequestSuccessPopup: false,
+  showSpinner: true,
   newAccountMemberRequest:  {
-      status: 'request denied' // other Status:  request pending , request denied
-  }
+      status: 'not requested' // other Status:  request pending , request denied
+  },
+  showLearnMorePopUp: false
 }
 
 import {
@@ -41,12 +45,13 @@ const accManagerReducer = (state = initialState, action) => {
 
     case FETCH_MANAGE_LANDING_SUCCESS:
       return updateObject(state, {
-        managers: action.response.customerInfo
-      })
+        managers: action.response.customerInfo,
+        showSpinner: false
+      },)
     case FETCH_MTNS_SUCCESS:
       return updateObject(state, {
         mtns: action.response.mtnList
-      })
+    })
     case FETCH_MANAGER_REQUESTS_SUCCESS:
       let accountManagerRequests = []
       action.response.customerInfo.forEach(eachManager => {
@@ -59,8 +64,19 @@ const accManagerReducer = (state = initialState, action) => {
       })
     case GET_ACCOUNT_MEMBER_DETAILS_SUCCESS :
     return updateObject(state, {
-      emailId: action.response.emailID,
-      phoneNumber: action.response.primaryPhone,
+      emailId: action.response.emailId,
+      phoneNumber: action.response.phoneNumber,
+      newAccountMemberRequest : {
+        status: action.response.hasPendingRequests ? 'request pending' : 'not requested'
+      }
+    })
+    case SHOW_LEARN_MORE_POPUP:
+      return updateObject(state, {
+        showLearnMorePopUp: true
+    })
+    case HIDE_LEARN_MORE_POPUP:
+      return updateObject(state, {
+        showLearnMorePopUp: false
     })
     default:
       return state

@@ -20,9 +20,21 @@ export const SET_PASSWORD_INFO = 'security/SET_PASSWORD_INFO'
 export const SET_PASSWORD_FAIL = 'security/SET_PASSWORD_FAIL'
 
 export const GET_SECRET_PIN_STATUS = "GET_SECRET_PIN_STATUS"
+export const GET_SECRET_PIN_STATUS_FAIL = "GET_SECRET_PIN_STATUS_FAIL"
 export const GET_LIST_OF_USER_NUMBERS = "GET_LIST_OF_USER_NUMBERS"
+export const GET_LIST_OF_USER_NUMBERS_FAIL = "GET_LIST_OF_USER_NUMBERS_FAIL"
 export const SEND_SECURE_PIN_TO_PHONE = "SEND_SECURE_PIN_TO_PHONE"
+export const SEND_SECURE_PIN_TO_PHONE_FAIL = "SEND_SECURE_PIN_TO_PHONE_FAIL"
 export const CONFIRM_SECURE_PIN_CODE = 'CONFIRM_SECURE_PIN_CODE'
+export const CONFIRM_SECURE_PIN_CODE_FAIL = 'CONFIRM_SECURE_PIN_CODE_FAIL'
+
+export const CLEAR_ERROR_CODES = "CLEAR_ERROR_CODES"
+
+export const clearErrorCodes = () => dispatch => {
+  dispatch({
+    type: CLEAR_ERROR_CODES
+  })
+}
 
 export const getSecretPinStatus = () => async dispatch => {
   // secure/data/service/verifySecurePinStatus
@@ -33,7 +45,10 @@ export const getSecretPinStatus = () => async dispatch => {
   const response = await axios.get(BASE_URL + API_NAME[GET_SECRET_PIN_STATUS])
   // const response = await axios.get("http://www.mocky.io/v2/5b69dc62320000cd1aaf5e64")
   // response.data.statusCode = "0";
-  console.log("secure pin - get secret pin status - action creator", response)
+  // response.data.errorCode = "1";
+  // response.data.data = response.data;
+  console.log("secure pin - get secret pin status - action creator", response.data)
+  
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: GET_SECRET_PIN_STATUS,
@@ -41,18 +56,20 @@ export const getSecretPinStatus = () => async dispatch => {
     })
   } else {
     dispatch({
-      type: GET_SECRET_PIN_STATUS,
-      payload: response.data.statusCode
+      type: GET_SECRET_PIN_STATUS_FAIL,
+      payload: response.data.errorCode
     })
   }
 }
 
 export const getListOfUserNumbers = () => async dispatch => {
   const response = await axios.get(BASE_URL + API_NAME[GET_LIST_OF_USER_NUMBERS])
-  console.log("secure pin - get user numbers - action creator", response)
   // const response = await axios.get("http://www.mocky.io/v2/5b69e4b83200003715af5e96")
   // response.data.statusCode = "0";
-  // response.data.deviceList = response.data.data.deviceList
+  // response.data.errorCode = "1";
+  // response.data.data.deviceList = response.data.data.deviceList;
+  console.log("secure pin - get user numbers - action creator", response)
+  
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: GET_LIST_OF_USER_NUMBERS,
@@ -60,8 +77,8 @@ export const getListOfUserNumbers = () => async dispatch => {
     })
   } else {
     dispatch({
-      type: GET_LIST_OF_USER_NUMBERS,
-      payload: response.data.statusCode
+      type: GET_LIST_OF_USER_NUMBERS_FAIL,
+      payload: response.data.errorCode
     })
   }
 }
@@ -72,10 +89,12 @@ export const sendSecurePinToPhone = (mtn, acctNum) => async dispatch => {
         'Content-Type': 'application/json',
     }
 })
-console.log("secure pin - send secure pin to phone - action creator", response)
   // const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum})
   // response.data.statusCode = "0"
-  // response.data.smartPinMtn = "123456"
+  // response.data.errorCode = "1"
+  // response.data.data.smartPinMtn = "123456";
+  console.log("secure pin - send secure pin to phone - action creator", response)
+  
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: SEND_SECURE_PIN_TO_PHONE,
@@ -83,8 +102,8 @@ console.log("secure pin - send secure pin to phone - action creator", response)
     })
   } else {
     dispatch({
-      type: SEND_SECURE_PIN_TO_PHONE,
-      payload: response.data.statusCode
+      type: SEND_SECURE_PIN_TO_PHONE_FAIL,
+      payload: response.data.errorCode
     })
   }
 }
@@ -95,10 +114,12 @@ export const confirmSecurePinCode = (mtn, acctNum, securePin) => async dispatch 
         'Content-Type': 'application/json',
     }
 })
-console.log("secure pin - confirm secure pin - action creator", response)
   // const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum, securePin})
-  // response.data.statusCode = "0"
-  // response.data.isSecurePinValidated = true
+  // response.data.statusCode = "1"
+  // response.data.errorCode = "1"
+  // response.data.data.isSecurePinValidated = true;
+  console.log("secure pin - confirm secure pin - action creator", response)
+  
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: CONFIRM_SECURE_PIN_CODE,
@@ -106,8 +127,8 @@ console.log("secure pin - confirm secure pin - action creator", response)
     })
   } else {
     dispatch({
-      type: CONFIRM_SECURE_PIN_CODE,
-      payload: response.data.statusCode
+      type: CONFIRM_SECURE_PIN_CODE_FAIL,
+      payload: response.data.errorCode
     })
   }
 }
@@ -153,17 +174,17 @@ export const setUserIdSuccess = response => ({
    response
 })
 
-export const setUserIdError = error => ({
+export const setUserIdError = payload => ({
    type: SET_USER_FAIL,
-   error
+   payload
 })
 export const setPinSuccess = response => ({
    type: SET_PIN_INFO,
    response
 })
-export const setPinError = error => ({
+export const setPinError = payload => ({
    type: SET_PIN_ERROR,
-   error
+   payload
 })
 
 export const getBannedListSuccess = response => ({
@@ -183,13 +204,13 @@ export const getQuestionError = error => ({
    error
 })
 
-export const setQuestionSuccess = response => ({
+export const setQuestionSuccess = payload => ({
    type: SET_QUES_INFO,
-   response
+   payload
 })
-export const setQuestionError = error => ({
+export const setQuestionError = payload => ({
    type: SET_QUES_FAIL,
-   error
+   payload
 })
 
 export const setPasswordSuccess = response => ({
@@ -197,9 +218,9 @@ export const setPasswordSuccess = response => ({
   response
 })
 
-export const setPasswordFail = error => ({
+export const setPasswordFail = payload => ({
   type: SET_PASSWORD_FAIL,
-  error
+  payload
 })
 
 export const getMetaData = () => dispatch => {
@@ -250,7 +271,8 @@ export const setUserId = (id) => dispatch => {
   console.log("SET USER CALLED")
     // API CAll WILL BE CALLED HERE
     const payload = JSON.stringify({"newUserName": id})     
-
+ // http://www.mocky.io/v2/5b74302a3500001000531e1d
+ // getURL("SET_USER_INFO")
    var resp = axios.post(getURL("SET_USER_INFO"),payload,{
         headers: {
             'Content-Type': 'application/json',
@@ -260,7 +282,13 @@ export const setUserId = (id) => dispatch => {
        // console.log('set user id working');
         // console.log(response);
         response.data.userId = id;
-        dispatch(setUserIdSuccess(response.data))
+        // response.data.statusCode = "1"
+        // response.data.errorCode = "234"
+        if(parseInt(response.data.statusCode) === 0){
+          dispatch(setUserIdSuccess(response.data))
+        } else {
+          dispatch(setUserIdError(response.data.errorCode))
+        }
       })
       .catch((err) => {
         dispatch(setUserIdError(err))
@@ -270,31 +298,46 @@ export const setUserId = (id) => dispatch => {
 export const setQuestionInfo = (question) => dispatch => {
  // API CAll WILL BE CALLED HERE
     var payload = JSON.stringify(question)
+    // getURL("SET_QUES_INFO")
    var resp = axios.post(getURL("SET_QUES_INFO"),payload,{
         headers: {
             'Content-Type': 'application/json',
         }
     });
       resp.then((response) => {
-        dispatch(setQuestionSuccess(response.data))
+        // response.data.statusCode = "1"
+        // response.data.errorCode = "1"
+        if(parseInt(response.data.statusCode) == 0){
+          dispatch(setQuestionSuccess(question))
+        } else {
+          dispatch(setQuestionError(response.data.errorCode))
+        }
       })
       .catch((err) => {
-        dispatch(setPinError(err))
+        console.log(err)
+        dispatch(setQuestionError("Something went wrong"))
       })
 }
 export const setPin = (pin) => dispatch => {
     // API CAll WILL BE CALLED HERE
    var payload = JSON.stringify(pin);
+   // getURL("SET_PIN_INFO")
    var resp = axios.post(getURL("SET_PIN_INFO"),payload,{
         headers: {
             'Content-Type': 'application/json',
         }
     })
       resp.then((response) => {
-        dispatch(setPinSuccess(response.data))
+        // response.data.statusCode = "0"
+        // response.data.errorCode = "1"
+        if(parseInt(response.data.statusCode) == 0){
+          dispatch(setPinSuccess(response.data))
+        } else {
+          dispatch(setPinError(response.data.errorCode))
+        }
       })
       .catch((err) => {
-        dispatch(setPinError(err))
+        dispatch(setPinError("Something went wrong"))
       })
 }
 
@@ -306,12 +349,16 @@ export const setPassword = (passwordObject) => dispatch => {
             'Content-Type': 'application/json',
         }
     })
-     resp.then((response) => {     
+     resp.then((response) => {
       //  response.data.statusCode = "0"
-        dispatch(setPasswordSuccess(response.data))
+        if(parseInt(response.data.statusCode) == 0){
+          dispatch(setPasswordSuccess(response.data))
+        } else {
+          dispatch(setPasswordFail(response.data.errorCode))
+        }
         // dispatch(setPasswordSuccess(response.config))
       })
       .catch((err) => {
-        dispatch(setUserIdError(err))
+        dispatch(setPasswordFail("Something went wrong."))
       })
 }

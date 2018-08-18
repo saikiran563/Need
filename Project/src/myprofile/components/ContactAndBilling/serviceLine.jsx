@@ -45,8 +45,7 @@ class ServiceLine extends Component {
           </div>
           <div>
             <strong>
-              {address.address.city} {address.address.state}
-              {address.address.zip}
+              {address.address.city} {address.address.state} {address.address.zip}
             </strong>
           </div>
         </p>
@@ -72,11 +71,12 @@ class ServiceLine extends Component {
             handleSave={this.props.handleSave}
             onCancel={this.handleCancelClick}
             addressListOnAccount={this.props.addressListOnAccount}
+            serviceAddressStatus={this.props.serviceAddressStatus}
           />
         </div>
-        <div className="serviceline-phone-edit description_box__edit description_box__edit_section">
+        <div className="serviceline-phone-edit description_box__edit description_box__edit_section serviceAddress_cancel">
           <a
-            className="btn btn-anchor description_box__btn-edit"
+            className="btn btn-anchor description_box__btn-edit cancel"
             onClick={this.handleCancelClick}
             role="button"
             analyticstrack="serviceLine-cancel"
@@ -115,7 +115,7 @@ class ServiceLine extends Component {
               role="button"
               analyticstrack="serviceLine-editline"
             >
-              Edit Line
+              {this.props.serviceAddressEditMode ? 'Edit Line' : '' }
             </a>
           ) : (
             <a
@@ -125,7 +125,7 @@ class ServiceLine extends Component {
               role="button"
               analyticstrack="serviceLine-editaddress"
             >
-              Edit Address
+              {this.props.serviceAddressEditMode ? 'Edit Address' : '' }
             </a>
           )}
         </div>
@@ -133,8 +133,10 @@ class ServiceLine extends Component {
     );
   };
 
+  
+
   renderLineRead = line => {
-    return <p>{line} [Device Nickname] </p>;
+    return <p>{this.convertPhoneToUSAFormat(line)} </p>;
   };
 
   // renderAddressItems = () => {
@@ -157,12 +159,27 @@ class ServiceLine extends Component {
   //   }
   // };
 
+  convertPhoneToUSAFormat = (line) => {
+      let x = line.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      return !x[2] ? x[1] : '' + x[1] + '.' + x[2] + (x[3] ? '.' + x[3] : '');
+   }
+
 //  {this.props.addressListOnAccount.userServiceAddressInfo.serviceAddresses.map(item => <div>{item.address.addressLine1s}</div> )}
   render() {
-    console.log("rendered", this.props)
     const { editLine, serviceLine, serviceAddress } = this.state;
+    const { serviceAddressStatus } = this.props;
+    const savedSectionStyle = {
+      "display": "inline",
+      "marginTop": "10px",
+      "paddingTop": "10px"
+    };
     return (
       <div className="serviceLine_templ">
+      {/*
+        serviceAddressStatus == '0' && <span className="text-success fa fa-check-circle col-xs-12 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
+                &nbsp;Saved
+                 </span>
+      */}
         {editLine
           ? this.renderServiceLineEdit(
               serviceLine ? serviceLine : this.state.serviceAddress
@@ -178,7 +195,8 @@ class ServiceLine extends Component {
 const mapStateToProps = state => {
   // console.log(state)
   return {
-    editLineClicked: state.contactDetails.editAddressOrLineClicked
+    editLineClicked: state.contactDetails.editAddressOrLineClicked,
+    serviceAddressStatus: state.contactDetails.serviceAddressStatus
   }
 }
 

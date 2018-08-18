@@ -1,13 +1,24 @@
-import React, { Component } from 'react'
-import InputField from '../FormElements/InputComponent'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import VerifyAddressPopup from  './verifyAddressPopup';
+import InputField from "../FormElements/InputComponent";
+import Modal from "../Modal/modal";
+import SecurePin from "../SecurePin/SecurePin";
 
-import './style.css'
+import {
+  getSecretPinStatus,
+  getListOfUserNumbers,
+  sendSecurePinToPhone,
+  confirmSecurePinCode
+} from "../Security/actions/fetchSecurities";
+
+import VerifyAddressPopup from "./verifyAddressPopup";
+
+import "./style.css";
 
 class BillingAddressBlock extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       address: this.props.userBillingInfo.addressLine1,
       apartment: this.props.userBillingInfo.addressLine2,
@@ -15,109 +26,194 @@ class BillingAddressBlock extends Component {
       city: this.props.userBillingInfo.city,
       zip: this.props.userBillingInfo.zip,
       requiredError: true,
-      isValid: '',
+      isValid: "",
       istouched: false,
       billingAddressInvalidMessages: [
-        { name: 'Invalid zip code', error: false, type: 'character' }
+        { name: "Invalid zip code", error: false, type: "character" }
       ],
-    }
+      modalStatus: false,
+      listOfAccountNumbersModal: false,
+      afterGetRequest: [],
+      errorModal: false
+    };
   }
 
- componentWillReceiveProps(newProps) {
-
-      if(newProps.userBillingInfo.addressLine1 !== this.props.userBillingInfo.addressLine1
-       || newProps.userBillingInfo.addressLine2 !== this.props.userBillingInfo.addressLine2
-       || newProps.userBillingInfo.state !== this.props.userBillingInfo.state
-       || newProps.userBillingInfo.city !== this.props.userBillingInfo.city
-       || newProps.userBillingInfo.zip !== this.props.userBillingInfo.zip){
-        this.setState(
-          {
-            address: newProps.userBillingInfo.addressLine1,
-            apartment: newProps.userBillingInfo.addressLine2,
-            USstate: newProps.userBillingInfo.state,
-            city: newProps.userBillingInfo.city,
-            zip: newProps.userBillingInfo.zip
-          }
-        );
-      }    
-  }
-     handleAddressOnChange = (e) => {
-      this.setState({ address: e.target.value }, () => this.onChangeInput('address'));
-    }
-
-    handleApartmentOnChange = (e) => {
-      this.setState({ apartment: e.target.value }, () => this.onChangeInput('apartment'));
-    }
-
-    handleCityOnChange = (e) => {
-       this.setState({ city: e.target.value }, () => this.onChangeInput('city'));
-    }
-
-    handleZipOnChange = (e) => {
-      const numTest = /^[0-9\b]+$/;
-      if(e.target.value == '' || numTest.test(e.target.value)){
-          this.setState({ zip: e.target.value }, () => this.onChangeInput('zip'));
-      }
-     
-    }
-    handleOnUSstateChange = (e) => {
-      this.setState({ USstate: e.target.value }, () => this.onChangeInput('state'));
-    }
-
-  onChangeInput = (type) => {
-    let val, billingAddressInvalidMessages;
- switch(type) {
-      case 'address':
-      val = this.state.address;
-      billingAddressInvalidMessages = JSON.parse(JSON.stringify(this.state.billingAddressInvalidMessages));
-      if(val === ''){
-      this.setState({ requiredError: true, isValid: false }); 
-      }else{
-      this.setState({ requiredError: false, isValid: true }); 
-      }
-      break;
-      case 'apartment':
-      val = this.state.apartment;
-      billingAddressInvalidMessages = JSON.parse(JSON.stringify(this.state.billingAddressInvalidMessages));
-      this.setState({ requiredError: false, isValid: true });  
-      break;
-      case 'city':
-      val = this.state.city;
-      billingAddressInvalidMessages = JSON.parse(JSON.stringify(this.state.billingAddressInvalidMessages));
-      if(val === ''){
-      this.setState({ requiredError: true, isValid: false }); 
-      }else{
-      this.setState({ requiredError: false, isValid: true }); 
-      }
-       
-      break;
-      case 'zip':
-      val = this.state.zip;
-      billingAddressInvalidMessages = JSON.parse(JSON.stringify(this.state.billingAddressInvalidMessages));
-      
-      if(val === '' || val.length < 5){
-        this.setState({ requiredError: true, isValid: false });
-      }else{
-        this.setState({ requiredError: false, isValid: true });
-      }
-      break;
-      case 'state':
-       val = this.state.USstate;
-      billingAddressInvalidMessages = JSON.parse(JSON.stringify(this.state.billingAddressInvalidMessages));
-      this.setState({ requiredError: false, isValid: true });
-    }
-  }
-
-   handleOnEditCancel = (type) => {
+  componentWillReceiveProps(newProps) {
+    if (
+      newProps.userBillingInfo.addressLine1 !==
+        this.props.userBillingInfo.addressLine1 ||
+      newProps.userBillingInfo.addressLine2 !==
+        this.props.userBillingInfo.addressLine2 ||
+      newProps.userBillingInfo.state !== this.props.userBillingInfo.state ||
+      newProps.userBillingInfo.city !== this.props.userBillingInfo.city ||
+      newProps.userBillingInfo.zip !== this.props.userBillingInfo.zip
+    ) {
       this.setState({
-        address: this.props.userBillingInfo.address
+        address: newProps.userBillingInfo.addressLine1,
+        apartment: newProps.userBillingInfo.addressLine2,
+        USstate: newProps.userBillingInfo.state,
+        city: newProps.userBillingInfo.city,
+        zip: newProps.userBillingInfo.zip
       });
-      this.props.handleEditCancel(type);
     }
+  }
+  handleAddressOnChange = e => {
+    this.setState({ address: e.target.value }, () =>
+      this.onChangeInput("address")
+    );
+  };
 
-    getUSAStates = (selectedVal) => {
-      return (
-        <select className="state-select" name="USA State" onChange={this.handleOnUSstateChange} defaultValue={selectedVal}>
+  handleApartmentOnChange = e => {
+    this.setState({ apartment: e.target.value }, () =>
+      this.onChangeInput("apartment")
+    );
+  };
+
+  handleCityOnChange = e => {
+    this.setState({ city: e.target.value }, () => this.onChangeInput("city"));
+  };
+
+  handleZipOnChange = e => {
+    const numTest = /^[0-9\b]+$/;
+    if (e.target.value == "" || numTest.test(e.target.value)) {
+      this.setState({ zip: e.target.value }, () => this.onChangeInput("zip"));
+    }
+  };
+  handleOnUSstateChange = e => {
+    this.setState({ USstate: e.target.value }, () =>
+      this.onChangeInput("state")
+    );
+  };
+
+  closeModal = () => {
+    this.setState({
+      errorModal: false,
+      modalStatus: false
+    });
+  };
+
+  startSecurePinFlow = event => {
+    this.props.getSecretPinStatus().then(() => {
+      const { securePin } = this.props;
+      console.log(securePin);
+      if (typeof securePin !== "string") {
+        if (!securePin.securePinEnabled) {
+          console.log("secure pin not enabled");
+          this.props.handleSave(
+            "billingAddressBlock",
+            {
+              addressLine1: this.state.address,
+              addressLine2: this.state.apartment,
+              city: this.state.city,
+              zip: this.state.zip,
+              state: this.state.USstate
+            },
+            event
+          );
+          // return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        }
+        if (!securePin.securePinVerified) {
+          console.log("secure pin not verified, go through secure pin flow");
+          this.props.getListOfUserNumbers().then(() => {
+            this.setState({
+              modalStatus: true,
+              listOfAccountNumbersModal: true,
+              afterGetRequest: this.props.listOfUserNumbers
+            });
+          });
+        } else {
+          console.log("secure pin already verified");
+          this.props.handleSave(
+            "billingAddressBlock",
+            {
+              addressLine1: this.state.address,
+              addressLine2: this.state.apartment,
+              city: this.state.city,
+              zip: this.state.zip,
+              state: this.state.USstate
+            },
+            event
+          );
+          // return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        }
+      } else {
+        this.setState({
+          errorModal: true,
+          afterGetRequest: this.props.securePin
+        });
+      }
+    });
+  };
+
+  onChangeInput = type => {
+    let val, billingAddressInvalidMessages;
+    switch (type) {
+      case "address":
+        val = this.state.address;
+        billingAddressInvalidMessages = JSON.parse(
+          JSON.stringify(this.state.billingAddressInvalidMessages)
+        );
+        if (val === "") {
+          this.setState({ requiredError: true, isValid: false });
+        } else {
+          this.setState({ requiredError: false, isValid: true });
+        }
+        break;
+      case "apartment":
+        val = this.state.apartment;
+        billingAddressInvalidMessages = JSON.parse(
+          JSON.stringify(this.state.billingAddressInvalidMessages)
+        );
+        this.setState({ requiredError: false, isValid: true });
+        break;
+      case "city":
+        val = this.state.city;
+        billingAddressInvalidMessages = JSON.parse(
+          JSON.stringify(this.state.billingAddressInvalidMessages)
+        );
+        if (val === "") {
+          this.setState({ requiredError: true, isValid: false });
+        } else {
+          this.setState({ requiredError: false, isValid: true });
+        }
+
+        break;
+      case "zip":
+        val = this.state.zip;
+        billingAddressInvalidMessages = JSON.parse(
+          JSON.stringify(this.state.billingAddressInvalidMessages)
+        );
+
+        if (val === "" || val.length < 5) {
+          this.setState({ requiredError: true, isValid: false });
+        } else {
+          this.setState({ requiredError: false, isValid: true });
+        }
+        break;
+      case "state":
+        val = this.state.USstate;
+        billingAddressInvalidMessages = JSON.parse(
+          JSON.stringify(this.state.billingAddressInvalidMessages)
+        );
+        this.setState({ requiredError: false, isValid: true });
+    }
+  };
+
+  handleOnEditCancel = type => {
+    this.setState({
+      address: this.props.userBillingInfo.address
+    });
+    this.props.handleEditCancel(type);
+  };
+
+  getUSAStates = selectedVal => {
+    return (
+      <select
+        className="state-select"
+        name="USA State"
+        onChange={this.handleOnUSstateChange}
+        defaultValue={selectedVal}
+      >
         <option value="AA">AA</option>
         <option value="AE">AE</option>
         <option value="AL">AL</option>
@@ -180,132 +276,250 @@ class BillingAddressBlock extends Component {
         <option value="WV">WV</option>
         <option value="WI">WI</option>
         <option value="WY">WY</option>
-        </select>)
-    }
-    contentsForModal = () => {
-      return {
-        address: this.state.address,
-        apartment: this.state.apartment,
-        state: this.state.USstate,
-        city: this.state.city,
-        zip: this.state.zip
-      }
-    }
-    onAddressSelect = (address) => {
-        this.setState({
-          address: address.address,
-          apartment: address.apartment,
-          USstate: address.state,
-          city: address.city,
-          zip: address.zip,
-        });
-    }
+      </select>
+    );
+  };
+  contentsForModal = () => {
+    return {
+      address: this.state.address,
+      apartment: this.state.apartment,
+      state: this.state.USstate,
+      city: this.state.city,
+      zip: this.state.zip
+    };
+  };
+  onAddressSelect = address => {
+    this.setState({
+      address: address.address,
+      apartment: address.apartment,
+      USstate: address.state,
+      city: address.city,
+      zip: address.zip
+    });
+  };
 
   render() {
-    const {  billingAddressInvalidMessages, requiredError, address, apartment, USstate, city, zip } = this.state;
-     const { userBillingInfo, showBillingEdit, billingAddressEditMode, billingAddressStatus } = this.props;
-     const isValid = !billingAddressInvalidMessages.find(address => address.error)
-     const editableClassName = billingAddressEditMode ? "" : "description_box_disabled";
-      const savedSectionStyle = {
-      "display": "inline",
-       "margin-top": "15px",
+    const {
+      billingAddressInvalidMessages,
+      requiredError,
+      address,
+      apartment,
+      USstate,
+      city,
+      zip
+    } = this.state;
+    const {
+      userBillingInfo,
+      showBillingEdit,
+      billingAddressEditMode,
+      billingAddressStatus
+    } = this.props;
+    const isValid = !billingAddressInvalidMessages.find(
+      address => address.error
+    );
+    const editableClassName = billingAddressEditMode
+      ? ""
+      : "description_box_disabled";
+    const savedSectionStyle = {
+      display: "inline",
+      "margin-top": "15px",
       "padding-top": "10px"
     };
     return (
-     <div className={`row description_box ${editableClassName}`}>
-        <div className="clearfix"></div>
+      <div className={`row description_box ${editableClassName}`}>
+        <div className="clearfix" />
         <div className="body">
-        <div className="col-xs-12 col-sm-4 description_box__header">
-                        <h4 tabIndex="0">Billing Address</h4>
-                        <p>Let us know where to send your bill.</p>
-                    </div>
-                    <div className="col-xs-12 col-sm-8 description_box__large-container">
-                        <div className="row">
-
-                                <div className="col-xs-12 col-sm-10 description_box__details">
-                                {
-                                    !(!showBillingEdit && billingAddressEditMode) &&  <div className="description_box__read">
-
-                                        <p>{address}</p>
-                                        <p>{apartment ? apartment : ''}</p>
-                                        <p>{city ? city : ''} {USstate} {zip ? zip : ''}</p>
-
-                                    </div>
-                                }
-                                {
-      !showBillingEdit && billingAddressEditMode && <div className="description_box__form">
-                    <div className="description_box__form" aria-hidden="false">
-                                        <div className="form-address__new_address row">
-                                            <div className="col-xs-12">
-                                                <label htmlFor="address_23">Address*</label>
-                                            </div>
-                                            <div className="col-xs-12">
-                                                <InputField handleOnChange={this.handleAddressOnChange} placeholder="" touched={this.state.istouched} value={address} name="address_23" type="text" analyticstrack="billingAddress-addressline1input" />
-                                            </div>
-                                            <div className="col-xs-12">
-                                                <label htmlFor="apt_23">Apt/Suite/Other</label>
-                                            </div>
-                                            <div className="col-xs-12">
-                                                <InputField handleOnChange={this.handleApartmentOnChange} placeholder="" touched={this.state.istouched} value={apartment} name="apt_23" type="text" className="" analyticstrack="billingAddress-aptinput" />
-                                            </div>
-                                            <div className="col-xs-12 col-sm-5">
-                                                <label htmlFor="city_23">City*</label>
-                                            <br aria-hidden="true" />
-                                                <InputField handleOnChange={this.handleCityOnChange} placeholder="" touched={this.state.istouched} value={city} type="text" name="city_23" className="" analyticstrack="billingAddress-cityinput"/>
-                                            </div>
-                                            <div className="col-xs-12 col-sm-3">
-                                                <label htmlFor="state">State*</label>
-                                            <br aria-hidden="true" />
-                                                
-                                                    { this.getUSAStates(USstate) }
-                                                
-                                            </div>
-                                            <div className="col-xs-12 col-md-4">
-                                                <label htmlFor="zipcode_23">Zip code*</label>
-                                            <br aria-hidden="true" />
-                                                <InputField handleOnChange={this.handleZipOnChange} placeholder="" touched={this.state.istouched} value={zip}  name="zipcode_23" type="text" className="" analyticstrack="billingAddress-zipinput"/>
-                                            </div>
-                                             {
-          !showBillingEdit && billingAddressEditMode && <div className="footer description_box__control-btn col-xs-12 btn--billing-addr">
-            <button className="btn btn--round-invert" role="button" onClick={() => this.handleOnEditCancel('cancelBlock')} analyticstrack="billingAddress-cancel">Cancel</button>
-            <button className="btn btn--round" disabled={requiredError|| reactGlobals.isCsr} onClick={() => this.props.handleSave('billingAddressBlock', {addressLine1:address,addressLine2:apartment,city,zip,state: USstate}, event)} analyticstrack="billingAddress-savechanges">Save Changes</button>
+          <div className="col-xs-12 col-sm-4 description_box__header">
+            <h4 tabIndex="0">Billing Address</h4>
+            <p>Let us know where to send your bill.</p>
           </div>
-        }
-                                        </div>
-                                       
-                                    </div>
+          <div className="col-xs-12 col-sm-8 description_box__large-container">
+            <div className="row">
+              <div className="col-xs-12 col-sm-10 description_box__details">
+                {!(!showBillingEdit && billingAddressEditMode) && (
+                  <div className="description_box__read">
+                    <p>{address}</p>
+                    <p>{apartment ? apartment : ""}</p>
+                    <p>
+                      {city ? city : ""} {USstate} {zip ? zip : ""}
+                    </p>
                   </div>
-                }
-                
-              </div>
-               
-                
-              {
-                showBillingEdit && <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit" onClick={() => this.props.handleEditCancel('billingAddressBlock')} role="button" analyticstrack="billingAddress-Edit">Edit</a>
-                </div>
-              }
-              {
-                !showBillingEdit && billingAddressEditMode &&
-                  <div className="description_box__edit description_box__edit_section">
-                  <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="billingAddress-cancel">Cancel</a>
-                </div>
-              }
+                )}
+                {!showBillingEdit &&
+                  billingAddressEditMode && (
+                    <div className="description_box__form">
+                      <div
+                        className="description_box__form"
+                        aria-hidden="false"
+                      >
+                        <div className="row">
+                          <div className="col-xs-12">
+                            <label htmlFor="address_23">Address*</label>
+                          </div>
+                          <div className="col-xs-12">
+                            <InputField
+                              handleOnChange={this.handleAddressOnChange}
+                              placeholder=""
+                              touched={this.state.istouched}
+                              value={address}
+                              name="address_23"
+                              type="text"
+                              analyticstrack="billingAddress-addressline1input"
+                            />
+                          </div>
+                          <div className="col-xs-12">
+                            <label htmlFor="apt_23">Apt/Suite/Other</label>
+                          </div>
+                          <div className="col-xs-12">
+                            <InputField
+                              handleOnChange={this.handleApartmentOnChange}
+                              placeholder=""
+                              touched={this.state.istouched}
+                              value={apartment}
+                              name="apt_23"
+                              type="text"
+                              className=""
+                              analyticstrack="billingAddress-aptinput"
+                            />
+                          </div>
+                          <div className="col-xs-12 col-sm-5">
+                            <label htmlFor="city_23">City*</label>
+                            <br aria-hidden="true" />
+                            <InputField
+                              handleOnChange={this.handleCityOnChange}
+                              placeholder=""
+                              touched={this.state.istouched}
+                              value={city}
+                              type="text"
+                              name="city_23"
+                              className=""
+                              analyticstrack="billingAddress-cityinput"
+                            />
+                          </div>
+                          <div className="col-xs-6 col-sm-3">
+                            <label htmlFor="state">State*</label>
+                            <br aria-hidden="true" />
 
-              {
-                 billingAddressStatus == '0' && <span className="text-success fa fa-check-circle col-xs-2 section-saved section-saved_block" tabIndex="0" style={savedSectionStyle}>
-                &nbsp;Saved
-                 </span>
-               }
+                            {this.getUSAStates(USstate)}
+                          </div>
+                          <div className="col-xs-6 col-sm-4">
+                            <label htmlFor="zipcode_23">Zip code*</label>
+                            <br aria-hidden="true" />
+                            <InputField
+                              handleOnChange={this.handleZipOnChange}
+                              placeholder=""
+                              touched={this.state.istouched}
+                              value={zip}
+                              name="zipcode_23"
+                              type="text"
+                              className=""
+                              analyticstrack="billingAddress-zipinput"
+                            />
+                          </div>
+                          {!showBillingEdit &&
+                            billingAddressEditMode && (
+                              <div className="footer description_box__control-btn col-xs-12 btn--billing-addr">
+                                <button
+                                  className="btn btn--round-invert"
+                                  role="button"
+                                  onClick={() =>
+                                    this.handleOnEditCancel("cancelBlock")
+                                  }
+                                  analyticstrack="billingAddress-cancel"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  className="btn btn--round"
+                                  disabled={requiredError || reactGlobals.isCsr}
+                                  onClick={this.startSecurePinFlow}
+                                  analyticstrack="billingAddress-savechanges"
+                                >
+                                  Save Changes
+                                </button>
+                              </div>
+                            )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+              </div>
+
+              {showBillingEdit && (
+                <div className="description_box__edit description_box__edit_section">
+                  <a
+                    className="description_box__btn-edit"
+                    onClick={() =>
+                      this.props.handleEditCancel("billingAddressBlock")
+                    }
+                    role="button"
+                    analyticstrack="billingAddress-Edit"
+                  >
+                    Edit
+                  </a>
+                </div>
+              )}
+              {!showBillingEdit &&
+                billingAddressEditMode && (
+                  <div className="description_box__edit description_box__edit_section">
+                    <a
+                      className="description_box__btn-edit description_box__btn-edit-cancel cancel"
+                      onClick={() => this.props.handleEditCancel("cancelblock")}
+                      role="button"
+                      analyticstrack="billingAddress-cancel"
+                    >
+                      Cancel
+                    </a>
+                  </div>
+                )}
+
+              {billingAddressStatus == "0" && (
+                <span
+                  className="text-success fa fa-check-circle col-xs-2 section-saved section-saved_block"
+                  tabIndex="0"
+                  style={savedSectionStyle}
+                >
+                  &nbsp;Saved
+                </span>
+              )}
             </div>
           </div>
-      
-        
         </div>
-           <VerifyAddressPopup contents={this.contentsForModal()} onSave={(address) => this.onAddressSelect(address)}/>         
+        <VerifyAddressPopup
+          contents={this.contentsForModal()}
+          onSave={address => this.onAddressSelect(address)}
+        />
+        <Modal
+          modalStatus={this.state.modalStatus}
+          closeModal={this.closeModal}
+        >
+          <SecurePin
+            handleSaveType={"billingAddressBlock"}
+            closeModal={this.closeModal}
+            handleSaveData={{
+              addressLine1: this.state.address,
+              addressLine2: this.state.apartment,
+              city: this.state.city,
+              zip: this.state.zip,
+              state: this.state.USstate
+            }}
+            handleSave={this.props.handleSave}
+          />
+        </Modal>
       </div>
-);
+    );
   }
 }
 
-export default BillingAddressBlock;
+const mapStateToProps = state => {
+  console.log("STATEEEE", state);
+  return {
+    securePin: state.security.secretPin,
+    isSecurePinValidated: state.security.isSecurePinValidated
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSecretPinStatus, getListOfUserNumbers }
+)(BillingAddressBlock);

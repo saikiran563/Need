@@ -33,7 +33,7 @@ class VerizonSelects extends Component {
                     <div className="row">
                         <div className="col-xs-12 description_box__details">
                             <a href="https://qa2billpay.verizonwireless.com/vzw/secure/mcm/mcmDisplayPreferences.action" role="button" 
-                            className="btn btn--round-invert btn-transfer" analyticstrack="privacy-verizon-settings">Change settings</a>
+                            className="btn btn--round-invert btn-transfer" analyticstrack="privacy-verizon-settings">Change setting</a>
                         </div>
                     </div>
                 </div>

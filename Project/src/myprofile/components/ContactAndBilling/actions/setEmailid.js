@@ -19,18 +19,20 @@ export const setEmailId = (data) => dispatch => {
         if(response.data.statusCode == "0"){
           dispatch(setEmailIdonSuccess(data));
           dispatch(getEmailIdSuccess(response.data.statusCode))
+          
         }else{
           dispatch(getEmailIdError(err))
         }
 
         //  dispatch(setEmailIdonSuccess(data));
-        //   dispatch(getEmailIdSuccess(response.status))
+        //   dispatch(getEmailIdSuccess('0'))
         
       })
       .catch((err) => {
         dispatch(getEmailIdError(err))
       })
 }
+
 export const getEmailIdSuccess = (response) => ({
   type: SET_EMAILID_SUCCESS,
   status : response,

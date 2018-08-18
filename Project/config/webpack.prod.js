@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const envBundle = String(process.env.BUNDLE) || 'app';
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: {
     myprofile: './src/myprofile/index.jsx'
   },

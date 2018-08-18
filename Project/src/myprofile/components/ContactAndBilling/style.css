@@ -47,31 +47,9 @@
     color: red;
 }
 
-.primary-phone-edit {
-    top: -10px !important;
-}
-.state-select {
-   padding-bottom: 0.6rem !important;
-   line-height: 1.4rem;
-   border-bottom: 2.3px solid black !important;
-   width: 100% !important;
-}
 
-.btn--billing-addr {
-    padding-left: 15px !important;
-}
-.description_box__read_service_line{
-    padding: 0.3rem;
-}
-.aMyProfile .description_box__control-btn {
-    
-    display: block !important;
-}
-.section-saved_block {
-    position: relative;
-    bottom: 1rem;
-    color: #0ac00a !important;
-}
+/* Custom styles for contact and billing block */
+
 .help-block {
     display: block;
     margin-top: -13px;
@@ -79,123 +57,10 @@
     color: #737373;
     font-size: 11px;
 }
-/*to be removed*/
-.aMyProfile .description_box__edit_section {
-    margin-top: 10px !important;
-    position: relative; 
-}
-.gquxWn {
-    border-bottom: 2px solid #ed7000 !important;
-}
-.state-select {
-   padding-bottom: 0.6rem !important; 
-}
 
-.modal-contents{
-  padding: 0 0 0 1.4rem;  
-}
-.address-modal-footer {
- margin-top: 0 !important;
-} 
-.modal-footer {
-    border-top: none !important;
-} 
-.address-suggested{
-    margin-left: 2px;
-} 
-.address-suggested .description_box__read {
-    padding-bottom: 1.2rem;
-}
-.modal-header {
-    border-bottom: none !important;
-}
-.address-suggested .description_box__read label{
-   font-family: inherit !important;
-   font-size: 16px !important;
-}
-
-.btn--round {
-    border-radius: 50px;
-    background: #000000;
-    border: 1px solid #000000;
-    color: #FFFFFF;
-    padding: 13px 38px;
-    font-family: "NeueHaasGroteskDisplayBold", arial;
-}
-.address-modal-footer .btn--round:hover {
-   color: #FFFFFF !important;  
-}
-
-.modal-title {
-    padding-left: 1.5rem;
-}
-
-#verify-address-modal {
-    overflow: hidden;
-}
-#verify-address-modal h1.title {
-    font-size: 16px;
-}
-.suggested-address{
-        float: right;
-    margin-left: 1rem;
-}
-.suggested-address p, .address-entered p{
-    font-size: 15px !important;
-}
-
-#verify-address-modal .description_box__edit.description_box__edit_section {
-    font-size: 15px;
-    text-align: unset;
-    cursor: pointer;
-}
-
-
-.service-line {
-    margin-left: 0;
-    padding-left: 8px !important;
-}
-.service-address-sub-block{
-    border-bottom: 1px solid #e4e5e3;
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-.edit-service-address-btn-span {
-    font-size: 10px;
-    color: #747676;
-}
-.modal-close {
-    text-decoration: none !important;
-}
-.aMyProfile .description_box_disabled {
-    pointer-events: none;
-}
-.VerifyModalFrame {
-    width: 50% !important;
-}
-.verify__modal {
-    width: 85% !important;
-}
-@media only screen and (min-width: 320px)and (max-width: 450px)  {
-   .aMyProfile .description_box__edit_section {
-	position: absolute !important;
-    top: 20px;
-    right: 15px;
-    text-align: right;
-    z-index: 1;
-	
-    }
-
-}
 @media only screen and (max-width: 600px) {
-   .edit-address {
-	position: absolute !important;
-    bottom: 20px;
-    right: 15px;
-    text-align: right;
-    z-index: 1;	
+    .primaryPhone_cancel, .serviceAddress_cancel {
+        top: 0 !important;
     }
-    .description_box__btn-edit-cancel {
-        display: none !important;
-    }
+    
 }

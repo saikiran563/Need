@@ -12,6 +12,10 @@ import ManagersListToAccountManager from './components/ManagersListToAccountMana
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 
+import Modal from "../Modal/modal"
+import SecurePin from "../SecurePin/SecurePin"
+import { handleErrors } from "../../../utils/errorHandler"
+
 const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
 const accountMember = reactGlobals.mdnRole == 'mobileSecure'
 const accountManager = reactGlobals.mdnRole == 'accountManager'
@@ -22,12 +26,49 @@ class AccountManagerBlock extends Component {
     this.state = this.getinitialState()
   }
 
+  addManagerClickedHandler = (e) => {
+    this.props.actions.getSecretPinStatus().then(() =>{
+      const { securePin } = this.props;
+      console.log(securePin)
+      if(!this.props.error){
+        if(!securePin.securePinEnabled){
+          console.log("secure pin not enabled")
+          // this.handleSave(e)
+
+        } 
+        if (!securePin.securePinVerified) {
+          console.log("secure pin not verified, go through secure pin flow")
+          this.props.actions.getListOfUserNumbers().then(() => {
+              this.setState({
+                  modalStatus: true,
+                  listOfAccountNumbersModal: true,
+                  // afterGetRequest: this.props.listOfUserNumbers
+              })
+          })
+        } else {
+          console.log("secure pin already verified")
+          // this.handleSave(e)
+          // this.props.handleSave('accountmanagerBlock',this.state, e)
+        //   this.props.actions.postAddManagerByAccountHolder({
+        //     "firstName": this.state.firstName,
+        //     "lastName": this.state.lastName,
+        //     "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+        //     "emailId": this.state.emailId,
+        //     "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
+        // })
+          // return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        }
+      }
+    })
+  }
+
   componentWillReceiveProps(nextProps){
     const { memberPhoneNumber, memberEmailId } = nextProps
     if(this.props.memberEmailId !== nextProps.memberEmailId) {
       this.setState({
         phoneNumber: nextProps.memberPhoneNumber,
-        emailId: nextProps.memberEmailId
+        emailId: nextProps.memberEmailId,
+        showLearnMorePopUp: nextProps.showLearnMorePopUp
       })
     }
   }
@@ -100,7 +141,12 @@ getinitialState(){
       showPopup: false,
       managerToRemove: {},
       isEditEmailOnAccountMemberSelected: false,
-      showLearnMorePopUp: false
+      showLearnMorePopUp: this.props.showLearnMorePopUp,
+      moveCancelButton: 0,
+      modalStatus: false,
+      listOfAccountNumbersModal: true,
+      afterGetRequest: this.props.listOfUserNumbers,
+
     }
 }
 
@@ -116,9 +162,9 @@ getinitialState(){
     const postPayload = {
         "firstName": managerToRemove.firstName,
         "lastName": managerToRemove.lastName,
-        "phoneNumber": managerToRemove.phoneNumber,
+        "phoneNumber": managerToRemove.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : managerToRemove.phoneNumber,
         "emailId": managerToRemove.emailId,
-        "acctTypeCode":managerToRemove.phoneNumber==='noLineAssigned' ? 'FAC' :''
+        "acctTypeCode":managerToRemove.phoneNumber==='Not Applicable' ? 'FAC' :''
       }
     this.props.actions.postRemoveManagerByAccountHolder(postPayload)
     this.props.handleRemoveManager(this.state.managerToRemove)
@@ -211,12 +257,13 @@ getinitialState(){
         <div>
           {
             managers.map((eachManager)=>{
+	                    const phoneNumber = eachManager.phoneNumber === 'Not Applicable' ? '' : eachManager.phoneNumber
               if(eachManager.role === 'accountHolder'){
                 return(
                   <div key={eachManager.phoneNumber}>
                     <div className='row'>
                         <div className='row col-xs-12 col-sm-1 col-md-11'>
-                            <h1>Current Account Manager</h1>
+                            <h1>Current Account Managers</h1>
                         </div>
                       <div className='row col-xs-12 col-sm-1 col-md-1'>
                            <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
@@ -224,7 +271,7 @@ getinitialState(){
                     </div>
                      <div className='row owner-info'>
                          <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
-                         <p>{eachManager.phoneNumber}</p>
+                         <p>{phoneNumber}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
                      <div className='row seperator'/>
@@ -236,7 +283,7 @@ getinitialState(){
                     <div className='row owner-info-second' key={eachManager.phoneNumber}>
                          <div className='row col-xs-12 col-sm-11'>
                              <h4 className='manager-name'>{ eachManager.firstName } { eachManager.lastName }</h4>
-                             <p>{eachManager.phoneNumber}</p>
+                             <p>{phoneNumber}</p>
                              <p>{eachManager.emailId}</p>
                          </div>
                          {
@@ -256,7 +303,7 @@ getinitialState(){
             <div className='row owner-info-second'>
                 <div className='row col-xs-12 col-sm-11 undo-message-cont'>
                   <span className='text-success fa fa-check-circle'></span>
-                  <p className='undo-message'>Account Manager { revokedManager.firstName  + ' '+ revokedManager.lastName } revoked</p>
+                  <p className='undo-message'>Account Manager { revokedManager.firstName  + ' '+ revokedManager.lastName } removed</p>
                 </div>
                 <div className='row col-xs-12 col-sm-1'>
                     <a className='undo' role='button' onClick={() => this.props.handleUndoRevoke()}>Undo</a>
@@ -291,6 +338,13 @@ getinitialState(){
     this.props.actions.postDenyManagerByAccountHolder(payload)
     this.props.handleDenyAccountManagerRequest(newRequest)
   }
+
+  // handleApproveAccountManagerClick = () => {
+  //   this.setState({
+  //     approveAccountManager: true
+  //   })
+  //   // this.handleAppproveAccountManagerRequest()
+  // }
 
   handleAppproveAccountManagerRequest(newRequest){
     const payload = {
@@ -374,8 +428,9 @@ getinitialState(){
       if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
         <div className='row add-manager-cont'>
+                      {this.state.moveCancelButton === 1 && !this.props.showManagerEdit && this.props.managerEditMode ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
             <h4 tabIndex='0'>Add Account Managers</h4>
-            <a className='question'> What can an Account Manager do ?</a>
+            <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
             <p className='answer'>
               An Account Manager does NOT have to have a mobile number on your
               account. By providing a name only, they will be able to manage all lines
@@ -422,7 +477,7 @@ getinitialState(){
                    </div>
                    <div className='footer col-xs-12'>
                      <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                       <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+                     <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
                    </div>
                  </div>
               </div>
@@ -432,12 +487,11 @@ getinitialState(){
         if(accountMember){
           return(
             <div className='row add-manager-cont'>
-              <h4 tabIndex='0'>Add Account Managers</h4>
-              <a className='question'> What can an Account Manager do ?</a>
+              <h4 tabIndex='0'>Request Account Manager Access</h4>
+              <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
               <p className='answer'>
-                An Account Manager does NOT have to have a mobile number on your
-                account. By providing a name only, they will be able to manage all lines
-                 on the account in retails stores and by calling Customer Service.
+              Submit a request to your Account Owner to gain Account Manager access and abilities.
+              You must be 18 years or older to be an Account Manager.
               </p>
               <div>
                   <div>
@@ -453,10 +507,7 @@ getinitialState(){
                          </div>
                      </div>
                     </div>
-                    <div>
-                         <p>If you assign a mobile number and email address, the Account
-                             Manager will be given My Verizon Online access to your account.</p>
-                     </div>
+                    
                      <div className='contact-cont'>
                          <div className='row'>
                              <div className='col-sm-3'>
@@ -472,16 +523,7 @@ getinitialState(){
                              </div>
                              <div className='p-t-7 col-sm-3'>
                                {
-                                 this.state.isEditEmailOnAccountMemberSelected  ?
-                                 <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
                                  <p>{emailId}</p>
-                               }
-                             </div>
-                             <div className='col-sm-1'>
-                               {
-                                 this.state.isEditEmailOnAccountMemberSelected  ?
-                                 <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
-                                 <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
                                }
                              </div>
                          </div>
@@ -537,7 +579,7 @@ getinitialState(){
     return(
       <div className='row add-manager-cont'>
           <h4 tabIndex='0'>Request to Become an Account Manager</h4>
-          <a className='question'> What can an Account Manager do ?</a>
+          <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
           <p className='answer'>
             Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.
           </p>
@@ -549,11 +591,13 @@ getinitialState(){
                   <div className='add-manager-fields'>
                      <div className='manager-fn-cont '>
                         <label htmlFor='userId'>First Name</label>
-                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' name='firstName' value={firstName}/>
+                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' 
+                        analyticstrack="accountmanager-add-fname"name='firstName' value={firstName}/>
                      </div>
                      <div className='manager-ln-cont '>
                          <label htmlFor='userId'>Last Name</label>
-                         <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder='Name' name='lastName'value={lastName}/>
+                         <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('lastName',e.target.value)}}  placeholder='Name'
+                         analyticstrack="accountmanager-add-lname" name='lastName'value={lastName}/>
                      </div>
                  </div>
                 </div>
@@ -572,20 +616,21 @@ getinitialState(){
                     <div className='p-t-7 col-sm-3'>
                       {
                         this.state.isEditEmailOnAccountMemberSelected  ?
-                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} placeholder='name@domain.com' name='email' value={emailId}/> :
+                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} 
+                        analyticstrack="accountmanager-emailid" placeholder='name@domain.com' name='email' value={emailId}/> :
                         <p>samurai.jack@verizon.com</p>
                       }
                     </div>
                     <div className='col-sm-1'>
                       {
                         this.state.isEditEmailOnAccountMemberSelected  ?
-                        <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()}>Save</a> :
-                        <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()}>Edit</a>
+                        <a className='edit-btn' onClick={()=>this.handleSaveNewMemberEmail()} analyticstrack="accountmanager-save">Save</a> :
+                        <a className='edit-btn' onClick={()=>this.handleEditNewMemberEmail()} analyticstrack="accountmanager-edit">Edit</a>
                       }
                     </div>
                     <div className='footer col-xs-12'>
-                          <a className='btn' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                          <button className='btn btn--round'  onClick={(e) =>{this.handleSendRequestForAccountManager(this.state)}}>Send Request</button>
+                          <a className='btn' role='button' onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="accountmanager-cancel">Cancel</a>
+                          <button className='btn btn--round'  onClick={(e) =>{this.handleSendRequestForAccountManager(this.state)}} analyticstrack="accountmanager-save">Send Request</button>
                     </div>
                 </div>
                </div> :
@@ -605,9 +650,43 @@ getinitialState(){
   }
 
   toggleLearnMorePopup = () =>{
+
+    if(this.props.showLearnMorePopUp){
+      this.props.actions.hideLearnMorePopUp()
+    }else {
+      this.props.actions.showLearnMorePopUp()
+    }
+  }
+  componentDidMount(){
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  closeModal = () => {
+    // this.props.clearErrorCodes()
     this.setState({
-      showLearnMorePopUp: ! this.state.showLearnMorePopUp
+      // errorModal: false,
+      modalStatus: false,
+      // selectedPhone: null,
+      // authorizationCode: ""
     })
+  }
+
+  handleResize = () => {
+    if(window.innerWidth < 990 && window.innerWidth > 715){
+      this.setState({
+        moveCancelButton: 1
+      })
+    } else if (window.innerWidth < 715 ) {
+      this.setState({
+        moveCancelButton: 2
+      })
+    }
+    else {
+      this.setState({
+        moveCancelButton: 0
+      })
+    }
   }
 
   render() {
@@ -624,13 +703,15 @@ getinitialState(){
           <Popup showPopup={this.props.showRequestSuccessPopup}>
               <RequestSent onClosePopup ={()=>{this.props.toggleRequestSuccessPopup()}}/>
           </Popup>
-          <Popup showPopup={this.state.showLearnMorePopUp}>
+          <Popup showPopup={this.props.showLearnMorePopUp}>
               <AccessRoles onClosePopup ={()=>{this.toggleLearnMorePopup()}}/>
           </Popup>
           <div className='clearfix'></div>
           <div className='body'>
-            <div className='col-xs-12 col-sm-4 description_box__header'>
-              <div className='col-xs-12'>
+            <div className='col-xs-12 col-sm-4 description_box__header' style={{padding: "0"}} >
+              <div className='col-xs-12' style={{padding: "0"}}>
+              {this.state.moveCancelButton === 2 && !showManagerEdit && managerEditMode ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
+              
               <h4 tabIndex='0' >Account Managers</h4>
               {/*
                   showManagerEdit && ( accountOwner || accountMember ) &&
@@ -639,7 +720,7 @@ getinitialState(){
                   </div> */
               }
               </div>
-              <p>Account Managers can manage all lines on the account in retail stores and by calling Customer Service.</p>
+              <p>Assign Account Managers to let others access and make changes to all information and lines on your account.</p>
             </div>
             <div className='col-xs-12 col-sm-8 description_box__large-container'>
               {
@@ -656,11 +737,34 @@ getinitialState(){
               {
                   showManagerEdit && ( accountOwner || accountMember ) &&
                   <div className='description_box__edit description_box__edit_section'>
-                    <a className='btn btn-anchor'  onClick={() => this.handleEditCancel()} role='button'>Edit</a>
+                    <a className='btn btn-anchor'  onClick={() => this.handleEditCancel()} role='button' analyticstrack="accountmanager-edit" >Edit</a>
                   </div>
               }
             </div>
           </div>
+          {/* <Modal
+              modalStatus={this.state.errorModal}
+              closeModal={this.closeModal}
+            >
+              <div>{this.handleErrors(this.props.error)}</div>
+            </Modal> */}
+            <Modal
+              modalStatus={this.state.modalStatus}
+              closeModal={this.closeModal}
+            >
+              <SecurePin
+                handleSaveType="accountmanagerBlock"
+                handleSaveData={{"firstName": this.state.firstName,
+                "lastName": this.state.lastName,
+                "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+                "emailId": this.state.emailId,
+                "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
+                closeModal={this.closeModal}
+                handleSave={this.props.handleSave}
+                // approveAccountManager={this.state.approveAccountManager}
+                // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
+              />
+           </Modal>
         </div>
     )
   }
@@ -672,6 +776,10 @@ const mapStateToProps = state => {
     //accountManagerRequests: state.accManagerReducer.accountManagerRequests,
     memberEmailId: state.accManagerReducer.emailId,
     memberPhoneNumber: state.accManagerReducer.phoneNumber,
+    showLearnMorePopUp: state.accManagerReducer.showLearnMorePopUp,
+    securePin: state.security.secretPin,
+    isSecurePinValidated: state.security.isSecurePinValidated,
+    error: state.security.securePinError
   }
 }
 

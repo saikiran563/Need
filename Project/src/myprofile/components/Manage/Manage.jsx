@@ -7,6 +7,7 @@ import Greetings from './Greetings'
 import TransferOfService from './TransferOfService'
 import './style.css'
 import Popup from './Popup/Popup';
+import Spinner from "../Spinner/Spinner"; //spinner
 
 require('../../../assets/css/main.css');
 require('../../../assets/css/my-profile.css');
@@ -47,7 +48,8 @@ class Manage extends Component {
     const type = URL_MAP[URL_MAP.length-1];
     type?this.handleEditCancel(type+"block"):"";
       this.setState({
-        accountManagerRequests: this.props.accountManagerRequests
+        accountManagerRequests: this.props.accountManagerRequests,
+        newAccountMemberRequest:this.props.newAccountMemberRequest
       })
   }
 
@@ -75,7 +77,8 @@ class Manage extends Component {
   componentWillReceiveProps(newProps){
       this.setState({
         managers: newProps.managers,
-        accountManagerRequests: newProps.accountManagerRequests
+        accountManagerRequests: newProps.accountManagerRequests,
+        newAccountMemberRequest:newProps.newAccountMemberRequest
       })
   }
 
@@ -233,9 +236,12 @@ handleEditCancel = (type) =>  {
 
   render() {
     const { managers, accountManagerRequests,deniedAccountManagerRequests } = this.state;
+    const { showSpinner } = this.props
     return (
       <div>
           <h1 className="title title--lg">Manage Account</h1>
+          {
+          showSpinner ? <Spinner /> :
           <div className="col-xs-12">
               <AccountManagers
                   managers={managers}
@@ -256,6 +262,7 @@ handleEditCancel = (type) =>  {
               <Greetings  handleEditCancel={(type) => this.handleEditCancel(type)} handleSave={(type, data, e) => this.handleSave(type, data, e)} {...this.state}/>
               <TransferOfService {...this.state}/>
           </div>
+          }
       </div>
     )
   }
@@ -266,6 +273,7 @@ const mapStateToProps = state => {
     managers: state.accManagerReducer.managers,
     accountManagerRequests:  state.accManagerReducer.accountManagerRequests,
     state:state,
+    newAccountMemberRequest:state.accManagerReducer.newAccountMemberRequest
   }
 }
 

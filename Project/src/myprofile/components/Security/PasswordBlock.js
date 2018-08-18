@@ -4,7 +4,9 @@ import { bindActionCreators } from 'redux'
 import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
 import {encrypt, decrypt,hasValueinArray} from "../../../utils/config"
-import './style.css'
+import './style.css';
+import { getErrorMsgByCode } from "../../../utils/config";
+import {clearErrorCodes} from "./actions/fetchSecurities";
 
 class PasswordBlock extends Component {
   constructor(props) {
@@ -59,25 +61,43 @@ class PasswordBlock extends Component {
     this.setState({ currentPassword: e.target.value });
   }
 
-  componentWillUpdate(prevProps){
+  componentDidUpdate(prevProps){
+    // console.log(prevProps)
     if(prevProps.pwdBlock !== this.props.pwdBlock){
       console.log(prevProps.pwdBlock)
       this.setState({
         showSaved: true
       })
     }
-  }
 
-  handleMouseClick = event => {
     if(this.state.showSaved){
-     this.setState({
-       showSaved: false
-     })
+      if(prevProps.event != this.props.event){
+        this.setState({
+          showSaved: false
+        })
+      }
+    }
+    if(this.props.error){
+      if(prevProps.event != this.props.event){
+        this.props.clearErrorCodes()
+      }
     }
   }
 
+  // handleMouseClick = event => {
+  //   if(this.state.showSaved){
+  //    this.setState({
+  //      showSaved: false
+  //    })
+  //   }
+  // }
+
   updateUser = (currentUser) => {
     this.setState({userId:currentUser});
+  }
+  handleEditCancel = () => {
+    this.setState({newPassword:"",currentPassword:"",confirmPassword:""},() => this.onChangeInput());
+     this.props.handleEditCancel('cancelblock')
   }
   onChangeInput = () => {
     const state = this.state;
@@ -144,6 +164,7 @@ class PasswordBlock extends Component {
   }
 
   render() {
+    // console.log("PASSWORD BLOCK",this.props)
     const { controlButtons, errorMessages, userId, requiredError, istouched, currentPassword, 
                                 newPassword, confirmPassword,isCurrentPwdValid, isMismatch } = this.state;
     const { passwordInfo, showPasswordEdit, passwordEditMode, pwdSaved, pwdBlock } = this.props;
@@ -155,6 +176,7 @@ class PasswordBlock extends Component {
      let strength=3;
      //const strengthClass = ['strength-meter mt-2', newPassword.length>0 ? 'visible' : 'invisible'].join(' ').trim();
      const strengthClass = ['strength-meter mt-2','visible'].join(' ').trim();
+      
      if(isValid && newPassword.length>0) {
        if(newPassword.match(/^[a-zA-Z0-9]+$/)){ //!@#\$%\^\&*\)\(+=._-
                pwdStrength="Medium";
@@ -185,10 +207,10 @@ class PasswordBlock extends Component {
        }*/
     const editableClassName = passwordEditMode ? "description_box--edit-view" : "description_box_disabled";
     return (
-        <div ref={node => this.node = node} onClick={this.handleMouseClick}  className={`row description_box ${editableClassName}`}>
+        <div className={`row description_box ${editableClassName}`}>
 	
 	<div className="col-xs-12 col-sm-4 description_box__header">
-		<h4 tabIndex="0">{passwordInfo.title}</h4>
+		<h4>{passwordInfo.title}</h4>
 		<p>{passwordInfo.desc}</p>
     </div>       
 	<div className="col-xs-12 col-sm-8 description_box__large-container">
@@ -201,7 +223,7 @@ class PasswordBlock extends Component {
 					</div>
 			    }
 				{
-					!showPasswordEdit && passwordEditMode  && passwordInfo.list && 
+					!showPasswordEdit && passwordEditMode && passwordInfo.list && 
 					<div className="description_box__form">
 						<div className="row">
 							<div className="col-xs-12 col-sm-5">
@@ -242,9 +264,7 @@ class PasswordBlock extends Component {
 								  touched={istouched}
 								  value={confirmPassword} 
                   analyticstrack="pwdblock-confpwdtxt"/>
-                 {  !isMismatch && confirmPassword.length>0 && 
-                  <p className="errorDisplay">The passwords do not match</p>
-                 }
+                  {this.props.error ? <p className="errorDisplay"><span className="fa fa-exclamation-circle"></span> {getErrorMsgByCode(this.props.error)}</p> : ""}
 								</div>
 							</div>
 							<div className="col-xs-12 col-sm-7">
@@ -276,17 +296,16 @@ class PasswordBlock extends Component {
 					</div>
 				}
 			</div>	
-      
       {
 			showPasswordEdit &&  
 			<div className="description_box__edit description_box__edit_section" analyticstrack="pwdblock-edit">
-				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('passwordblock')} role="button">Edit</a>
+				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('passwordblock')} role="button"  tabIndex="0" href="#/security/password">Edit</a>
 			</div>
 			}	
        {
 			!showPasswordEdit && passwordEditMode &&   
 			<div className="description_box__edit description_box__edit_section cancel" analyticstrack="pwdblock-cancel">
-				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button">Cancel</a>
+				<a className="btn btn-anchor"  onClick={this.handleEditCancel} role="button" href="#/security">Cancel</a>
 			</div>
 			}	
        {this.state.showSaved ? <span className="text-success fa fa-check-circle col-xs-12 section-saved"> Saved </span> : ""}
@@ -294,7 +313,7 @@ class PasswordBlock extends Component {
 			{
                !showPasswordEdit && passwordEditMode && 
 			   <div className="footer col-xs-12">
-                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pwdblock-cancel">Cancel</a>
+                  <a className="btn btn--round-invert" role="button"  onClick={this.handleEditCancel}  analyticstrack="pwdblock-cancel" href="#/security">Cancel</a>
                   <button className="btn btn--round"  disabled={!isValid || !isMismatch || reactGlobals.isCsr}  onClick={() => this.props.handleSave('pwdForm', {newVerifyPassword: confirmPassword, currentPassword: currentPassword, newPassword: newPassword}, event)}
                   analyticstrack="pwdblock-save">Save Changes</button> 
                 </div>
@@ -306,4 +325,10 @@ class PasswordBlock extends Component {
   }
 }
 
-export default PasswordBlock;
+const mapStateToProps = state => {
+  return {
+    error: state.security.passwordError
+  }
+}
+
+export default connect(mapStateToProps, {clearErrorCodes})(PasswordBlock);

@@ -52,9 +52,6 @@ class LeftNav extends Component {
                         <li className=" " analyticstrack="leftnavsecretque">
                             <NavLink exact to='/security/question'>Secret question</NavLink>
                         </li>
-                        <li className=" ">
-                            <a href="/my-profile-desktop-security.html?section=securityImgS&page=ss">Security image</a>
-                        </li>
                         {acctHolder && <li className=" ">
                             <NavLink exact to='/security/enhancedauth'>Enhanced authentication</NavLink>
                         </li>}
@@ -80,7 +77,7 @@ class LeftNav extends Component {
 
 
                         <li className={`page page__title ${this.props.location.pathname.indexOf("manage") > -1 ? "main-active" : ''}`} analyticstrack="leftnavmanageacct">
-                            <NavLink exact to='/manage'>Manage Account</NavLink>
+                            <NavLink exact to='/manage'>Account Management</NavLink>
                         </li>
                         <li className=" " analyticstrack="leftnavacctmanager">
                             <NavLink exact to="/manage/accountmanager">Account managers</NavLink>

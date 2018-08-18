@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux'
 import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
 import './style.css'
+import { getErrorMsgByCode } from "../../../utils/config"
+import { clearErrorCodes } from "./actions/fetchSecurities"
 
 class AccountBlock extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class AccountBlock extends Component {
       istouched: false,
       isMismatch: false,
       currentAccountPin: "", newAccountPin: "", confirmAccountPin: "",
+      pinSaved: false,
       errorMessages: [
         { name: '4 numbers in length', error: false, type: 'minmax'},
         { name: 'Can’t be sequential', error: false, type: 'onSeq' },
@@ -35,7 +38,25 @@ class AccountBlock extends Component {
       this.setState({ confirmAccountPin: value }, () => this.onChangeInput());
     }
   }
-  
+  componentDidUpdate(prevProps){
+    if(prevProps.pinSaved !== this.props.pinSaved){
+      this.setState({
+        pinSaved: true
+      })
+    }
+    if(this.state.pinSaved){
+      if(prevProps.event != this.props.event){
+        this.setState({
+          pinSaved: false
+        })
+      }
+    }
+    if(this.props.error){
+      if(prevProps.event != this.props.event){
+        this.props.clearErrorCodes()
+      }
+    }
+  }
  /* handleOnSave = (e) => {
        let  {userId , currentAccountPin , requiredError , newAccountPin,isCurrentPinValid} = this.state;
        if(pin === currentAccountPin )
@@ -64,6 +85,10 @@ class AccountBlock extends Component {
   }
   isSeq(numbers) {
     return  numbers.every((digit,i)=> i===0  ||  digit == parseInt(numbers[i-1])+1);
+  }
+  handleEditCancel = () => {
+    this.setState({newAccountPin:"",currentAccountPin:""},() => this.onChangeInput());
+     this.props.handleEditCancel('cancelblock')
   }
   onChangeInput = () => {
     const newPin = this.state.newAccountPin;
@@ -125,7 +150,7 @@ class AccountBlock extends Component {
         <div className={`row description_box ${editableClassName}`}>
 	
 	<div className="col-xs-12 col-sm-4 description_box__header">
-		<h4 tabIndex="0">Account Pin</h4>
+		<h4>Account Pin</h4>
 		<p>{accountPinInfo.desc}</p>
     </div>
       
@@ -177,6 +202,8 @@ class AccountBlock extends Component {
                   { /* !isMismatch && confirmAccountPin.length>0 && 
                   <p className="errorDisplay">Mismatch</p> */
                  }
+                  {this.props.error ? <p className="errorDisplay"><span className="fa fa-exclamation-circle"></span> {getErrorMsgByCode(this.props.error)}</p> : ""}
+                 
 								</div>
 							</div>
 							<div className="col-xs-12 col-sm-7">
@@ -207,23 +234,25 @@ class AccountBlock extends Component {
 			{ 
         !showAccountPinEdit && accountPinEditMode && 
              <div className="description_box__edit description_box__edit_section cancel">
-				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="pinblock-cancel">Cancel</a>
+				<a className="btn btn-anchor"    onClick={this.handleEditCancel} role="button" analyticstrack="pinblock-cancel" href="#/security">Cancel</a>
 			</div>
             }
 			
             {
 			showAccountPinEdit &&  
 			<div className="description_box__edit description_box__edit_section" analyticstrack="pinblock-edit">
-				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('accountPinblock')} role="button">Edit</a>
+				<a className="btn btn-anchor"  onClick={() => this.props.handleEditCancel('accountPinblock')} role="button"  tabIndex="0" href="#/security/accountPin">Edit</a>
 			</div>
 			}
 				{
-              pinSaved && <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span>
+              this.state.pinSaved ? <span className="col-xs-12 section-saved text-success fa fa-check-circle"> Saved </span> : ""
             }
+			
+            
 			{
                !showAccountPinEdit && accountPinEditMode && 
 			   <div className="footer col-xs-12">
-                  <a className="btn btn--round-invert" role="button"  onClick={() => this.props.handleEditCancel('cancelblock')} analyticstrack="pinblock-cancel">Cancel</a>
+                  <a className="btn btn--round-invert" role="button"   onClick={this.handleEditCancel}  analyticstrack="pinblock-cancel" href="#/security">Cancel</a>
                   <button className="btn btn--round"  disabled={!isValid || !isMismatch || reactGlobals.isCsr} 
                   onClick={() => this.props.handleSave('pinForm', {enteredPin: newAccountPin,reEnteredPin: confirmAccountPin}, event)} 
                   analyticstrack="pinblock-save">Save Changes</button>
@@ -240,4 +269,10 @@ class AccountBlock extends Component {
   }
 }
 
-export default AccountBlock;
+const mapStateToProps = state => {
+  return {
+    error: state.security.accountPinError
+  }
+}
+
+export default connect(mapStateToProps, { clearErrorCodes })(AccountBlock);

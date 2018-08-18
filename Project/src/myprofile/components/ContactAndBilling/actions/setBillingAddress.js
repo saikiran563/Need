@@ -79,7 +79,7 @@ export const updateBillingAddress = (address) => dispatch => {
        }
 
       //  dispatch(setBillingAddressOnSuccess(address))
-      // dispatch(setBillingAddressSuccess(response.status)) 
+      // dispatch(setBillingAddressSuccess("0")) 
         
     })
      .catch((err) => {

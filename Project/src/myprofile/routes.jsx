@@ -8,6 +8,7 @@ import Manage from './components/Manage'
 import ContactAndBilling from './components/ContactAndBilling/contactBilling';
 import PrivacyAndPermissions from './components/PrivacyAndPermissions/privacyPermissions';
 import LeftNav from './components/LeftNavBar/leftNav';
+import timeOut from  './components/SessionTimeout/Timeout'
 require('../assets/css/main.css');
 class ReactRouter extends Component {   
   render() {
@@ -20,13 +21,13 @@ class ReactRouter extends Component {
         <LeftNav/>
         </div> 
         <div className="col-md-9 a-quicklinks">                        
-          <Route exact path="/" component={QuickLinks} />
-          <Route exact strict path="/security" component={Security} />
-          <Route exact strict path="/security/userid" component={Security} />
-          <Route exact strict path="/security/password" component={Security} />
-          <Route exact strict path="/security/accountPin" component={Security} />
-          <Route exact strict path="/security/question" component={Security} />
-          <Route exact strict path="/security/enhancedauth" component={Security} />
+          <Route exact path="/" component={timeOut(QuickLinks)} />
+          <Route exact strict path="/security" component={timeOut(Security)} />
+          <Route exact strict path="/security/userid"  key="userid" component={timeOut(Security)} />
+          <Route exact strict path="/security/password"  key="password" component={timeOut(Security)} />
+          <Route exact strict path="/security/accountPin"  key="pin" component={timeOut(Security)} />
+          <Route exact strict path="/security/question" key="ques" component={timeOut(Security)} />
+          <Route exact strict path="/security/enhancedauth" key="enhancedauth" component={timeOut(Security)} />
           <Route exact strict path="/contactbilling" component={ContactAndBilling} />
           <Route exact strict path="/contactbilling/email" component={ContactAndBilling} />
           <Route exact strict path="/contactbilling/primaryPhone" component={ContactAndBilling} />

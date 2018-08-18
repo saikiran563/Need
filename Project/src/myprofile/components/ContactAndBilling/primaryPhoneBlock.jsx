@@ -123,7 +123,7 @@ class PrimaryPhoneBlock extends Component {
                     <div className="col-xs-12 col-sm-8 description_box__large-container">
                         <div className="row">
 
-                                <div className="col-xs-8 col-sm-8 description_box__details">
+                                <div className="col-xs-12 col-sm-8 description_box__details">
                                 {
                                     !(!showPrimaryPhoneEdit && primaryPhoneEditMode) &&  <div className="description_box__read">
 
@@ -170,7 +170,7 @@ class PrimaryPhoneBlock extends Component {
               }
               {
                 !showPrimaryPhoneEdit && primaryPhoneEditMode &&
-                  <div className="description_box__edit description_box__edit_section">
+                  <div className="description_box__edit description_box__edit_section primaryPhone_cancel cancel">
                   <a className="description_box__btn-edit description_box__btn-edit-cancel" onClick={() => this.props.handleEditCancel('cancelblock')} role="button" analyticstrack="primaryPhone-cancel">Cancel</a>
                 </div>
               }

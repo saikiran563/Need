@@ -1,0 +1,13 @@
+{
+  "enauth": {
+    "two_factor_flag": "1",
+    "email": "PRIYANKA.MADHAVARAM@VERIZONWIRELESS.COM",
+    "mdn": "3183710025",
+    "mdn_is_capable": "Y",
+    "email_is_verified": "Y",
+    "cust_id": "0313216114",
+    "user_id": "Test123467",
+    "role": "accountManager",
+    "acct_num": "00001"
+  }
+}

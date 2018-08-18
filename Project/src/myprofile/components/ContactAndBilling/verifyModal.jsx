@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './style.css'
+import '../Modal/style.css';
 
 class VerifyModal extends Component {
     constructor(props, context){
@@ -33,7 +33,7 @@ class VerifyModal extends Component {
                             <span className="a-icon-overlay-close" aria-hidden="true"onClick={() => this.closepop()}></span>
                         </a>
                     </span>
-                    <div className="aMyProfile aMyProfile__modal verify__modal overlay-content">
+                    <div id="overlayFrame contactbilling-verifyemail" className="aMyProfile aMyProfile__modal verify__modal overlay-content">
                 <h1 className="title title--lg">There's just one more step.</h1>
                 <h2 className="title title--lg">Please verify your email address.</h2>
                 <p className="modal__divider remove-desc">
@@ -46,7 +46,7 @@ class VerifyModal extends Component {
                 <br aria-hidden="true"/>
                 <div className="rol-permissions__buttons row">
                     <div className="col-xs-12 ">
-                        <a className="btn btn--round" role="button" onClick={() => this.handleSave()}>Ok, continue</a>
+                        <a className="btn btn--round" role="button" onClick={() => this.handleSave()} >Ok, continue</a>
                     </div>
                 </div>
             </div>

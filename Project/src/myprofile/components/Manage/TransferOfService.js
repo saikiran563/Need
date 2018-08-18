@@ -14,14 +14,13 @@ class TransferofService extends Component {
         <div className="clearfix"></div>
         <div className="body row">
           <div className="col-xs-12 col-sm-4 description_box__header">
-            <h4 tabIndex="1">Transfer of service </h4>
+            <h4 tabIndex="1">Transfer Lines of Service </h4>
             <p>Transfer control of a line to another account, or take responsibility of a line from another account. </p>
           </div>
           {
             showTransferOfServiceEdit && (
               <div>
                   <div className="col-xs-12 col-sm-4">
-                    <p>Transfer of Service</p>
                   </div>
                   <div className="col-xs-12 col-sm-4 transferofservice-cont">
                     <a
@@ -29,7 +28,7 @@ class TransferofService extends Component {
                       role="button"
                       href='https://www.verizonwireless.com/UFDRender/Flows/RelinquishingService'
                     >
-                      Transfer of Service
+                      Transfer  Service
                     </a>
                   </div>
               </div>
@@ -39,7 +38,6 @@ class TransferofService extends Component {
             !showTransferOfServiceEdit && transferOfServiceEditMode && (
             <div>
                 <div className="col-xs-12 col-sm-4">
-                  <p>Transfer of Service</p>
                 </div>
                 {
                   reactGlobals.role.toLocaleLowerCase() !="mobilesecure" &&
@@ -49,7 +47,7 @@ class TransferofService extends Component {
                       role="button"
                       href='https://www.verizonwireless.com/UFDRender/Flows/RelinquishingService'
                     >
-                      Transfer of Service
+                      Transfer Service
                     </a>
                   </div>
                 }

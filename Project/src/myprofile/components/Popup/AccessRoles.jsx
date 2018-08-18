@@ -56,18 +56,18 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray" >
+                                        
                                             <span className="a-hidden" id="assign-account-managers-manager-label">Manager Toggle</span>
-                                            <input type="checkbox" name="radio2" aria-labelledby="assign-account-managers-manager-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                            
+                            
+                                       
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                        
                                             <span className="a-hidden" id="assign-account-managers-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio2" aria-labelledby="assign-account-managers-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                          
+                                            
+                                       
                                     </div>
                                 </div>
 
@@ -83,18 +83,16 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="change-billing-password-manager-label">Manager Toggle</span>
-                                            <input type="checkbox" name="radio1" aria-labelledby="change-billing-password-manager-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                           
+                                        
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="change-billing-password-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio1" aria-labelledby="change-billing-password-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                          
+                                      
                                     </div>
                                 </div>
 
@@ -118,11 +116,9 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="upgrade-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio3" aria-labelledby="upgrade-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                           
                                     </div>
                                 </div>
 
@@ -146,11 +142,10 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                        
                                             <span className="a-hidden" id="new-line-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio14" aria-labelledby="new-line-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                           
+                                        
                                     </div>
                                 </div>
 
@@ -175,11 +170,10 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                      
                                             <span className="a-hidden" id="plan-changes-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio4" aria-labelledby="plan-changes-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                            
+                                       
                                     </div>
                                 </div>
 
@@ -204,11 +198,9 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="view-bill-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio5" aria-labelledby="view-bill-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                            
                                     </div>
                                 </div>
 
@@ -234,11 +226,10 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="paperless-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio6" aria-labelledby="paperless-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                            
+                                       
                                     </div>
                                 </div>
 
@@ -247,7 +238,7 @@ const AccessRoles = () => {
 
                                 <div className="row rol-permissions__row">
                                     <div className="col-xs-6">
-                                        <p>Cancel Pending Order*</p>
+                                        <p>Cancel Pending Order</p>
                                     </div>
                                     <div className="col-xs-2">
                                         <label className="custom-checkbox-gray">
@@ -264,11 +255,10 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="cancel-pending-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio7" aria-labelledby="cancel-pending-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                           
+                                        
                                     </div>
                                 </div>
 
@@ -294,11 +284,10 @@ const AccessRoles = () => {
                                         </label>
                                     </div>
                                     <div className="col-xs-2">
-                                        <label className="custom-checkbox-gray">
+                                       
                                             <span className="a-hidden" id="recurring-payments-member-label">Member Toggle</span>
-                                            <input type="checkbox" name="radio8" aria-labelledby="recurring-payments-member-label" />
-                                            <span className="checkmark"></span>
-                                        </label>
+                                           
+                                      
                                     </div>
                                 </div>
 
