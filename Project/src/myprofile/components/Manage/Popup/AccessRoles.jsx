@@ -857,7 +857,6 @@ const AccessRoles = (props) => {
             <div className="col-xs-12">
               <a href="https://www.verizonwireless.com/support/assign-account-manager-roles-faqs/" className="btn btn--round-invert">Learn More</a>
               <a
-                href="#/manage"
                 onClick={()=>{props.onClosePopup()}}
                 className="btn btn--round close-btn"
                 role="button"

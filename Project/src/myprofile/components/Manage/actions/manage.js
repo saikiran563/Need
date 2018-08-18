@@ -11,7 +11,7 @@ import {
     GET_MANAGER_REQUESTS_URL,
     SEND_ACCOUNT_MANGER_REQUEST_URL,
     POST_GREETING_NAME_URL,
-    GET_ACCOUNT_MEMBER_DETAILS_URL
+    GET_ACCOUNT_MEMBER_DETAILS_URL,
   } from '../api'
 
   /*Get the data related to Manage Account Block */
@@ -74,6 +74,11 @@ export const GET_ACCOUNT_MEMBER_DETAILS_BEGIN= 'GET_ACCOUNT_MEMBER_DETAILS_BEGIN
 export const GET_ACCOUNT_MEMBER_DETAILS_SUCCESS = 'GET_ACCOUNT_MEMBER_DETAILS_SUCCESS'
 export const GET_ACCOUNT_MEMBER_DETAILS_FAIL = 'GET_ACCOUNT_MEMBER_DETAILS_FAIL'
 
+//Show and Hide show Learn More PopUp
+export const SHOW_LEARN_MORE_POPUP = 'SHOW_LEARN_MORE_POPUP'
+export const HIDE_LEARN_MORE_POPUP = 'HIDE_LEARN_MORE_POPUP'
+
+
 const customHeaders = {
  "Accept": "application/json"
  //"Authorization": "'client_ip':10.191.198.160,'channel':'web'",
@@ -93,7 +98,6 @@ export const fetchLandingManageData = () => dispatch => {
   dispatch(fetchLandingManageDataBegin())
   axios.get(GET_MANAGE_LANDING_URL,{headers: customHeaders})
   .then(response => {
-
     dispatch(fetchLandingManageDataSuccess(response.data))
   })
  .catch((error) => {
@@ -281,7 +285,7 @@ const postDenyManagerByAccountHolderFailed = error => ({
 /* Send Request to Account holder to become account manager*/
 export const postSendRequestForAccountManager = (payload) => dispatch => {
   dispatch(postSendRequestForAccountManagerBegin())
-  axios.post(SEND_ACCOUNT_MANGER_REQUEST_URL,payload)
+  axios.patch(SEND_ACCOUNT_MANGER_REQUEST_URL,payload)
   .then(response => {
     dispatch(postSendRequestForAccountManagerSuccess(response.data))
   })

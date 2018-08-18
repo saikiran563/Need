@@ -17,7 +17,7 @@ const initialState = {
   accountManagerRequests: [],
   mtns: [],
   emailId: '',
-  phoneNumber:'',
+  phoneNumber:'6362245062',
   deniedAccountManagerRequests: null,
   showRequestSuccessPopup: false,
   showSpinner: true,
@@ -43,15 +43,22 @@ const accManagerReducer = (state = initialState, action) => {
         managers: [...state.managers, action.response.data]
       }
 
+    case FETCH_MANAGE_LANDING_BEGIN:
+      return updateObject(state, {
+        showSpinner: true
+      })
+
     case FETCH_MANAGE_LANDING_SUCCESS:
       return updateObject(state, {
         managers: action.response.customerInfo,
         showSpinner: false
-      },)
+      })
+
     case FETCH_MTNS_SUCCESS:
       return updateObject(state, {
         mtns: action.response.mtnList
     })
+
     case FETCH_MANAGER_REQUESTS_SUCCESS:
       let accountManagerRequests = []
       action.response.customerInfo.forEach(eachManager => {

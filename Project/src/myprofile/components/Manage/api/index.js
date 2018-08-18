@@ -13,6 +13,10 @@ export const GET_MANAGER_REQUESTS_URL =  BASE_URL +  '/data/ahonly/profile/pendi
 export const POST_GREETING_NAME_URL =  BASE_URL + '/data/secure/profile/greetingname'
 export const GET_ACCOUNT_MEMBER_DETAILS_URL =  BASE_URL+ '/data/secure/profile/userDetails'
 
-//export const GET_MANAGE_LANDING_URL = 'https://mypf-2a66b.firebaseio.com/activemanagers.json'
-//export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
-//export const POST_GREETING_NAME_URL =  'https://mypf-2a66b.firebaseio.com/activemanagers.json'
+
+// export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
+// export const GET_MANAGE_LANDING_URL = 'https://mypf-2a66b.firebaseio.com/activemanagers.json'
+// //export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
+// export const POST_GREETING_NAME_URL =  'https://mypf-2a66b.firebaseio.com/activemanagers.json'
+
+//export const SEND_ACCOUNT_MANGER_REQUEST_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests/customerInfo.json'

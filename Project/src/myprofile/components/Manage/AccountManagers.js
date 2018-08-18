@@ -11,7 +11,7 @@ import AccessRoles  from './Popup/AccessRoles'
 import ManagersListToAccountManager from './components/ManagersListToAccountManager'
 import ManagerCard from './components/ManagerCard'
 import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
-
+import formatPhoneNumber from './utilities/formatPhoneNumber'
 import Modal from "../Modal/modal"
 import SecurePin from "../SecurePin/SecurePin"
 import { handleErrors } from "../../../utils/errorHandler"
@@ -35,7 +35,7 @@ class AccountManagerBlock extends Component {
           console.log("secure pin not enabled")
           // this.handleSave(e)
 
-        } 
+        }
         if (!securePin.securePinVerified) {
           console.log("secure pin not verified, go through secure pin flow")
           this.props.actions.getListOfUserNumbers().then(() => {
@@ -358,6 +358,18 @@ getinitialState(){
     this.props.handleAppproveAccountManagerRequest(payload)
   }
 
+  handleUndoDenyAccountManagerRequest(deniedAccountManager){
+    const sendRequestPayload = {
+      status: 'request pending',
+      firstName: deniedAccountManager.firstName,
+      lastName: deniedAccountManager.lastName,
+      phoneNumber: deniedAccountManager.phoneNumber,
+      emailId: deniedAccountManager.emailId
+    }
+    this.props.actions.postSendRequestForAccountManager(sendRequestPayload)
+    this.props.handleUndoDenyAccountManagerRequest()
+  }
+
   handleSendRequestForAccountManager(newRequest){
     const payload = {
         "role":'',
@@ -397,7 +409,7 @@ getinitialState(){
                     <p className='undo-message'>Account Manager Request from {deniedAccountManagerRequests.phoneNumber} is denied </p>
                   </div>
                   <div className='row col-xs-12 col-sm-1'>
-                      <a className='undo' role='button' onClick={() => this.props.handleUndoDenyAccountManagerRequest()}>Undo</a>
+                      <a className='undo' role='button' onClick={() => this.handleUndoDenyAccountManagerRequest(deniedAccountManagerRequests)}>Undo</a>
                   </div>
               </div>
             }
@@ -507,14 +519,14 @@ getinitialState(){
                          </div>
                      </div>
                     </div>
-                    
+
                      <div className='contact-cont'>
                          <div className='row'>
                              <div className='col-sm-3'>
                                  <label>Phone Number</label>
                              </div>
                              <div className='p-t-7 col-sm-3'>
-                                 <p>{phoneNumber}</p>
+                                 <p>{formatPhoneNumber(phoneNumber)}</p>
                              </div>
                          </div>
                          <div className='row'>
@@ -530,7 +542,7 @@ getinitialState(){
                      </div>
                      <div className='footer col-xs-12'>
                        <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                         <button className='btn btn--round'  onClick={() =>this.handleSendRequestForAccountManager(this.state) }>Send Request</button> :
+                         <button className='btn btn--round'  onClick={() =>this.handleSendRequestForAccountManager(this.state) }>Send Request</button>
                      </div>
                    </div>
                 </div>
@@ -591,7 +603,7 @@ getinitialState(){
                   <div className='add-manager-fields'>
                      <div className='manager-fn-cont '>
                         <label htmlFor='userId'>First Name</label>
-                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name' 
+                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('firstName',e.target.value)}} placeholder='Name'
                         analyticstrack="accountmanager-add-fname"name='firstName' value={firstName}/>
                      </div>
                      <div className='manager-ln-cont '>
@@ -616,7 +628,7 @@ getinitialState(){
                     <div className='p-t-7 col-sm-3'>
                       {
                         this.state.isEditEmailOnAccountMemberSelected  ?
-                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}} 
+                        <InputField type='text' handleOnChange={(e)=>{this.handleOnChange('emailId',e.target.value)}}
                         analyticstrack="accountmanager-emailid" placeholder='name@domain.com' name='email' value={emailId}/> :
                         <p>samurai.jack@verizon.com</p>
                       }
@@ -711,7 +723,7 @@ getinitialState(){
             <div className='col-xs-12 col-sm-4 description_box__header' style={{padding: "0"}} >
               <div className='col-xs-12' style={{padding: "0"}}>
               {this.state.moveCancelButton === 2 && !showManagerEdit && managerEditMode ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
-              
+
               <h4 tabIndex='0' >Account Managers</h4>
               {/*
                   showManagerEdit && ( accountOwner || accountMember ) &&

@@ -9,15 +9,11 @@ class GreetingBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requiredError: true,
-      touched: false,
-      useridInvalidMessages: [
-        { name: "1-10 characters", error: false, type: "characterCount" },
-        {
-          name: "Does not contain certain special characters",
-          error: false,
-          type: "special"
-        }
+      isValid: true,
+      istouched: false,
+      errorMessages: [
+        { name: '1-10 characters', error: false, type: 'minmax'},
+        { name: 'Does not contain certain special characters', error: false, type: 'special' }
       ],
       greetingName: this.props.greetingName,
       moveCancelButton:0
@@ -31,61 +27,52 @@ class GreetingBlock extends Component {
   }
 
   handleOnChange = e => {
-    if(e.target.value.length <= 10){
+    const newGreetingName = e.target.value
+    if(newGreetingName.length <= 10){
           this.setState({ greetingName: e.target.value }, () => this.onChangeInput());
     }
   };
 
   onChangeInput = () => {
-    const val = this.state.greetingName;
-    const useridInvalidMessages = JSON.parse(
-      JSON.stringify(this.state.useridInvalidMessages)
-    );
-    if (val.length === 0) {
-      this.setState({
-        requiredError: true,
-        useridInvalidMessages: [
-          { name: "1-10 characters", error: false, type: "characterCount" },
-
-          {
-            name: "Does not contain certain special characters",
-            error: false,
-            type: "special"
-          }
-        ]
-      });
+    //const state = this.state;
+    //const list = this.props.passwordInfo.list;
+    const newPwd = this.state.greetingName;
+    // const confirmPwd = state.confirmPassword;
+    // const exactList = list.exactList;
+    // const containsList =  list.containsList
+    this.setState({istouched: true});
+    const errorMessages = JSON.parse(JSON.stringify(this.state.errorMessages));
+    if(newPwd.length === 0) {
+      this.setState( { isValid : false, istouched: false, errorMessages: [
+        { name: '1-10 characters', error: false, type: 'minmax'},
+        { name: 'Does not contain certain special characters', error: false, type: 'special' }
+      ] });
     } else {
-      this.setState({ requiredError: false });
-
-      if (val.length > 10) {
-        let inavlidMessage = useridInvalidMessages.find(
-          message => message.type === "characterCount"
-        );
-        inavlidMessage.error = true;
-        this.setState({ useridInvalidMessages });
+      this.setState( { isValid: true });
+       if(newPwd.length > 10) {
+        this.setState( { isValid: false });
+         let invalidMessage = errorMessages.find(message => message.type === 'minmax');
+        invalidMessage.error = true;
+        this.setState({ errorMessages });
       } else {
-        let inavlidMessage = useridInvalidMessages.find(
-          message => message.type === "characterCount"
-        );
-        inavlidMessage.error = false;
-        this.setState({ useridInvalidMessages });
+        let invalidMessage = errorMessages.find(message => message.type === 'minmax');
+        invalidMessage.error = false;
+        this.setState({ errorMessages });
       }
 
-      if (val.match(/[!#$%^&*()+|~=_`{}\[\]:";'<>,.\/]/)) {
-        let inavlidMessage = useridInvalidMessages.find(
-          message => message.type === "special"
-        );
-        inavlidMessage.error = true;
-        this.setState({ useridInvalidMessages });
+      if(newPwd.match(/[!#$%^&*()+|~=_`{}\[\]:";'<>,.\/]/)){
+          this.setState( { isValid: false });
+          let invalidMessage =  errorMessages.find(message => message.type === 'special');
+          invalidMessage.error = true;
+          this.setState({ errorMessages });
       } else {
-        let inavlidMessage = useridInvalidMessages.find(
-          message => message.type === "special"
-        );
-        inavlidMessage.error = false;
-        this.setState({ useridInvalidMessages });
+        this.setState( { isValid: true });
+        let invalidMessage =  errorMessages.find(message => message.type === 'special');
+          invalidMessage.error = false;
+          this.setState({ errorMessages });
       }
     }
-  };
+  }
 
   handleSaveGreetingName(){
     this.props.actions.postGreetingName({greetingName:this.state.greetingName})
@@ -123,10 +110,11 @@ class GreetingBlock extends Component {
   render() {
     const {
       controlButtons,
-      useridInvalidMessages,
+      errorMessages,
       useridValid,
-      requiredError,
-      greetingName
+      isValid,
+      greetingName,
+      istouched
     } = this.state;
     const { showGreetingEdit, greetingEditMode } = this.props;
     const editableClassName = greetingEditMode ? "description_box--edit-view" : "description_box_disabled";
@@ -157,38 +145,53 @@ class GreetingBlock extends Component {
                         placeholder="Name"
                         name="greeting"
                         value={this.state.greetingName}
-                        valid={requiredError}
+                        valid={isValid}
+                        touched={istouched}
                         analyticstrack="greeting-nametxt"
                       />
                     </div>
                   <div className="greeting-fields-req col-xs-12 col-sm-6  col-md-5">
                     <h3>Greeting Name Requirements</h3>
                     <ul className="fieldErrors">
-                      {useridInvalidMessages.map(message => {
-                        return (
-                          <li key={message.name}>
-                            {!requiredError &&
-                              (message.error ? (
-                                <span className="text-danger">
-                                  <i className="fa fa-times-circle" />
-                                </span>
-                              ) : (
-                                <span className="text-success">
-                                  <i className="fa fa-check-circle" />
-                                </span>
-                              ))}
-                            {requiredError && (
-                              <span>
-                                <i className="fa fa-check-circle" />
-                              </span>
-                            )}
-                            {message.name}
-                          </li>
-                        );
-                      })}
+                      {
+    									errorMessages.map((message) => {
+                        if(!istouched){
+                          return(
+                            <li key={message.name}>
+                                <span className="text"><i className="fa fa-check-circle"></i> </span>
+                                {message.name}
+                            </li>
+                          )
+                        }
+    									return (
+    									  <li key={message.name}>
+    										{
+                          isValid == true &&
+    											(
+                              message.error ?
+                              <span className="text-danger"><i className="fa fa-times-circle"></i> </span> :
+      										    <span className="text-success"><i className="fa fa-check-circle"></i> </span>
+                            )
+                         }
+                         {
+                           isValid == false &&
+     											(
+                               message.error ?
+                               <span className="text-danger"><i className="fa fa-times-circle"></i> </span> :
+       										    <span className="text-success"><i className="fa fa-check-circle"></i> </span>
+                             )
+                          }
+    										 {/*
+                           isValid === false && <span className="text-danger"><i className="fa fa-times-circle"></i> </span>
+                        */}
+    										{message.name}
+    									  </li>
+    									)
+    									})
+    									}
                     </ul>
                   </div>
-                   
+
                 </div>
               )}
 
@@ -217,7 +220,7 @@ class GreetingBlock extends Component {
               >
                 Cancel
               </a>
-              <button className="btn btn--round" disabled={requiredError} onClick={()=>{this.handleSaveGreetingName()}}analyticstrack="greeting-save">
+              <button className="btn btn--round" disabled={!isValid} onClick={()=>{this.handleSaveGreetingName()}} analyticstrack="greeting-save">
                 Save Changes
               </button>
             </div>

@@ -102,6 +102,8 @@ class Manage extends Component {
   }
 
   handleUndoDenyAccountManagerRequest(){
+
+
       let { accountManagerRequests, deniedAccountManagerRequests }  = this.state
       accountManagerRequests.push(deniedAccountManagerRequests)
       this.setState({
@@ -271,9 +273,10 @@ handleEditCancel = (type) =>  {
 const mapStateToProps = state => {
   return {
     managers: state.accManagerReducer.managers,
-    accountManagerRequests:  state.accManagerReducer.accountManagerRequests,
+    accountManagerRequests: state.accManagerReducer.accountManagerRequests,
     state:state,
-    newAccountMemberRequest:state.accManagerReducer.newAccountMemberRequest
+    newAccountMemberRequest: state.accManagerReducer.newAccountMemberRequest,
+    showSpinner: state.accManagerReducer.showSpinner
   }
 }
 
