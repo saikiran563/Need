@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 
 
 class RevokeAccess extends Component {
     render() {
         return (
           <div className="modal_content">
-              <span className='revoke-popup-heading'>
+              <span className='title title--lg'>
                 Are you sure you want to remove this account Manager ?
               </span>
               <br aria-hidden="true" />

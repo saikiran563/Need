@@ -285,7 +285,7 @@ const postDenyManagerByAccountHolderFailed = error => ({
 /* Send Request to Account holder to become account manager*/
 export const postSendRequestForAccountManager = (payload) => dispatch => {
   dispatch(postSendRequestForAccountManagerBegin())
-  axios.patch(SEND_ACCOUNT_MANGER_REQUEST_URL,payload)
+  axios.post(SEND_ACCOUNT_MANGER_REQUEST_URL,payload)
   .then(response => {
     dispatch(postSendRequestForAccountManagerSuccess(response.data))
   })

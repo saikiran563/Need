@@ -1,6 +1,6 @@
 const BASE_URL = 'https://vzwqa2.verizonwireless.com/ui/acct/secure'
 
-export const GET_MANAGE_LANDING_URL = BASE_URL + '/data/ao/profile/accountmanager'
+//export const GET_MANAGE_LANDING_URL = BASE_URL + '/data/ao/profile/accountmanager'
 export const GET_ACCOUNT_MANAGE_URL =  BASE_URL + '/data/ao/profile/accountmanager'
 export const GET_ACCOUNT_MEMBER_DETAILS =  BASE_URL + '/data/am/profile/pendingRequests'
 export const ADD_MANAGER_URL = BASE_URL + '/data/ahonly/profile/modifyacctmgr'
@@ -14,9 +14,7 @@ export const POST_GREETING_NAME_URL =  BASE_URL + '/data/secure/profile/greeting
 export const GET_ACCOUNT_MEMBER_DETAILS_URL =  BASE_URL+ '/data/secure/profile/userDetails'
 
 
-// export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
-// export const GET_MANAGE_LANDING_URL = 'https://mypf-2a66b.firebaseio.com/activemanagers.json'
-// //export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
-// export const POST_GREETING_NAME_URL =  'https://mypf-2a66b.firebaseio.com/activemanagers.json'
-
+ export const GET_MANAGE_LANDING_URL = 'https://mypf-2a66b.firebaseio.com/activemanagers.json'
+ //export const GET_MANAGER_REQUESTS_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests.json'
+ //export const POST_GREETING_NAME_URL =  'https://mypf-2a66b.firebaseio.com/activemanagers.json'
 //export const SEND_ACCOUNT_MANGER_REQUEST_URL = 'https://mypf-2a66b.firebaseio.com/pendingRequests/customerInfo.json'

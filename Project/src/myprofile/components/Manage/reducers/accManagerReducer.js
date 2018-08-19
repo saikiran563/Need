@@ -17,7 +17,7 @@ const initialState = {
   accountManagerRequests: [],
   mtns: [],
   emailId: '',
-  phoneNumber:'6362245062',
+  phoneNumber:'',
   deniedAccountManagerRequests: null,
   showRequestSuccessPopup: false,
   showSpinner: true,

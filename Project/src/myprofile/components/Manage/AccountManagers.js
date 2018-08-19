@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as actions from './actions'
 import InputField from '../FormElements/InputComponent'
 import './style.css'
+import './accountmanager.css'
 import Popup from './Popup/Popup'
 import RevokeAccess from './Popup/RevokeAccess'
 import RequestSent  from './Popup/RequestSent'
@@ -14,7 +15,7 @@ import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 import formatPhoneNumber from './utilities/formatPhoneNumber'
 import Modal from "../Modal/modal"
 import SecurePin from "../SecurePin/SecurePin"
-import { handleErrors } from "../../../utils/errorHandler"
+//import { handleErrors } from "../../../utils/errorHandler"
 
 const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
 const accountMember = reactGlobals.mdnRole == 'mobileSecure'
@@ -265,7 +266,7 @@ getinitialState(){
                         <div className='row col-xs-12 col-sm-1 col-md-11'>
                             <h1>Current Account Managers</h1>
                         </div>
-                      <div className='row col-xs-12 col-sm-1 col-md-1'>
+                      <div className='row col-xs-12 col-sm-1 col-md-1 hidden-lg-down'>
                            <a className='btn btn-anchor'  onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
                       </div>
                     </div>

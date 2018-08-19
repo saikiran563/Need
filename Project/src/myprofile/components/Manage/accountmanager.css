@@ -1,0 +1,15 @@
+#overlayContainer.visible #overlayFrame {
+    top: 15%;
+    left: 0; }
+
+.btnclose{
+    width: 160px;
+    text-align: center;
+    margin-top: 10px;
+}
+/* @media only screen and (min-width: 320px)and (max-width: 450px)  { */
+    .aMyProfile .description_box__edit_section {
+     top: 0 !important;
+     }
+ 
+ /* } */

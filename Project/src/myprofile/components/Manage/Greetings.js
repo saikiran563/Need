@@ -127,7 +127,7 @@ class GreetingBlock extends Component {
               <h4 tabIndex="0">Greeting Name</h4>
               <p>Tell us the name you would like to go by.</p>
             </div>
-            <div className="col-xs-12 col-sm-8 description_box__large-container">
+            <div className="col-xs-12 col-sm-8 description_box__large-container pl-0">
               {
                 showGreetingEdit  &&  (
                 <div>
