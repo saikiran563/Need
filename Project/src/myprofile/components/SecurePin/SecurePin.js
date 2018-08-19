@@ -213,6 +213,18 @@ class SecurePin extends Component {
             </button>
           </div>
         );
+      }else if (this.props.handleSaveType == "addManagerAccountManagerBlock") {
+        return (
+          <div>
+            <p>Account Manager is  Added Successfully</p>
+            <button
+              className="btn btn--round-invert"
+              onClick={this.props.closeModal}
+            >
+              Close
+            </button>
+          </div>
+        );
       }
        else if (this.props.handleSaveType == "serviceAddressBlock") {
         return (

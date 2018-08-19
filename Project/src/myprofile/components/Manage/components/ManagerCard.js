@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 export default ({managerInfo,isNewlyAdded}) => {
-  const phoneNumber = managerInfo.phoneNumber === 'Not Applicable' ? '' : managerInfo.phoneNumber
+  const phoneNumber = ( managerInfo.phoneNumber === 'noLineAssigned' || managerInfo.phoneNumber === 'Not Applicable' )  ? '' : managerInfo.phoneNumber
   return(
     <div className='row owner-info-second' key={managerInfo.phoneNumber}>
        <div className='row col-xs-12 col-sm-11'>

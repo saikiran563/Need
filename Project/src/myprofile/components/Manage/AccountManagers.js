@@ -38,7 +38,8 @@ class AccountManagerBlock extends Component {
         isEditEmailOnAccountMemberSelected: false,
         showLearnMorePopUp: this.props.showLearnMorePopUp,
         moveCancelButton: 0,
-        modalStatus: false,
+        approveManagerSecurePinModalStatus: false,
+        addManagerSecurePinModalStatus: false,
         listOfAccountNumbersModal: true,
         afterGetRequest: this.props.listOfUserNumbers,
         errorModal: false,
@@ -48,7 +49,6 @@ class AccountManagerBlock extends Component {
 
 
   startSecurePin = ( event, payload, actionType ) =>{
-    debugger
     if( actionType === 'approval' ){
         this.handleAppproveAccountManagerRequest(payload)
     }
@@ -74,8 +74,16 @@ class AccountManagerBlock extends Component {
         if (!securePin.securePinVerified) {
           console.log("secure pin not verified, go through secure pin flow");
           this.props.actions.getListOfUserNumbers().then(() => {
+            if( actionType === 'approval'){
+              this.setState({
+                approveManagerSecurePinModalStatus: true
+              })
+            }else if(actionType === 'addManager'){
+              this.setState({
+                addManagerSecurePinModalStatus: true
+              })
+            }
             this.setState({
-              modalStatus: true,
               listOfAccountNumbersModal: true,
               afterGetRequest: this.props.listOfUserNumbers
             });
@@ -446,7 +454,13 @@ class AccountManagerBlock extends Component {
   }
 
   handleAddManagerAfterSecurePinPass = (e) => {
-
+    const addManagerPayload = {
+    "firstName": this.state.firstName,
+    "lastName": this.state.lastName,
+    "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+    "emailId": this.state.emailId,
+    "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
+  }
     this.props.handleSave('accountmanagerBlock',this.state, e)
     this.props.actions.postAddManagerByAccountHolder(addManagerPayload)
     this.setState(this.getinitialState())
@@ -456,14 +470,14 @@ class AccountManagerBlock extends Component {
     this.startSecurePin(e,{},'addManager')
   }
 
-  getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
+getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
   if(accountManager) return <div />
     const { newAccountMemberRequest, mtns } = this.props
     if( newAccountMemberRequest.status === 'not requested' ){
       if( accountOwner && managers.length <= MAXIMUM_ACCOUNT_MANAGERS_ACTIVE ){
       return(
         <div className='row add-manager-cont'>
-                      {this.state.moveCancelButton === 1 && !this.props.showManagerEdit && this.props.managerEditMode ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
+               {this.state.moveCancelButton === 1 && !this.props.showManagerEdit && this.props.managerEditMode ? <a className='btn btn-anchor' style={{float: 'right'}} onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a> : ""}
             <h4 tabIndex='0'>Add Account Managers</h4>
             <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
             <p className='answer'>
@@ -519,7 +533,7 @@ class AccountManagerBlock extends Component {
             </div>
           )
         }
-        if(accountMember){
+        if( accountMember ){
           return(
             <div className='row add-manager-cont'>
               <h4 tabIndex='0'>Request Account Manager Access</h4>
@@ -542,7 +556,6 @@ class AccountManagerBlock extends Component {
                          </div>
                      </div>
                     </div>
-
                      <div className='contact-cont'>
                          <div className='row'>
                              <div className='col-sm-3'>
@@ -598,7 +611,7 @@ class AccountManagerBlock extends Component {
     if(this.props.newAccountMemberRequest.status === 'request denied'){
       return(
         <div className='row'>
-              <h2 className='account-manager-request-heading'>Request to Become an Account Manager</h2>
+              <h2 className='account-manager-request-heading'>Request to Become an Account Manager2</h2>
               <h3 className='account-manager-request-pending'>
                     Your Account Owner  has denied your request
               </h3>
@@ -606,11 +619,24 @@ class AccountManagerBlock extends Component {
                   you can always submit another request you can always submit another request you can always
                   submit another request you can always submit another request you can always submit another request
             </p>
-
         </div>
       )
     }
 
+    if(accountOwner) {
+      return(
+        <div className='row add-manager-cont'>
+            <h4 tabIndex='0'>Add Account Managers</h4>
+            <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
+            <p className='answer'>
+              Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.
+            </p>
+            <div className='warning'>
+                 <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
+            </div>
+        </div>
+      )
+    }
     return(
       <div className='row add-manager-cont'>
           <h4 tabIndex='0'>Request to Become an Account Manager</h4>
@@ -671,7 +697,7 @@ class AccountManagerBlock extends Component {
                </div> :
                <div className='warning'>
                     <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
-                </div>
+               </div>
              }
             </div>
           </div>
@@ -700,7 +726,8 @@ class AccountManagerBlock extends Component {
   closeModal = () => {
     this.setState({
       errorModal: false,
-      modalStatus: false
+      addManagerSecurePinModalStatus: false,
+      approveManagerSecurePinModalStatus: false
     });
   };
 
@@ -728,7 +755,7 @@ class AccountManagerBlock extends Component {
   }
   render() {
     console.log('THIS PROPS', this.props)
-
+    console.log("Thi stat o mofal", this.state.addManagerSecurePinModalStatus)
     const { firstName, lastName, phoneNumber, emailId } = this.state;
     const { showManagerEdit, managerEditMode,managers,showRequestSuccessPopup } = this.props;
     const editableClassName = managerEditMode ? 'description_box--edit-view' : 'description_box_disabled';
@@ -786,20 +813,31 @@ class AccountManagerBlock extends Component {
               <div>{handleErrors(this.props.error)}</div>
             </Modal>
             <Modal
-              modalStatus={this.state.modalStatus}
+              modalStatus={this.state.addManagerSecurePinModalStatus}
               closeModal={this.closeModal}
             >
              <SecurePin
-               handleSaveType="approveAccountManagerBlock"
-               handleSaveData= {{"firstName": this.state.firstName,
-               lastName: this.state.lastName,
-               phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-               emailId: this.state.emailId,
-               acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
+               handleSaveType="addManagerAccountManagerBlock"
                closeModal={this.closeModal}
-               handleSave={()=>{this.handleApproveAccMgrReqAfterSecurePinValidation()}}
+               handleSave={()=>{this.handleAddManagerAfterSecurePinPass()}}
              />
          </Modal>
+         <Modal
+           modalStatus={this.state.errorModal}
+           closeModal={this.closeModal}
+         >
+           <div>{handleErrors(this.props.error)}</div>
+         </Modal>
+         <Modal
+           modalStatus={this.state.approveManagerSecurePinModalStatus}
+           closeModal={this.closeModal}
+         >
+          <SecurePin
+            handleSaveType="approveAccountManagerBlock"
+            closeModal={this.closeModal}
+            handleSave={()=>{this.handleApproveAccMgrReqAfterSecurePinValidation()}}
+          />
+      </Modal>
         </div>
     )
   }

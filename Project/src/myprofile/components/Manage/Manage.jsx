@@ -83,6 +83,7 @@ class Manage extends Component {
   }
 
   handleAppproveAccountManagerRequest(newRequest){
+    debugger
       let { managers, accountManagerRequests } = this.state
       managers.push({
         firstName:  newRequest.firstName,
@@ -166,7 +167,7 @@ handleEditCancel = (type) =>  {
   }
 
   handleSave = (formId, formData, event) => {
-     event.preventDefault ? event.preventDefault() : {}
+     //event.preventDefault ? event.preventDefault() : {}
       switch(formId) {
        case 'accountmanagerBlock':
        const { managers } = this.state
