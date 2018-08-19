@@ -201,7 +201,20 @@ class SecurePin extends Component {
             </button>
           </div>
         );
-      } else if (this.props.handleSaveType == "serviceAddressBlock") {
+      } else if (this.props.handleSaveType == "approveAccountManagerBlock") {
+        return (
+          <div>
+            <p>Account Manager is Successfully Approved.</p>
+            <button
+              className="btn btn--round-invert"
+              onClick={this.props.closeModal}
+            >
+              Close
+            </button>
+          </div>
+        );
+      }
+       else if (this.props.handleSaveType == "serviceAddressBlock") {
         return (
           <div>
             <p>Your address has been updated.</p>

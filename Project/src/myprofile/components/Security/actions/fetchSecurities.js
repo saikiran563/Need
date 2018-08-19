@@ -42,13 +42,13 @@ export const getSecretPinStatus = () => async dispatch => {
   // http://www.mocky.io/v2/5b69dc62320000cd1aaf5e64 --- verified: false / enabled: true
   // http://www.mocky.io/v2/5b6b0d303200003a2f373298 --- verified: true / enabled: true
 
-  const response = await axios.get(BASE_URL + API_NAME[GET_SECRET_PIN_STATUS])
-  // const response = await axios.get("http://www.mocky.io/v2/5b69dc62320000cd1aaf5e64")
+  //const response = await axios.get(BASE_URL + API_NAME[GET_SECRET_PIN_STATUS])
+   const response = await axios.get("https://api.myjson.com/bins/axppo")
   // response.data.statusCode = "0";
   // response.data.errorCode = "1";
   // response.data.data = response.data;
   console.log("secure pin - get secret pin status - action creator", response.data)
-  
+
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: GET_SECRET_PIN_STATUS,
@@ -63,13 +63,13 @@ export const getSecretPinStatus = () => async dispatch => {
 }
 
 export const getListOfUserNumbers = () => async dispatch => {
-  const response = await axios.get(BASE_URL + API_NAME[GET_LIST_OF_USER_NUMBERS])
-  // const response = await axios.get("http://www.mocky.io/v2/5b69e4b83200003715af5e96")
+//const response = await axios.get(BASE_URL + API_NAME[GET_LIST_OF_USER_NUMBERS])
+  const response = await axios.get("https://api.myjson.com/bins/hhhd8")
   // response.data.statusCode = "0";
   // response.data.errorCode = "1";
   // response.data.data.deviceList = response.data.data.deviceList;
   console.log("secure pin - get user numbers - action creator", response)
-  
+
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: GET_LIST_OF_USER_NUMBERS,
@@ -84,17 +84,17 @@ export const getListOfUserNumbers = () => async dispatch => {
 }
 
 export const sendSecurePinToPhone = (mtn, acctNum) => async dispatch => {
-  const response = await axios.post(BASE_URL + API_NAME[SEND_SECURE_PIN_TO_PHONE], {mtn, acctNum}, {
-    headers: {
-        'Content-Type': 'application/json',
-    }
-})
-  // const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum})
+//   const response = await axios.post(BASE_URL + API_NAME[SEND_SECURE_PIN_TO_PHONE], {mtn, acctNum}, {
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+// })
+  const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum})
   // response.data.statusCode = "0"
   // response.data.errorCode = "1"
   // response.data.data.smartPinMtn = "123456";
   console.log("secure pin - send secure pin to phone - action creator", response)
-  
+
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: SEND_SECURE_PIN_TO_PHONE,
@@ -109,17 +109,17 @@ export const sendSecurePinToPhone = (mtn, acctNum) => async dispatch => {
 }
 
 export const confirmSecurePinCode = (mtn, acctNum, securePin) => async dispatch => {
-  const response = await axios.post(BASE_URL + API_NAME[CONFIRM_SECURE_PIN_CODE], {mtn, acctNum, securePin}, {
-    headers: {
-        'Content-Type': 'application/json',
-    }
-})
-  // const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum, securePin})
+//   const response = await axios.post(BASE_URL + API_NAME[CONFIRM_SECURE_PIN_CODE], {mtn, acctNum, securePin}, {
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+// })
+  const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum, securePin})
   // response.data.statusCode = "1"
   // response.data.errorCode = "1"
   // response.data.data.isSecurePinValidated = true;
   console.log("secure pin - confirm secure pin - action creator", response)
-  
+
   if(parseInt(response.data.statusCode) == 0){
     dispatch({
       type: CONFIRM_SECURE_PIN_CODE,
@@ -234,7 +234,7 @@ export const getMetaData = () => dispatch => {
 }
 
 export const getQuestionInfo = () => dispatch => {
-  
+
 // http://www.mocky.io/v2/5b6c52582f0000a918893cef
 // getURL("GET_QUES_INFO")
 
@@ -251,7 +251,7 @@ export const getQuestionInfo = () => dispatch => {
 }
 
 export const getBannedPwdList = () => dispatch => {
-  
+
 
   axios.get(getURL("GET_BAN_PWD_INFO"))
   .then(
@@ -270,7 +270,7 @@ export const getBannedPwdList = () => dispatch => {
 export const setUserId = (id) => dispatch => {
   console.log("SET USER CALLED")
     // API CAll WILL BE CALLED HERE
-    const payload = JSON.stringify({"newUserName": id})     
+    const payload = JSON.stringify({"newUserName": id})
  // http://www.mocky.io/v2/5b74302a3500001000531e1d
  // getURL("SET_USER_INFO")
    var resp = axios.post(getURL("SET_USER_INFO"),payload,{
@@ -343,7 +343,7 @@ export const setPin = (pin) => dispatch => {
 
 
 export const setPassword = (passwordObject) => dispatch => {
-   var payload = JSON.stringify(passwordObject)     
+   var payload = JSON.stringify(passwordObject)
    var resp = axios.post(getURL("SET_PASSWORD_INFO"),payload,{
         headers: {
             'Content-Type': 'application/json',

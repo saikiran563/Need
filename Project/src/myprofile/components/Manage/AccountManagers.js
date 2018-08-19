@@ -27,41 +27,80 @@ class AccountManagerBlock extends Component {
     this.state = this.getinitialState()
   }
 
-  addManagerClickedHandler = (e) => {
-    this.props.actions.getSecretPinStatus().then(() =>{
-      const { securePin } = this.props;
-      console.log(securePin)
-      if(!this.props.error){
-        if(!securePin.securePinEnabled){
-          console.log("secure pin not enabled")
-          // this.handleSave(e)
+  getinitialState(){
+    return {
+        firstName: '',
+        lastName: '',
+        phoneNumber: this.props.memberPhoneNumber,
+        emailId: this.props.memberEmailId,
+        showPopup: false,
+        managerToRemove: {},
+        isEditEmailOnAccountMemberSelected: false,
+        showLearnMorePopUp: this.props.showLearnMorePopUp,
+        moveCancelButton: 0,
+        modalStatus: false,
+        listOfAccountNumbersModal: true,
+        afterGetRequest: this.props.listOfUserNumbers,
+        errorModal: false,
+        approvedRequest: null
+      }
+  }
 
-        }
-        if (!securePin.securePinVerified) {
-          console.log("secure pin not verified, go through secure pin flow")
-          this.props.actions.getListOfUserNumbers().then(() => {
-              this.setState({
-                  modalStatus: true,
-                  listOfAccountNumbersModal: true,
-                  // afterGetRequest: this.props.listOfUserNumbers
-              })
-          })
-        } else {
-          console.log("secure pin already verified")
-          // this.handleSave(e)
-          // this.props.handleSave('accountmanagerBlock',this.state, e)
-        //   this.props.actions.postAddManagerByAccountHolder({
-        //     "firstName": this.state.firstName,
-        //     "lastName": this.state.lastName,
-        //     "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-        //     "emailId": this.state.emailId,
-        //     "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
-        // })
+
+  startSecurePin = ( event, request ) =>{
+    console.log("Secure Pin New Request", request);
+    this.handleAppproveAccountManagerRequest(request)
+    this.props.actions.getSecretPinStatus().then(() => {
+      const { securePin } = this.props;
+      console.log(securePin);
+      if (typeof securePin !== "string") {
+        if (!securePin.securePinEnabled) {
+          console.log("secure pin not enabled");
+          // this.props.handleSave(
+          //   "approveAccountManagerBlock",
+          //   {
+          //     // addressLine1: this.state.address,
+          //     // addressLine2: this.state.apartment,
+          //     // city: this.state.city,
+          //     // zip: this.state.zip,
+          //     // state: this.state.USstate
+          //   },
+          //   event
+          // );
           // return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
         }
+        if (!securePin.securePinVerified) {
+          console.log("secure pin not verified, go through secure pin flow");
+          this.props.actions.getListOfUserNumbers().then(() => {
+            this.setState({
+              modalStatus: true,
+              listOfAccountNumbersModal: true,
+              afterGetRequest: this.props.listOfUserNumbers
+            });
+          });
+        } else {
+          console.log("secure pin already verified");
+          // this.props.handleSave(
+          //   "billingAddressBlock",
+          //   {
+          //     addressLine1: this.state.address,
+          //     addressLine2: this.state.apartment,
+          //     city: this.state.city,
+          //     zip: this.state.zip,
+          //     state: this.state.USstate
+          //   },
+          //   event
+          // );
+          // return this.props.handleSave('questionForm', {challengeQuestionID: this.state.newQId, challengeAnswer: this.state.newAnswer}, event)
+        }
+      } else {
+        this.setState({
+          errorModal: true,
+          afterGetRequest: this.props.securePin
+        });
       }
-    })
-  }
+    });
+  };
 
   componentWillReceiveProps(nextProps){
     const { memberPhoneNumber, memberEmailId } = nextProps
@@ -95,7 +134,7 @@ class AccountManagerBlock extends Component {
               </div>
               <div className='col-md-2'/>
               <div className='col-md-5'>
-                <button className='btn btn--round' onClick={(e) =>this.handleAppproveAccountManagerRequest(request)}>Approve</button>
+                <button className='btn btn--round' onClick={(event) =>this.startSecurePin(event,request)}>Approve</button>
               </div>
               <div className='col-md-1'/>
            </div>
@@ -132,24 +171,6 @@ class AccountManagerBlock extends Component {
       </div>
     )
   }
-
-getinitialState(){
-  return {
-      firstName: '',
-      lastName: '',
-      phoneNumber: this.props.memberPhoneNumber,
-      emailId: this.props.memberEmailId,
-      showPopup: false,
-      managerToRemove: {},
-      isEditEmailOnAccountMemberSelected: false,
-      showLearnMorePopUp: this.props.showLearnMorePopUp,
-      moveCancelButton: 0,
-      modalStatus: false,
-      listOfAccountNumbersModal: true,
-      afterGetRequest: this.props.listOfUserNumbers,
-
-    }
-}
 
   handleClosePopup(){
     this.setState({
@@ -348,15 +369,16 @@ getinitialState(){
   // }
 
   handleAppproveAccountManagerRequest(newRequest){
-    const payload = {
+    const approvedRequest = {
         "firstName": newRequest.firstName,
         "lastName": newRequest.lastName,
         "phoneNumber": newRequest.phoneNumber,
         "emailId": newRequest.emailId,
         "status":"APPROVED"
- }
-    this.props.actions.postApproveManagerByAccountHolder(payload)
-    this.props.handleAppproveAccountManagerRequest(payload)
+    }
+    this.setState({
+      approvedRequest
+    })
   }
 
   handleUndoDenyAccountManagerRequest(deniedAccountManager){
@@ -676,14 +698,11 @@ getinitialState(){
   }
 
   closeModal = () => {
-    // this.props.clearErrorCodes()
     this.setState({
-      // errorModal: false,
-      modalStatus: false,
-      // selectedPhone: null,
-      // authorizationCode: ""
-    })
-  }
+      errorModal: false,
+      modalStatus: false
+    });
+  };
 
   handleResize = () => {
     if(window.innerWidth < 990 && window.innerWidth > 715){
@@ -702,6 +721,11 @@ getinitialState(){
     }
   }
 
+  handleApproveAccMgrReqAfterSecurePinValidation(){
+      const { approvedRequest } = this.state
+      this.props.actions.postApproveManagerByAccountHolder(approvedRequest)
+      this.props.handleAppproveAccountManagerRequest(approvedRequest)
+  }
   render() {
     console.log('THIS PROPS', this.props)
 
@@ -765,19 +789,36 @@ getinitialState(){
               modalStatus={this.state.modalStatus}
               closeModal={this.closeModal}
             >
-              <SecurePin
+            {/*  <SecurePin
                 handleSaveType="accountmanagerBlock"
                 handleSaveData={{"firstName": this.state.firstName,
-                "lastName": this.state.lastName,
-                "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-                "emailId": this.state.emailId,
-                "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
+                lastName: this.state.lastName,
+                phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+                emailId: this.state.emailId,
+                acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
                 closeModal={this.closeModal}
                 handleSave={this.props.handleSave}
                 // approveAccountManager={this.state.approveAccountManager}
                 // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
               />
            </Modal>
+           <Modal
+             modalStatus={this.props.approveModalStatus}
+             closeModal={this.toggleApproveModalStatus}
+           > */}
+             <SecurePin
+               handleSaveType="approveAccountManagerBlock"
+               handleSaveData= {{"firstName": this.state.firstName,
+               lastName: this.state.lastName,
+               phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+               emailId: this.state.emailId,
+               acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
+               closeModal={this.closeModal}
+               handleSave={()=>{this.handleApproveAccMgrReqAfterSecurePinValidation()}}
+               // approveAccountManager={this.state.approveAccountManager}
+               // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
+             />
+         </Modal>
         </div>
     )
   }
@@ -791,8 +832,7 @@ const mapStateToProps = state => {
     memberPhoneNumber: state.accManagerReducer.phoneNumber,
     showLearnMorePopUp: state.accManagerReducer.showLearnMorePopUp,
     securePin: state.security.secretPin,
-    isSecurePinValidated: state.security.isSecurePinValidated,
-    error: state.security.securePinError
+    isSecurePinValidated: state.security.isSecurePinValidated
   }
 }
 
