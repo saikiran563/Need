@@ -130,11 +130,11 @@ class AccountManagerBlock extends Component {
       return(
         <div key={ request.phoneNumber + request.emailId }>
           <div className='row request-cont'>
-              <p>Requested by { request.phoneNumber } </p>
+              <p>Requested by { formatPhoneNumber(request.phoneNumber) } </p>
           </div>
            <div className='row'>
                <h4 tabIndex='0'>{request.firstName+ '  ' + request.lastName}</h4>
-               <p>{request.phoneNumber}</p>
+               <p>{formatPhoneNumber(request.phoneNumber)}</p>
                <p>{request.emailId}</p>
            </div>
            <div className='row'>
@@ -260,7 +260,7 @@ class AccountManagerBlock extends Component {
                   <div key={eachManager.phoneNumber}>
                      <div className='row owner-info'>
                          <h4 className='manager-name'>{eachManager.firstName+ ' '+ eachManager.lastName}( Account Owner )</h4>
-                         <p>{eachManager.phoneNumber}</p>
+                         <p>{formatPhoneNumber(eachManager.phoneNumber)}</p>
                          <p>{eachManager.emailId}</p>
                      </div>
                   </div>
@@ -289,7 +289,7 @@ class AccountManagerBlock extends Component {
         <div>
           {
             managers.map((eachManager)=>{
-	                    const phoneNumber = eachManager.phoneNumber === 'Not Applicable' ? '' : eachManager.phoneNumber
+	                    const phoneNumber = eachManager.phoneNumber === 'Not Applicable' ? '' : formatPhoneNumber(eachManager.phoneNumber)
               if(eachManager.role === 'accountHolder'){
                 return(
                   <div key={eachManager.phoneNumber}>
