@@ -166,7 +166,7 @@ handleEditCancel = (type) =>  {
   }
 
   handleSave = (formId, formData, event) => {
-     event ? event.preventDefault() : {}
+     event.preventDefault ? event.preventDefault() : {}
       switch(formId) {
        case 'accountmanagerBlock':
        const { managers } = this.state

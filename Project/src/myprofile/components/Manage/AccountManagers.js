@@ -48,6 +48,7 @@ class AccountManagerBlock extends Component {
 
 
   startSecurePin = ( event, payload, actionType ) =>{
+    debugger
     if( actionType === 'approval' ){
         this.handleAppproveAccountManagerRequest(payload)
     }
@@ -135,7 +136,7 @@ class AccountManagerBlock extends Component {
               </div>
               <div className='col-md-2'/>
               <div className='col-md-5'>
-                <button className='btn btn--round' onClick={(event) =>this.startSecurePin(event,request)}>Approve</button>
+                <button className='btn btn--round' onClick={(event) =>this.startSecurePin(event,request,'approval')}>Approve</button>
               </div>
               <div className='col-md-1'/>
            </div>
@@ -778,7 +779,7 @@ class AccountManagerBlock extends Component {
               }
             </div>
           </div>
-          <Modal
+            <Modal
               modalStatus={this.state.errorModal}
               closeModal={this.closeModal}
             >
@@ -797,23 +798,6 @@ class AccountManagerBlock extends Component {
                acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
                closeModal={this.closeModal}
                handleSave={()=>{this.handleApproveAccMgrReqAfterSecurePinValidation()}}
-             />
-         </Modal>
-          <Modal
-            modalStatus={this.state.modalStatus}
-            closeModal={this.closeModal}
-          >
-             <SecurePin
-               handleSaveType="approveAccountManagerBlock"
-               handleSaveData= {{"firstName": this.state.firstName,
-               lastName: this.state.lastName,
-               phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-               emailId: this.state.emailId,
-               acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
-               closeModal={this.closeModal}
-               handleSave={(e)=>{this.handleAddManagerAfterSecurePinPass(e)}}
-               // approveAccountManager={this.state.approveAccountManager}
-               // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
              />
          </Modal>
         </div>
