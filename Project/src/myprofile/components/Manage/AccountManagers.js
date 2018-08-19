@@ -15,7 +15,7 @@ import { MAXIMUM_ACCOUNT_MANAGERS_ACTIVE } from './constants'
 import formatPhoneNumber from './utilities/formatPhoneNumber'
 import Modal from "../Modal/modal"
 import SecurePin from "../SecurePin/SecurePin"
-//import { handleErrors } from "../../../utils/errorHandler"
+import { handleErrors } from "../../../utils/errorHandler"
 
 const accountOwner =  reactGlobals.mdnRole == 'accountHolder'
 const accountMember = reactGlobals.mdnRole == 'mobileSecure'
@@ -47,9 +47,10 @@ class AccountManagerBlock extends Component {
   }
 
 
-  startSecurePin = ( event, request ) =>{
-    console.log("Secure Pin New Request", request);
-    this.handleAppproveAccountManagerRequest(request)
+  startSecurePin = ( event, payload, actionType ) =>{
+    if( actionType === 'approval' ){
+        this.handleAppproveAccountManagerRequest(payload)
+    }
     this.props.actions.getSecretPinStatus().then(() => {
       const { securePin } = this.props;
       console.log(securePin);
@@ -443,17 +444,15 @@ class AccountManagerBlock extends Component {
     return <div/>
   }
 
-  handleSave = (e) =>{
-    // this.props.handleSave('accountManagerBlock',{firstName: this.state.firstName, emailId: this.state.emailId} , e)
-	this.props.handleSave('accountmanagerBlock',this.state, e)
-    this.props.actions.postAddManagerByAccountHolder({
-        "firstName": this.state.firstName,
-        "lastName": this.state.lastName,
-        "phoneNumber": this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-        "emailId": this.state.emailId,
-        "acctTypeCode": this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''
-    })
+  handleAddManagerAfterSecurePinPass = (e) => {
+
+    this.props.handleSave('accountmanagerBlock',this.state, e)
+    this.props.actions.postAddManagerByAccountHolder(addManagerPayload)
     this.setState(this.getinitialState())
+  }
+
+  handleAddManager = (e) =>{
+    this.startSecurePin(e,{},'addManager')
   }
 
   getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
@@ -512,7 +511,7 @@ class AccountManagerBlock extends Component {
                    </div>
                    <div className='footer col-xs-12'>
                      <a className='btn btn--round-invert' role='button' onClick={() => this.props.handleEditCancel('cancelblock')}>Cancel</a>
-                     <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleSave(e) }>Add Manager</button>
+                     <button className='btn btn--round' disabled={reactGlobals.isCsr}  onClick={(e) =>this.handleAddManager(e) }>Add Manager</button>
                    </div>
                  </div>
               </div>
@@ -779,33 +778,16 @@ class AccountManagerBlock extends Component {
               }
             </div>
           </div>
-          {/* <Modal
+          <Modal
               modalStatus={this.state.errorModal}
               closeModal={this.closeModal}
             >
-              <div>{this.handleErrors(this.props.error)}</div>
-            </Modal> */}
+              <div>{handleErrors(this.props.error)}</div>
+            </Modal>
             <Modal
               modalStatus={this.state.modalStatus}
               closeModal={this.closeModal}
             >
-            {/*  <SecurePin
-                handleSaveType="accountmanagerBlock"
-                handleSaveData={{"firstName": this.state.firstName,
-                lastName: this.state.lastName,
-                phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
-                emailId: this.state.emailId,
-                acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
-                closeModal={this.closeModal}
-                handleSave={this.props.handleSave}
-                // approveAccountManager={this.state.approveAccountManager}
-                // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
-              />
-           </Modal>
-           <Modal
-             modalStatus={this.props.approveModalStatus}
-             closeModal={this.toggleApproveModalStatus}
-           > */}
              <SecurePin
                handleSaveType="approveAccountManagerBlock"
                handleSaveData= {{"firstName": this.state.firstName,
@@ -815,6 +797,21 @@ class AccountManagerBlock extends Component {
                acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
                closeModal={this.closeModal}
                handleSave={()=>{this.handleApproveAccMgrReqAfterSecurePinValidation()}}
+             />
+         </Modal>
+          <Modal
+            modalStatus={this.state.modalStatus}
+            closeModal={this.closeModal}
+          >
+             <SecurePin
+               handleSaveType="approveAccountManagerBlock"
+               handleSaveData= {{"firstName": this.state.firstName,
+               lastName: this.state.lastName,
+               phoneNumber: this.state.phoneNumber === 'noLineAssigned' ? 'Not Applicable' : this.state.phoneNumber,
+               emailId: this.state.emailId,
+               acctTypeCode: this.state.phoneNumber === 'noLineAssigned' ? 'FAC' : ''}}
+               closeModal={this.closeModal}
+               handleSave={(e)=>{this.handleAddManagerAfterSecurePinPass(e)}}
                // approveAccountManager={this.state.approveAccountManager}
                // approveAccountManagerFunction={this.handleAppproveAccountManagerRequest}
              />

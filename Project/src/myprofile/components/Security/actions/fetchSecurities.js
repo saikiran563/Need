@@ -114,10 +114,11 @@ export const confirmSecurePinCode = (mtn, acctNum, securePin) => async dispatch 
 //         'Content-Type': 'application/json',
 //     }
 // })
+//newton
   const response = await axios.post("http://www.mocky.io/v2/5b69e4b83200003715af5e96", {mtn, acctNum, securePin})
-  // response.data.statusCode = "1"
-  // response.data.errorCode = "1"
-  // response.data.data.isSecurePinValidated = true;
+  //response.data.data.statusCode = "1"
+  //response.data.errorCode = "1"
+  //response.data.data.isSecurePinValidated = false;
   console.log("secure pin - confirm secure pin - action creator", response)
 
   if(parseInt(response.data.statusCode) == 0){
