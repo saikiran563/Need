@@ -154,10 +154,6 @@ class AccountManagerBlock extends Component {
     }
     return(
       <div>
-        <div className='row max-account-managers-message'>
-          <p >You may have a maximum of three Account Managers at a time.
-            To add a new Account Manger, please remove one first. </p>
-        </div>
         <div className='row request-cont'>
             <p>Requested by { request.phoneNumber } </p>
         </div>
@@ -628,9 +624,6 @@ getManagerAddView( managers, firstName, lastName, phoneNumber, emailId ){
         <div className='row add-manager-cont'>
             <h4 tabIndex='0'>Add Account Managers</h4>
             <a className='question' onClick={()=>{this.props.actions.showLearnMorePopUp()}}> What can an Account Manager do ?</a>
-            <p className='answer'>
-              Submit a request to your Account Owner to gain Account Manager access and abilities. You must be 18 years or older to be an Account Manager.
-            </p>
             <div className='warning'>
                  <p>You may have a maximum of three additional Account Managers at a time. To add a new Account Manger, please remove one first.</p>
             </div>
